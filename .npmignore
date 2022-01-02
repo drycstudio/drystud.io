@@ -1,0 +1,14 @@
+#exclude all examples
+templates/
+node_modules/
+lib/
+assets/
+
+index.js
+.babelrc
+.eslintrc
+.gitignore
+LICENSE
+README.md
+rollup.config.js
+yarn.lock

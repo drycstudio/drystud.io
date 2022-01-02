@@ -3,7 +3,7 @@
     "publishConfig": {
         "registry": "https://npm.pkg.github.com/euclidesdry"
     },
-    "version": "0.0.1-beta-1",
+    "version": "v0.0.1-beta-2",
     "description": "The pretty Electron Titlebar with ReactJS",
     "repository": "https://www.github.com/euclidesdry/electron-pretty-titlebar",
     "author": "euclidesdry <euclidesdry@gmail.com>",
@@ -17,7 +17,6 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "rollup": "rollup -c",
-        "publish": "npm publish",
         "ci": "npm run lint && npm run test && npm run build && npm run rollup && npm run publish",
         "test": "jest",
         "lint": "eslint ."
@@ -29,9 +28,12 @@
         "@types/react": "^17.0.38",
         "eslint": "^8.6.0",
         "jest": "^27.4.5",
+        "postcss": "^8.4.5",
         "react": "^17.0.2",
         "rollup": "^2.62.0",
         "rollup-plugin-dts": "^4.1.0",
+        "rollup-plugin-postcss": "^4.0.2",
+        "rollup-plugin-scss": "^3.0.0",
         "tslib": "^2.3.1",
         "typescript": "^4.5.4"
     }

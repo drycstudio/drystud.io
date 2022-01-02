@@ -1,6 +1,8 @@
 /// <reference types="react" />
 export interface TitlebarProps {
-    label: string;
+    title: string | undefined | null;
+    onMinus?: () => void;
+    onMinimazeMaximaze?: () => void;
+    onClose?: () => void;
 }
-declare const Titlebar: ({ label }: TitlebarProps) => JSX.Element;
-export default Titlebar;
+export default function Titlebar({ title, onClose, onMinus, onMinimazeMaximaze }: TitlebarProps): JSX.Element;

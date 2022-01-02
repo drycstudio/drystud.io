@@ -2460,9 +2460,16 @@ if (process.env.NODE_ENV === 'production') {
 
 var React = react.exports;
 
-const Titlebar = ({ label }) => {
-    return React.createElement("button", null, label);
-};
+function Titlebar({ title, onClose, onMinus, onMinimazeMaximaze }) {
+    const handleMinus = () => !onClose ? onMinus : alert('Please Add Electron Minus Button Handler');
+    const handleMinimazeMaximaze = () => !onClose ? onMinimazeMaximaze : alert('Please Add Electron Minimaze/Maximaze Button Handler');
+    const handleClose = () => !onClose ? onClose : alert('Please Add Electron Close Button Handler');
+    return (React.createElement("div", null,
+        React.createElement("button", null, title),
+        React.createElement("button", { onClick: handleMinus }, "Minus"),
+        React.createElement("button", { onClick: handleMinimazeMaximaze }, "Minimize/Maximaze"),
+        React.createElement("button", { onClick: handleClose }, "Close")));
+}
 
 exports.Titlebar = Titlebar;
 //# sourceMappingURL=index.js.map

@@ -5,6 +5,12 @@ import dts from "rollup-plugin-dts";
 
 const packageJson = require("./package.json");
 
+// CSS Config
+import postcss from "rollup-plugin-postcss";
+
+// SASS Config
+import scss from "rollup-plugin-scss";
+
 export default [
     {
         input: "src/index.ts",
@@ -24,11 +30,21 @@ export default [
             resolve(),
             commonjs(),
             typescript({ tsconfig: "./tsconfig.json" }),
+
+            // CSS Config
+            postcss(),
+            // SASS Config
+            scss({
+                outputStyle: "compressed",
+            }), // will output compiled styles to output.css
         ],
     },
     {
         input: "dist/esm/types/index.d.ts",
         output: [{ file: "dist/index.d.ts", format: "esm" }],
         plugins: [dts()],
+
+        // CSS Config
+        external: [/\.css$/],
     },
 ];

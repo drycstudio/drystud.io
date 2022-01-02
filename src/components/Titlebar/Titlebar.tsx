@@ -1,11 +1,31 @@
 import React from "react";
 
 export interface TitlebarProps {
-  label: string;
+    title: string | undefined | null;
+    onMinus?: () => void;
+    onMinimazeMaximaze?: () => void;
+    onClose?: () => void;
 }
 
-const Titlebar = ({ label }: TitlebarProps) => {
-  return <button>{label}</button>;
-};
+export default function Titlebar({
+    title,
+    onClose,
+    onMinus,
+    onMinimazeMaximaze
+}: TitlebarProps) {
 
-export default Titlebar;
+    const handleMinus = () => !onClose ? onMinus : alert('Please Add Electron Minus Button Handler');
+
+    const handleMinimazeMaximaze = () => !onClose ? onMinimazeMaximaze : alert('Please Add Electron Minimaze/Maximaze Button Handler');
+
+    const handleClose = () => !onClose ? onClose : alert('Please Add Electron Close Button Handler');
+
+    return (
+        <div>
+            <button>{title}</button>
+            <button onClick={handleMinus}>Minus</button>
+            <button onClick={handleMinimazeMaximaze}>Minimize/Maximaze</button>
+            <button onClick={handleClose}>Close</button>
+        </div>
+    );
+};

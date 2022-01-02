@@ -4,11 +4,11 @@
 ### How to use
 
 ```bash
-npm install @euclidesdry/electron-pretty-titlebar@0.0.1-beta-1
+npm install @euclidesdry/electron-pretty-titlebar
 ```
 
 Or
 
 ```bash
-yarn add @euclidesdry/electron-pretty-titlebar@0.0.1-beta-1
+yarn add @euclidesdry/electron-pretty-titlebar
 ```

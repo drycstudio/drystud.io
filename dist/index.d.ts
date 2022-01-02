@@ -1,7 +1,10 @@
 /// <reference types="react" />
 interface TitlebarProps {
-    label: string;
+    title: string | undefined | null;
+    onMinus?: () => void;
+    onMinimazeMaximaze?: () => void;
+    onClose?: () => void;
 }
-declare const Titlebar: ({ label }: TitlebarProps) => JSX.Element;
+declare function Titlebar({ title, onClose, onMinus, onMinimazeMaximaze }: TitlebarProps): JSX.Element;
 
 export { Titlebar };
