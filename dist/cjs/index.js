@@ -2465,7 +2465,7 @@ function Titlebar({ title, onClose, onMinus, onMinimazeMaximaze }) {
     const handleMinimazeMaximaze = () => !onClose ? onMinimazeMaximaze : alert('Please Add Electron Minimaze/Maximaze Button Handler');
     const handleClose = () => !onClose ? onClose : alert('Please Add Electron Close Button Handler');
     return (React.createElement("div", null,
-        React.createElement("button", null, title),
+        React.createElement("button", { className: "z-50 ept-actionButton" }, title),
         React.createElement("button", { onClick: handleMinus }, "Minus"),
         React.createElement("button", { onClick: handleMinimazeMaximaze }, "Minimize/Maximaze"),
         React.createElement("button", { onClick: handleClose }, "Close")));

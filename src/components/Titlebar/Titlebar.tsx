@@ -1,5 +1,7 @@
 import React from "react";
 
+import './Titlebar.css';
+
 export interface TitlebarProps {
     title: string | undefined | null;
     onMinus?: () => void;
@@ -22,7 +24,7 @@ export default function Titlebar({
 
     return (
         <div>
-            <button>{title}</button>
+            <button className="z-50 ept-actionButton">{title}</button>
             <button onClick={handleMinus}>Minus</button>
             <button onClick={handleMinimazeMaximaze}>Minimize/Maximaze</button>
             <button onClick={handleClose}>Close</button>

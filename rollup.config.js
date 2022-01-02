@@ -11,6 +11,9 @@ import postcss from "rollup-plugin-postcss";
 // SASS Config
 import scss from "rollup-plugin-scss";
 
+// TailwindCSS Config
+import tailwind from "rollup-plugin-tailwind";
+
 export default [
     {
         input: "src/index.ts",
@@ -34,14 +37,14 @@ export default [
             // CSS Config
             postcss(),
             // SASS Config
-            scss({
-                outputStyle: "compressed",
-            }), // will output compiled styles to output.css
+            scss(), // will output compiled styles to output.css
+            // TailwindCSS Config
+            tailwind(),
         ],
     },
     {
         input: "dist/esm/types/index.d.ts",
-        output: [{ file: "dist/index.d.ts", format: "esm" }],
+        output: [{ file: "dist/index.d.ts", format: "esm"}],
         plugins: [dts()],
 
         // CSS Config
