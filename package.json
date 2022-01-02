@@ -1,0 +1,29 @@
+{
+    "name": "electron-pretty-titlebar",
+    "version": "v0.0.1-beta-0",
+    "description": "The pretty Electron Titlebar with ReactJS",
+    "repository": "https://www.github.com/euclidesdry/electron-pretty-titlebar",
+    "author": "euclidesdry <euclidesdry@gmail.com>",
+    "license": "MIT",
+    "private": false,
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "files": [
+        "dist"
+    ],
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "rollup": "rollup -c"
+    },
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^21.0.1",
+        "@rollup/plugin-node-resolve": "^13.1.2",
+        "@rollup/plugin-typescript": "^8.3.0",
+        "@types/react": "^17.0.38",
+        "react": "^17.0.2",
+        "rollup": "^2.62.0",
+        "rollup-plugin-dts": "^4.1.0",
+        "tslib": "^2.3.1",
+        "typescript": "^4.5.4"
+    }
+}
