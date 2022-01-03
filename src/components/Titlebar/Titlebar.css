@@ -427,6 +427,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   z-index: 50;
 }
 
+.contents {
+  display: contents;
+}
+
 /* .ept-actionButton {
     font-size: 60px;
 } */

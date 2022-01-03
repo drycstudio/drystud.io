@@ -3,6 +3,8 @@ templates/
 node_modules/
 lib/
 assets/
+.storybook/
+.github/
 
 index.js
 .babelrc

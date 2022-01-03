@@ -9,6 +9,10 @@
         "**/*.spec.js",
         "**/*.spec.ts",
         "**/*.spec.tsx",
+        "**/stories",
+        "**/*.stories.js",
+        "**/*.stories.ts",
+        "**/*.stories.tsx",
     ],
     "compilerOptions": {
         // Default
