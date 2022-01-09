@@ -4,6 +4,7 @@ node_modules/
 lib/
 assets/
 .storybook/
+storybook-static/
 .github/
 
 index.js

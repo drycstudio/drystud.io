@@ -24,7 +24,7 @@ export default function Titlebar({
 
     return (
         <div>
-            <button className="fixed z-50 bg-default-dark">{title}</button>
+            <button className="z-50 ept-actionButton">{title}</button>
             <button onClick={handleMinus}>Minus</button>
             <button onClick={handleMinimazeMaximaze}>Minimize/Maximaze</button>
             <button onClick={handleClose}>Close</button>

@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .ept-actionButton {
+.ept-actionButton {
     font-size: 60px;
-} */
+}

@@ -1,4 +1,5 @@
 /// <reference types="react" />
+import './Titlebar.css';
 export interface TitlebarProps {
     title: string | undefined | null;
     onMinus?: () => void;

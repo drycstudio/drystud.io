@@ -1,5 +1,8 @@
 {
     // Added
+    "include": [
+        "src/*"
+    ],
     "exclude": [
         "**/tests",
         "**/*.test.js",
@@ -13,6 +16,13 @@
         "**/*.stories.js",
         "**/*.stories.ts",
         "**/*.stories.tsx",
+        "templates",
+        "./templates",
+        "./templates/*",
+        "node_modules",
+        "./node_modules",
+        "./node_modules/*",
+        "./node_modules/@types/node/index.d.ts",
     ],
     "compilerOptions": {
         // Default

@@ -5,7 +5,7 @@ import dts from "rollup-plugin-dts";
 
 //NEW
 import { terser } from "rollup-plugin-terser";
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import peerDepsExternal from "rollup-plugin-peer-deps-external";
 
 const packageJson = require("./package.json");
 
