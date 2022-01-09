@@ -19,5 +19,5 @@ HelloWorld.args = {
 
 export const ClickMe = Template.bind({});
 ClickMe.args = {
-    title: "Click me!",
+    title: "Testing Component Titlebar",
 };

@@ -4,3 +4,8 @@
     outline: 0;
     box-sizing: border-box;
 }
+
+.sb-show-main.sb-main-padded {
+    padding: 0 !important;
+    margin: 0;
+}
