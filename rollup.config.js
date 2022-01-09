@@ -3,6 +3,10 @@ import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
 
+//NEW
+import { terser } from "rollup-plugin-terser";
+import peerDepsExternal from "rollup-plugin-peer-deps-external";
+
 const packageJson = require("./package.json");
 
 // CSS Config
@@ -10,6 +14,9 @@ import postcss from "rollup-plugin-postcss";
 
 // SASS Config
 import scss from "rollup-plugin-scss";
+
+// TailwindCSS Config
+import tailwind from "rollup-plugin-tailwind";
 
 export default [
     {
@@ -27,6 +34,8 @@ export default [
             },
         ],
         plugins: [
+            peerDepsExternal(),
+
             resolve(),
             commonjs(),
             typescript({ tsconfig: "./tsconfig.json" }),
@@ -34,9 +43,11 @@ export default [
             // CSS Config
             postcss(),
             // SASS Config
-            scss({
-                outputStyle: "compressed",
-            }), // will output compiled styles to output.css
+            scss(), // will output compiled styles to output.css
+            // TailwindCSS Config
+            tailwind(),
+
+            terser(),
         ],
     },
     {

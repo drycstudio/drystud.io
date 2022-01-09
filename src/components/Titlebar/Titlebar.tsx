@@ -1,4 +1,7 @@
 import React from "react";
+import { FiMinus, FiSquare, FiX } from "react-icons/fi";
+
+import './Titlebar.css';
 
 export interface TitlebarProps {
     title: string | undefined | null;
@@ -21,11 +24,16 @@ export default function Titlebar({
     const handleClose = () => !onClose ? onClose : alert('Please Add Electron Close Button Handler');
 
     return (
-        <div>
-            <button>{title}</button>
-            <button onClick={handleMinus}>Minus</button>
-            <button onClick={handleMinimazeMaximaze}>Minimize/Maximaze</button>
-            <button onClick={handleClose}>Close</button>
+        <div className="epTitlebar">
+            <div className="epTitlebar__logo"></div>
+            <div className="epTitlebar__title">
+                <h6 className="title__text">{title}</h6>
+            </div>
+            <div className="epTitlebar__actionButtons">
+                <button className="actionButtons__button actionButtons__minus"onClick={handleMinus}><FiMinus /></button>
+                <button className="actionButtons__button actionButtons__minimazeMaximaze"onClick={handleMinimazeMaximaze}><FiSquare /></button>
+                <button className="actionButtons__button actionButtons__close"onClick={handleClose}><FiX /></button>
+            </div>
         </div>
     );
 };

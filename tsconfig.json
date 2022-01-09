@@ -1,21 +1,46 @@
 {
-  "compilerOptions": {
-    // Default
-    "target": "es2018",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-
     // Added
-    "jsx": "react",
-    "module": "ESNext",
-    "declaration": true,
-    "declarationDir": "types",
-    "sourceMap": true,
-    "outDir": "dist",
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "emitDeclarationOnly": true,
-  },
+    "include": [
+        "src/*"
+    ],
+    "exclude": [
+        "**/tests",
+        "**/*.test.js",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/spec",
+        "**/*.spec.js",
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+        "**/stories",
+        "**/*.stories.js",
+        "**/*.stories.ts",
+        "**/*.stories.tsx",
+        "templates",
+        "./templates",
+        "./templates/*",
+        "node_modules",
+        "./node_modules",
+        "./node_modules/*",
+        "./node_modules/@types/node/index.d.ts",
+    ],
+    "compilerOptions": {
+        // Default
+        "target": "es2018",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "skipLibCheck": true,
+
+        // Added
+        "jsx": "react",
+        "module": "ESNext",
+        "declaration": true,
+        "declarationDir": "types",
+        "sourceMap": true,
+        "outDir": "dist",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "emitDeclarationOnly": true,
+    },
 }
