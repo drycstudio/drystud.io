@@ -6,7 +6,7 @@ import './Titlebar.css';
 
 export interface TitlebarProps {
     title: string | undefined | null;
-    logo: string;
+    logo?: string;
     onMinus?: () => void;
     onMinimazeMaximaze?: () => void;
     onClose?: () => void;
@@ -30,7 +30,7 @@ export default function Titlebar({
     return (
         <div className="epTitlebar">
             <div className="epTitlebar__logo">
-                <img className="flex-1 p-[6px] h-[38px] w-[38px]" src={titlebarLogo} alt="Electron Pretty Titlebar Logo" />
+                <img className="logo__image" src={titlebarLogo} alt="Electron Pretty Titlebar Logo" />
             </div>
             <div className="epTitlebar__menu">
             </div>
@@ -39,13 +39,13 @@ export default function Titlebar({
             </div>
             <div className="epTitlebar__actionButtons">
                 <button className="actionButtons__button actionButtons__minus" onClick={handleMinus}>
-                    <FiMinus className="actionButtons__icon flex-1 w-5 h-5" />
+                    <FiMinus className="actionButtons__icon" />
                 </button>
                 <button className="actionButtons__button actionButtons__minimazeMaximaze" onClick={handleMinimazeMaximaze}>
-                    <FiSquare className="actionButtons__icon flex-1 w-5 h-5" />
+                    <FiSquare className="actionButtons__icon" />
                 </button>
                 <button className="actionButtons__button actionButtons__close" onClick={handleClose}>
-                    <FiX className="actionButtons__icon flex-1 w-5 h-5" />
+                    <FiX className="actionButtons__icon" />
                 </button>
             </div>
         </div>

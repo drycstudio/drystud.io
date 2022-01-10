@@ -16,7 +16,10 @@ import postcss from "rollup-plugin-postcss";
 import scss from "rollup-plugin-scss";
 
 // TailwindCSS Config
-import tailwind from "rollup-plugin-tailwind";
+import tailwindcss from "rollup-plugin-tailwindcss";
+
+// SVG Config
+import svgImport from "rollup-plugin-svg-import";
 
 export default [
     {
@@ -35,19 +38,32 @@ export default [
         ],
         plugins: [
             peerDepsExternal(),
-
-            resolve(),
-            commonjs(),
-            typescript({ tsconfig: "./tsconfig.json" }),
-
             // CSS Config
-            postcss(),
+            postcss({
+                minimize: true,
+                modules: true,
+                use: {
+                    sass: null,
+                    stylus: null,
+                    less: { javascriptEnabled: true },
+                },
+                extract: true,
+            }),
             // SASS Config
             scss(), // will output compiled styles to output.css
             // TailwindCSS Config
-            tailwind(),
-
+            tailwindcss({
+                input: "./src/index.css", // required
+                purge: false,
+            }),
+            resolve(),
+            commonjs(),
+            typescript({ tsconfig: "./tsconfig.json" }),
             terser(),
+            // process SVG to DOM Node or String. Default: false
+            svgImport({
+                stringify: false,
+            }),
         ],
     },
     {
