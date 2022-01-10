@@ -19,6 +19,9 @@ import postcss from "rollup-plugin-postcss";
 // TailwindCSS Config
 import tailwindcss from "rollup-plugin-tailwindcss";
 
+// Image Config
+import image from "@rollup/plugin-image";
+
 // SVG Config
 import svgImport from "rollup-plugin-svg-import";
 
@@ -68,6 +71,7 @@ export default [
             svgImport({
                 stringify: false,
             }),
+            image(),
         ],
     },
     {
