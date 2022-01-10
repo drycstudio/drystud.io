@@ -13,9 +13,6 @@ const packageJson = require("./package.json");
 // CSS Config
 import postcss from "rollup-plugin-postcss";
 
-// SASS Config
-// import scss from "rollup-plugin-scss";
-
 // TailwindCSS Config
 import tailwindcss from "rollup-plugin-tailwindcss";
 
@@ -46,7 +43,6 @@ export default [
             postcss({
                 minimize: false,
                 modules: true,
-                sourcemap: true,
                 plugins: [autoprefixer()],
                 use: {
                     sass: null,
@@ -56,12 +52,10 @@ export default [
                 extract: true,
                 extract: "titlebar.css",
             }),
-            // SASS Config
-            // scss(), // will output compiled styles to output.css
             // TailwindCSS Config
             tailwindcss({
                 input: "./src/index.scss", // required
-                // purge: false,
+                purge: false,
             }),
             resolve(),
             commonjs(),

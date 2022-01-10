@@ -3,7 +3,7 @@ module.exports = {
         require("postcss-import"),
         require("tailwindcss"),
         require("postcss-nested"), // or require('postcss-nesting')
-        require("autoprefixer"),
+        // require("autoprefixer"),
     ],
     module: {
         rules: [
