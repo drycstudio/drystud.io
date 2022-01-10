@@ -19,6 +19,7 @@ module.exports = {
             "default-dark": "#1B1B2F",
             "default-soft-dark": "#162447",
             "default-light-dark": "#1F4068",
+            "default-dark-salmon": "#810015",
             "default-salmon": "#E43F5A",
         },
         extend: {},
