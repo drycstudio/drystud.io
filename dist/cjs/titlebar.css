@@ -468,11 +468,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-backdrop-sepia:  ;
 }
 
-.contents {
+.titlebar-module_contents__IjuSM {
   display: contents;
 }
 
-.epTitlebar {
+.titlebar-module_epTitlebar__E4kHu {
   position: fixed;
   z-index: 50;
   display: flex;
@@ -487,7 +487,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.epTitlebar__logo {
+.titlebar-module_epTitlebar__logo__d6OHS {
   display: flex;
   height: 100%;
   width: 38px;
@@ -495,31 +495,31 @@ Ensure the default browser behavior of the `hidden` attribute.
   align-items: center;
 }
 
-.epTitlebar__logo .logo__image {
+.titlebar-module_epTitlebar__logo__d6OHS .titlebar-module_logo__image__R2-AF {
   height: 38px;
   width: 38px;
   flex: 1 1 0%;
   padding: 6px;
 }
 
-.epTitlebar__menu {
+.titlebar-module_epTitlebar__menu__azVTE {
   width: 58px;
 }
 
-.epTitlebar__title {
+.titlebar-module_epTitlebar__title__WZXkW {
   -webkit-user-select: none;
   -webkit-app-region: drag;
   flex-grow: 1;
   text-align: center;
 }
 
-.epTitlebar__actionButtons {
+.titlebar-module_epTitlebar__actionButtons__PbZGo {
   display: flex;
   height: 100%;
   flex-direction: row;
 }
 
-.actionButtons__button {
+.titlebar-module_actionButtons__button__CdeXj {
   margin: 0px;
   display: flex;
   height: 100%;
@@ -533,7 +533,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   transition-duration: 200ms;
 }
 
-.actionButtons__button .actionButtons__icon {
+.titlebar-module_actionButtons__button__CdeXj .titlebar-module_actionButtons__icon__hmRSc {
   height: 1.25rem;
   width: 1.25rem;
   flex: 1 1 0%;
@@ -542,20 +542,26 @@ Ensure the default browser behavior of the `hidden` attribute.
   transition-duration: 200ms;
 }
 
-.actionButtons__button:hover .actionButtons__icon {
+.titlebar-module_actionButtons__button__CdeXj:hover .titlebar-module_actionButtons__icon__hmRSc {
   --tw-scale-x: 1.25;
   --tw-scale-y: 1.25;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transition-duration: 300ms;
 }
 
-.actionButtons__button:active .actionButtons__icon {
+.titlebar-module_actionButtons__button__CdeXj:active .titlebar-module_actionButtons__icon__hmRSc {
   --tw-scale-x: .95;
   --tw-scale-y: .95;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.actionButtons__close {
+.titlebar-module_actionButtons__minus__9icsi {
+}
+
+.titlebar-module_actionButtons__minimazeMaximaze__uOGve {
+}
+
+.titlebar-module_actionButtons__close__iiV7J {
   --tw-bg-opacity: 1;
   background-color: rgb(129 0 21 / var(--tw-bg-opacity));
 }

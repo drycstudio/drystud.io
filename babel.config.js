@@ -3,7 +3,6 @@ module.exports = {
         "@babel/preset-env",
         "@babel/preset-react",
         "@babel/preset-typescript",
-        "babel-plugin-tailwind",
     ],
     ignore: [/node_modules/],
     ignore: [/templates/],

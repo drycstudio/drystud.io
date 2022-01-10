@@ -1,6 +1,9 @@
 import React from 'react';
 import { Titlebar } from '@euclidesdry/electron-pretty-titlebar';
+
 import logo from './logo.svg';
+
+import '@euclidesdry/electron-pretty-titlebar/dist/cjs/index.css';
 import './App.css';
 
 function App() {

@@ -2,7 +2,7 @@ import React from "react";
 import { FiMinus, FiSquare, FiX, FiMinimize, FiMaximize } from "react-icons/fi";
 
 import titlebarLogo from "../../assets/icon/logo/electron-pretty-titlebar-logo.svg";
-import './Titlebar.css';
+import CSS from './titlebar.module.css';
 
 export interface TitlebarProps {
     title: string | undefined | null;
@@ -28,24 +28,24 @@ export default function Titlebar({
     const handleClose = () => (!!onClose) ? onClose : alert('Please Add Electron Close Button Handler');
 
     return (
-        <div className="epTitlebar">
-            <div className="epTitlebar__logo">
-                <img className="logo__image" src={titlebarLogo} alt="Electron Pretty Titlebar Logo" />
+        <div className={CSS.epTitlebar}>
+            <div className={CSS.epTitlebar__logo}>
+                <img className={CSS.logo__image} src={titlebarLogo} alt="Electron Pretty Titlebar Logo" />
             </div>
-            <div className="epTitlebar__menu">
+            <div className={CSS.epTitlebar__menu}>
             </div>
-            <div className="epTitlebar__title">
-                <h6 className="title__text">{title}</h6>
+            <div className={CSS.epTitlebar__title}>
+                <h6 className={CSS.title__text}>{title}</h6>
             </div>
-            <div className="epTitlebar__actionButtons">
-                <button className="actionButtons__button actionButtons__minus" onClick={handleMinus}>
-                    <FiMinus className="actionButtons__icon" />
+            <div className={CSS.epTitlebar__actionButtons}>
+                <button className={`${CSS.actionButtons__button} ${CSS.actionButtons__minus}`} onClick={handleMinus}>
+                    <FiMinus className={CSS.actionButtons__icon} />
                 </button>
-                <button className="actionButtons__button actionButtons__minimazeMaximaze" onClick={handleMinimazeMaximaze}>
-                    <FiSquare className="actionButtons__icon" />
+                <button className={`${CSS.actionButtons__button} ${CSS.actionButtons__minimazeMaximaze}`} onClick={handleMinimazeMaximaze}>
+                    <FiSquare className={CSS.actionButtons__icon} />
                 </button>
-                <button className="actionButtons__button actionButtons__close" onClick={handleClose}>
-                    <FiX className="actionButtons__icon" />
+                <button className={`${CSS.actionButtons__button} ${CSS.actionButtons__close}`} onClick={handleClose}>
+                    <FiX className={CSS.actionButtons__icon} />
                 </button>
             </div>
         </div>

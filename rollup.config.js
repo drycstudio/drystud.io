@@ -2,6 +2,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
+import autoprefixer from "autoprefixer";
 
 //NEW
 import { terser } from "rollup-plugin-terser";
@@ -13,7 +14,7 @@ const packageJson = require("./package.json");
 import postcss from "rollup-plugin-postcss";
 
 // SASS Config
-import scss from "rollup-plugin-scss";
+// import scss from "rollup-plugin-scss";
 
 // TailwindCSS Config
 import tailwindcss from "rollup-plugin-tailwindcss";
@@ -40,21 +41,24 @@ export default [
             peerDepsExternal(),
             // CSS Config
             postcss({
-                minimize: true,
+                minimize: false,
                 modules: true,
+                sourcemap: true,
+                plugins: [autoprefixer()],
                 use: {
                     sass: null,
                     stylus: null,
                     less: { javascriptEnabled: true },
                 },
                 extract: true,
+                extract: "titlebar.css",
             }),
             // SASS Config
-            scss(), // will output compiled styles to output.css
+            // scss(), // will output compiled styles to output.css
             // TailwindCSS Config
             tailwindcss({
-                input: "./src/index.css", // required
-                purge: false,
+                input: "./src/index.scss", // required
+                // purge: false,
             }),
             resolve(),
             commonjs(),
