@@ -1,5 +1,4 @@
 {
-    // Added
     "include": [
         "src/*"
     ],
