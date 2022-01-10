@@ -9,7 +9,7 @@
     },
     "dependencies": {
         "@babel/core": "^7.16.0",
-        "@euclidesdry/electron-pretty-titlebar": "^0.0.1-beta-2",
+        "@euclidesdry/electron-pretty-titlebar": "^0.0.2-beta-1",
         "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
         "@svgr/webpack": "^5.5.0",
         "@testing-library/jest-dom": "^5.16.1",
