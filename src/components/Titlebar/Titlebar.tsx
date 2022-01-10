@@ -14,6 +14,7 @@ export interface TitlebarProps {
 
 export default function Titlebar({
     title,
+    logo,
     onClose,
     onMinus,
     onMinimazeMaximaze
@@ -30,7 +31,7 @@ export default function Titlebar({
     return (
         <div className={CSS.epTitlebar}>
             <div className={CSS.epTitlebar__logo}>
-                <img className={CSS.logo__image} src={titlebarLogo} alt="Electron Pretty Titlebar Logo" />
+                <img className={CSS.logo__image} src={(!!logo) ? logo : titlebarLogo} alt="Electron Pretty Titlebar Logo" />
             </div>
             <div className={CSS.epTitlebar__menu}>
             </div>
