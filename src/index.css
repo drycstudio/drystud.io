@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .epTitlebar {
-    @apply fixed flex flex-wrap items-center content-between h-[48px] w-[100%] z-50 bg-default-dark text-white;
+    @apply fixed flex flex-wrap items-center content-between h-[38px] w-[100%] z-50 bg-default-dark text-white;
 }
 
 .epTitlebar__title {
@@ -11,9 +11,13 @@
 }
 
 .epTitlebar__actionButtons {
-    @apply h-[100%] flex items-center justify-end;
+    @apply h-[100%] flex flex-row;
 }
 
 .actionButtons__button {
-    @apply w-[58px] h-[100%] flex flex-row items-center content-center;
+    @apply w-[48px] h-[100%] flex items-center content-center text-center m-0;
+}
+
+.actionButtons__close {
+    @apply bg-default-salmon;
 }

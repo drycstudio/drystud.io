@@ -3,7 +3,7 @@
     "publishConfig": {
         "registry": "https://npm.pkg.github.com/euclidesdry"
     },
-    "version": "v0.0.2-beta-0",
+    "version": "v0.0.2-beta-1",
     "description": "The pretty Electron Titlebar with ReactJS",
     "repository": "https://www.github.com/euclidesdry/electron-pretty-titlebar",
     "author": "euclidesdry <euclidesdry@gmail.com>",
@@ -17,7 +17,7 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "ci": "npm install && npm run lint && npm run test && npm run build && npm run publish",
-        "publish": "npm run build && npm run publish",
+        "publish:package": "npm run build && npm run publish",
         "build": "npm run tailwind && npm run rollup",
         "tailwind": "npx tailwindcss -i ./src/index.css -o ./src/components/Titlebar/Titlebar.css",
         "tailwind:minify": "npx tailwindcss -i ./src/index.css -o ./src/components/Titlebar/Titlebar.css --minify",

@@ -30,9 +30,15 @@ export default function Titlebar({
                 <h6 className="title__text">{title}</h6>
             </div>
             <div className="epTitlebar__actionButtons">
-                <button className="actionButtons__button actionButtons__minus"onClick={handleMinus}><FiMinus /></button>
-                <button className="actionButtons__button actionButtons__minimazeMaximaze"onClick={handleMinimazeMaximaze}><FiSquare /></button>
-                <button className="actionButtons__button actionButtons__close"onClick={handleClose}><FiX /></button>
+                <button className="actionButtons__button actionButtons__minus" onClick={handleMinus}>
+                    <FiMinus className="flex-1" />
+                </button>
+                <button className="actionButtons__button actionButtons__minimazeMaximaze" onClick={handleMinimazeMaximaze}>
+                    <FiSquare className="flex-1" />
+                </button>
+                <button className="actionButtons__button actionButtons__close" onClick={handleClose}>
+                    <FiX className="flex-1" />
+                </button>
             </div>
         </div>
     );
