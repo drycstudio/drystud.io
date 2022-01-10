@@ -10,6 +10,10 @@
     @apply flex items-center content-center w-[38px] h-[100%];
 }
 
+.epTitlebar__logo .logo__image {
+    @apply flex-1 p-[6px] h-[38px] w-[38px];
+}
+
 .epTitlebar__menu {
     @apply w-[58px];
 }
@@ -29,7 +33,7 @@
 }
 
 .actionButtons__button .actionButtons__icon {
-    @apply transition-all duration-200;
+    @apply transition-all duration-200 flex-1 w-5 h-5;
 }
 
 .actionButtons__button:hover .actionButtons__icon {
@@ -39,6 +43,10 @@
 .actionButtons__button:active .actionButtons__icon {
     @apply scale-95;
 }
+
+.actionButtons__minus {}
+
+.actionButtons__minimazeMaximaze {}
 
 .actionButtons__close {
     @apply bg-default-dark-salmon;

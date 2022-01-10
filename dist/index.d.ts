@@ -1,6 +1,7 @@
 /// <reference types="react" />
 interface TitlebarProps {
     title: string | undefined | null;
+    logo?: string;
     onMinus?: () => void;
     onMinimazeMaximaze?: () => void;
     onClose?: () => void;

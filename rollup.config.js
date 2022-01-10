@@ -2,6 +2,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
+import autoprefixer from "autoprefixer";
 
 //NEW
 import { terser } from "rollup-plugin-terser";
@@ -13,10 +14,13 @@ const packageJson = require("./package.json");
 import postcss from "rollup-plugin-postcss";
 
 // SASS Config
-import scss from "rollup-plugin-scss";
+// import scss from "rollup-plugin-scss";
 
 // TailwindCSS Config
-import tailwind from "rollup-plugin-tailwind";
+import tailwindcss from "rollup-plugin-tailwindcss";
+
+// SVG Config
+import svgImport from "rollup-plugin-svg-import";
 
 export default [
     {
@@ -35,19 +39,35 @@ export default [
         ],
         plugins: [
             peerDepsExternal(),
-
+            // CSS Config
+            postcss({
+                minimize: false,
+                modules: true,
+                sourcemap: true,
+                plugins: [autoprefixer()],
+                use: {
+                    sass: null,
+                    stylus: null,
+                    less: { javascriptEnabled: true },
+                },
+                extract: true,
+                extract: "titlebar.css",
+            }),
+            // SASS Config
+            // scss(), // will output compiled styles to output.css
+            // TailwindCSS Config
+            tailwindcss({
+                input: "./src/index.scss", // required
+                // purge: false,
+            }),
             resolve(),
             commonjs(),
             typescript({ tsconfig: "./tsconfig.json" }),
-
-            // CSS Config
-            postcss(),
-            // SASS Config
-            scss(), // will output compiled styles to output.css
-            // TailwindCSS Config
-            tailwind(),
-
             terser(),
+            // process SVG to DOM Node or String. Default: false
+            svgImport({
+                stringify: false,
+            }),
         ],
     },
     {
