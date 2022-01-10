@@ -1080,10 +1080,13 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@euclidesdry/electron-pretty-titlebar@^0.0.1-beta-2":
-  version "0.0.1-beta-2"
-  resolved "https://npm.pkg.github.com/download/@euclidesdry/electron-pretty-titlebar/0.0.1-beta-2/e65bf1003ba2c5981da7d4ea16e3dfdf77298ebf1c40954f9e89c4c510d9995c#04de16f65de23807f1835470ca200e47ca528ab9"
-  integrity sha512-4ZNZemTD3ihrv+BRRY/tiG0tjtBIYyGjFM5UvBiRrTiUfiYdvbMrLBFESsKsy2RVcHYqRD5FC6g7zuBcKgj7YQ==
+"@euclidesdry/electron-pretty-titlebar@^0.0.2-beta-0":
+  version "0.0.2-beta-0"
+  resolved "https://npm.pkg.github.com/download/@euclidesdry/electron-pretty-titlebar/0.0.2-beta-0/1d27a523309e366f088b1c25c8c9b4316e5e04c641e5adc4d34a0857411d0248#e9fc9d5a40c102e14377a93b5361555a9993098d"
+  integrity sha512-Ooc4gLm87wE5qk2EOkX8v7b66PniGFW/4kyPr6GQoQ6EbRFdcT8uW7EKggW+0teyhWeDqfAB+3grQGMBpYsDqQ==
+  dependencies:
+    react "^17.0.2"
+    react-dom "^17.0.2"
 
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.2"

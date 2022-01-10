@@ -11,7 +11,7 @@
 }
 
 .epTitlebar__actionButtons {
-    @apply h-[100%] flex flex-wrap items-center justify-end;
+    @apply h-[100%] flex items-center justify-end;
 }
 
 .actionButtons__button {
