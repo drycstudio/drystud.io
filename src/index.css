@@ -10,7 +10,13 @@
     @apply flex items-center content-center w-[38px] h-[100%];
 }
 
+.epTitlebar__menu {
+    @apply w-[58px];
+}
+
 .epTitlebar__title {
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
     @apply grow text-center;
 }
 
@@ -19,9 +25,21 @@
 }
 
 .actionButtons__button {
-    @apply w-[48px] h-[100%] flex items-center content-center text-center m-0;
+    @apply w-[48px] h-[100%] flex items-center content-center text-center m-0 transition-all duration-200 overflow-hidden;
+}
+
+.actionButtons__button .actionButtons__icon {
+    @apply transition-all duration-200;
+}
+
+.actionButtons__button:hover .actionButtons__icon {
+    @apply duration-300 scale-125;
+}
+
+.actionButtons__button:active .actionButtons__icon {
+    @apply scale-95;
 }
 
 .actionButtons__close {
-    @apply bg-default-salmon;
+    @apply bg-default-dark-salmon;
 }
