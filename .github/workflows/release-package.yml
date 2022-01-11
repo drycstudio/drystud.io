@@ -12,6 +12,7 @@ jobs:
             - uses: actions/setup-node@v2
               with:
                   node-version: 16
+            - run: npm install
             - run: npm ci
             - run: npm test
 
@@ -41,6 +42,7 @@ jobs:
               with:
                   node-version: 16
                   registry-url: https://npm.pkg.github.com/
+            - run: npm install
             - run: npm ci
             - run: npm publish
               env:
