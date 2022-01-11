@@ -5,9 +5,9 @@ name: Titlebar Release
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16]
+        node-version: [14.x, 16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -26,7 +26,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: yarn
+    - name: yarn install
+    - run: yarn install
+    - name: Runing CI, Building The Project and Testing
     - run: yarn ci
-    - run: yarn run build --if-present
+    - run: yarn run build
     - run: yarn test
