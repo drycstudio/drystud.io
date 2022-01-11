@@ -6,6 +6,6 @@ interface TitlebarProps {
     onMinimazeMaximaze?: () => void;
     onClose?: () => void;
 }
-declare function Titlebar({ title, onClose, onMinus, onMinimazeMaximaze }: TitlebarProps): JSX.Element;
+declare function Titlebar({ title, logo, onClose, onMinus, onMinimazeMaximaze }: TitlebarProps): JSX.Element;
 
 export { Titlebar };

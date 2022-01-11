@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { FiMinus, FiSquare, FiX, FiMinimize, FiMaximize } from "react-icons/fi";
 
 import titlebarLogo from "../../assets/icon/logo/electron-pretty-titlebar-logo.svg";
@@ -22,11 +22,11 @@ export default function Titlebar({
 
     console.log(onClose, onMinus, ' => Log do Pepino!')
 
-    const handleMinus = () => (!!onMinus) ? onMinus : alert('Please Add Electron Minus Button Handler');
+    const handleMinus = () => (!!onMinus) ? onMinus() : alert('Please Add Electron Minus Button Handler');
 
-    const handleMinimazeMaximaze = () => (!!onMinimazeMaximaze) ? onMinimazeMaximaze : alert('Please Add Electron Minimaze/Maximaze Button Handler');
+    const handleMinimazeMaximaze = () => (!!onMinimazeMaximaze) ? onMinimazeMaximaze() : alert('Please Add Electron Minimaze/Maximaze Button Handler');
 
-    const handleClose = () => (!!onClose) ? onClose : alert('Please Add Electron Close Button Handler');
+    const handleClose = () => (!!onClose) ? onClose() : alert('Please Add Electron Close Button Handler');
 
     return (
         <div className={CSS.epTitlebar}>
@@ -36,7 +36,7 @@ export default function Titlebar({
             <div className={CSS.epTitlebar__menu}>
             </div>
             <div className={CSS.epTitlebar__title}>
-                <h6 className={CSS.title__text}>{title}</h6>
+                <h6 className={CSS.title__text} style={{ margin: 0 }}>{title}</h6>
             </div>
             <div className={CSS.epTitlebar__actionButtons}>
                 <button className={`${CSS.actionButtons__button} ${CSS.actionButtons__minus}`} onClick={handleMinus}>
