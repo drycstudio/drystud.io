@@ -4,7 +4,6 @@
 [![NPM Version (scoped)](https://img.shields.io/npm/v/@euclidesdry/electron-pretty-titlebar?style=for-the-badge&logo=appveyor)](https://www.npmjs.com/package/@euclidesdry/electron-pretty-titlebar)
 ![npm](https://img.shields.io/npm/dm/@euclidesdry/electron-pretty-titlebar?style=for-the-badge)
 [![GitHub license](https://img.shields.io/github/license/euclidesdry/electron-pretty-titlebar?style=for-the-badge)](https://github.com/euclidesdry/electron-pretty-titlebar/blob/main/LICENSE)
-[![install size](https://packagephobia.com/badge?p=@euclidesdry/electron-pretty-titlebar)](https://packagephobia.com/result?p=@euclidesdry/electron-pretty-titlebar)
 
 A pretty way to add Titlebar in a Electron app using ReactJS
 

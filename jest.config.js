@@ -9,7 +9,7 @@ module.exports = {
 	preset: 'ts-jest',
 	testEnvironment: 'jest-environment-jsdom',
 	setupFilesAfterEnv: ['./jest.setup.js'],
-	collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
+	collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.stories.{js,jsx,ts,tsx}'],
 	coverageDirectory: 'coverage',
 	transform: {
 		'^.+\\.(ts|tsx)?$': 'ts-jest',
