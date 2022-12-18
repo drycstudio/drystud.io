@@ -26,7 +26,7 @@
 		"ci": "yarn install && yarn lint && yarn test",
 		"build": "yarn rollup",
 		"build:with-storybook": "yarn rollup && yarn build-storybook",
-		"publish:package": "yarn build && yarn publish --access public",
+		"publish:package": "yarn build && npm publish --access public",
 		"tailwind": "npx tailwindcss -i ./src/index.scss -o ./src/components/Titlebar/titlebar.module.css",
 		"tailwind:minify": "npx tailwindcss -i ./src/index.scss -o ./src/components/Titlebar/titlebar.module.css --minify",
 		"tailwind:watch": "npx tailwindcss -i ./src/index.scss -o ./src/components/Titlebar/titlebar.module.css --watch",

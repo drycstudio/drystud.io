@@ -33,7 +33,7 @@ jobs:
                   NODE_AUTH_TOKEN: ${{secrets.AUTH_NPM_TOKEN}}
 
     publish-gpr:
-        needs: publish-npm
+        needs: build-ci
         runs-on: ubuntu-latest
         permissions:
             packages: write
