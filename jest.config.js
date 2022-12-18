@@ -5,9 +5,9 @@ const { pathsToModuleNameMapper } = require('ts-jest');
 const { compilerOptions } = require('./tsconfig');
 
 module.exports = {
-	roots: ['<rootDir>'],
+	roots: ['<rootDir>/src'],
 	preset: 'ts-jest',
-	testEnvironment: 'node',
+	testEnvironment: 'jest-environment-jsdom',
 	setupFilesAfterEnv: ['./jest.setup.js'],
 	collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
 	coverageDirectory: 'coverage',

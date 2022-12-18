@@ -1,6 +1,5 @@
 module.exports = {
 	presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
-	ignore: [/node_modules/, /templates/],
 	plugins: [
 		[
 			'module-resolver',
@@ -9,7 +8,7 @@ module.exports = {
 				// ! Warning: do not activate the following option "root" to avoid the error:
 				// ? - TypeError: Cannot read properties of null(reading 'useContext')
 				// root: '.',
-				extensions: ['.js', '.jsx', '.ts', '.tsx', '.mdx', '.android.js', 'android.tsx', '.ios.js', '.ios.tsx'],
+				extensions: ['.js', '.jsx', '.ts', '.tsx', '.mdx'],
 				alias: {
 					'@assets': './src/assets',
 					'@config': './src/config',

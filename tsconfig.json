@@ -4,7 +4,7 @@
 	"display": "Node 16",
 	"extends": "@tsconfig/node16/tsconfig.json",
 	"compilerOptions": {
-		"types": ["jest"],
+		"types": ["@types/node", "jest", "@types/jest"],
 		"target": "esnext",
 		"forceConsistentCasingInFileNames": true,
 		"allowJs": true,
