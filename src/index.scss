@@ -3,55 +3,57 @@
 @tailwind utilities;
 
 .epTitlebar {
-    @apply fixed flex flex-wrap items-center content-between h-[38px] w-[100%] z-50 bg-default-dark text-white;
+	@apply fixed flex flex-wrap items-center content-between h-[38px] w-[100%] z-50 bg-default-dark text-white;
 }
 
 .epTitlebar__logo {
-    @apply flex items-center content-center w-[38px] h-[100%];
+	@apply flex items-center content-center w-[38px] h-[100%];
 }
 
 .epTitlebar__logo .logo__image {
-    @apply flex-1 p-[6px] h-[38px] w-[38px];
+	@apply flex-1 p-[6px] h-[38px] w-[38px];
 }
 
 .epTitlebar__menu {
-    @apply w-[58px];
+	@apply w-[58px];
 }
 
 .epTitlebar__title {
-    -webkit-user-select: none;
-    -webkit-app-region: drag;
-    @apply grow text-center;
+	-webkit-user-select: none;
+	-webkit-app-region: drag;
+	@apply grow text-center;
 }
 
 .title__text {
-    @apply m-0 p-0;
+	@apply m-0 p-0;
 }
 
 .epTitlebar__actionButtons {
-    @apply h-[100%] flex flex-row;
+	@apply h-[100%] flex flex-row;
 }
 
 .actionButtons__button {
-    @apply w-[48px] h-[100%] flex items-center content-center text-center m-0 transition-all duration-200 overflow-hidden;
+	@apply w-[48px] h-[100%] flex items-center content-center text-center m-0 transition-all duration-200 overflow-hidden;
 }
 
 .actionButtons__icon {
-    @apply transition-all duration-200 flex-1 w-5 h-5;
+	@apply transition-all duration-200 flex-1 w-5 h-5;
 }
 
 .actionButtons__button:hover .actionButtons__icon {
-    @apply duration-300 scale-125;
+	@apply duration-300 scale-125;
 }
 
 .actionButtons__button:active .actionButtons__icon {
-    @apply scale-95;
+	@apply scale-95;
 }
 
-.actionButtons__minus {}
+.actionButtons__minus {
+}
 
-.actionButtons__minimazeMaximaze {}
+.actionButtons__minimizeMaximaze {
+}
 
 .actionButtons__close {
-    @apply bg-default-dark-salmon;
+	@apply bg-default-dark-salmon;
 }
