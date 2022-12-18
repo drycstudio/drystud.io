@@ -38,5 +38,16 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"resolveJsonModule": true
-	}
+	},
+	"exclude": [
+		"node_modules",
+		"dist",
+		"lib",
+		"esm",
+		"tests",
+		"stories",
+		"jest.config.ts",
+		"jest.setup.ts",
+		"jest.config.*.ts"
+	]
 }
