@@ -1,0 +1,29 @@
+{
+	"arrowParens": "avoid",
+	"tabWidth": 2,
+	"printWidth": 120,
+	"bracketSameLine": true,
+	"bracketSpacing": true,
+	"singleQuote": true,
+	"jsxSingleQuote": true,
+	"trailingComma": "es5",
+	"semi": true,
+	"importOrder": [
+		"^react(.*)",
+		"<THIRD_PARTY_MODULES>",
+		"@/(.*)",
+		"@config/(.*)",
+		"@constants/(.*)",
+		"@helpers/(.*)",
+		"@utils/(.*)",
+		"@project-types/(.*)",
+		"@hooks/(.*)",
+		"@components/(.*)",
+		"@contexts/(.*)",
+		"@theme/(.*)",
+		"@assets/(.*)",
+		"^[./]"
+	],
+	"importOrderSeparation": true,
+	"importOrderSortSpecifiers": true
+}
