@@ -23,10 +23,10 @@
 	],
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"ci": "npm install && npm run lint && npm run test && npm run build",
-		"build": "npm run rollup",
-		"build:with-storybook": "npm run rollup && npm run build-storybook",
-		"publish:package": "npm run build && npm run publish --access public",
+		"ci": "yarn install && yarn lint && yarn test",
+		"build": "yarn rollup",
+		"build:with-storybook": "yarn rollup && yarn build-storybook",
+		"publish:package": "yarn build && yarn publish --access public",
 		"tailwind": "npx tailwindcss -i ./src/index.scss -o ./src/components/Titlebar/titlebar.module.css",
 		"tailwind:minify": "npx tailwindcss -i ./src/index.scss -o ./src/components/Titlebar/titlebar.module.css --minify",
 		"tailwind:watch": "npx tailwindcss -i ./src/index.scss -o ./src/components/Titlebar/titlebar.module.css --watch",
@@ -40,12 +40,12 @@
 		"lint:fix": "eslint --fix src/**/*.{js,jsx,ts,tsx,json}",
 		"lint:format": "prettier --write src/**/*.{js,jsx,ts,tsx,css,md,json} --config ./.prettierrc",
 		"storybook": "start-storybook -p 6086",
-		"build-storybook": "npm run tailwind:minify && build-storybook",
+		"build-storybook": "yarn tailwind:minify && yarn build-storybook",
 		"prepare": "husky install"
 	},
 	"lint-staged": {
-		"*.{js,jsx,ts,tsx}": "npm run lint",
-		"*.{js,jsx,ts,tsx,css,md,html,json}": "npm run lint:format"
+		"*.{js,jsx,ts,tsx}": "yarn lint",
+		"*.{js,jsx,ts,tsx,css,md,html,json}": "yarn lint:format"
 	},
 	"dependencies": {
 		"antd": "^5.0.7",
