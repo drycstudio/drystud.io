@@ -2,6 +2,6 @@
 	"editor.codeActionsOnSave": { "source.fixAll.eslint": true },
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
-	"conventionalCommits.scopes": ["new version", "lint", "ci", "test"],
+	"conventionalCommits.scopes": ["new version", "lint", "ci", "test", "component"],
 	"cSpell.words": ["npmrc"]
 }
