@@ -12,39 +12,37 @@ jobs:
             - uses: actions/setup-node@v2
               with:
                   node-version: 16
-            - run: npm run ci
+            - run: yarn ci
 
     publish-npm:
         needs: build
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-node@v2
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
               with:
                   node-version: 16
                   registry-url: "https://registry.npmjs.org"
                   scope: "@euclidesdry"
             - run: yarn ci
-            - run: yarn build
             - run: yarn publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.AUTH_NPM_TOKEN}}
 
     publish-gpr:
-        needs: build
+        needs: publish-npm
         runs-on: ubuntu-latest
         permissions:
             packages: write
             contents: read
         steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-node@v2
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
               with:
                   node-version: 16
                   registry-url: https://npm.pkg.github.com/
-            - run: npm install
-            - run: npm run ci
-            - run: npm run build
-            - run: npm publish
+            - run: yarn install
+            - run: yarn ci
+            - run: yarn publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.AUTH_GITHUB_TOKEN}}
