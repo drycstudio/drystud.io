@@ -16,7 +16,7 @@
     ],
     "types": "dist/index.d.ts",
     "scripts": {
-        "ci": "npm install && npm run lint && npm run test",
+        "ci": "npm install && npm run lint && npm run test && npm run build",
         "publish:package": "npm run build && npm run publish --access public",
         "build": "npm run rollup && npm run build-storybook",
         "tailwind": "npx tailwindcss -i ./src/index.scss -o ./src/components/Titlebar/titlebar.module.css",
