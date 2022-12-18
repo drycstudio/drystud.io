@@ -12,9 +12,7 @@ jobs:
             - uses: actions/setup-node@v2
               with:
                   node-version: 16
-            - run: npm install
             - run: npm run ci
-            - run: npm run test
 
     publish-npm:
         needs: build
@@ -26,7 +24,7 @@ jobs:
                   node-version: 16
                   registry-url: "https://registry.npmjs.org"
                   scope: "@euclidesdry"
-            - run: yarn install
+            - run: yarn ci
             - run: yarn build
             - run: yarn publish
               env:
