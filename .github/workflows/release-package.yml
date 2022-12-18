@@ -12,7 +12,7 @@ jobs:
             - uses: actions/setup-node@v2
               with:
                   node-version: 16
-            - run: npm run ci
+            - run: yarn ci
 
     publish-npm:
         needs: build
@@ -41,8 +41,8 @@ jobs:
               with:
                   node-version: 16
                   registry-url: https://npm.pkg.github.com/
-            - run: npm install
-            - run: npm run ci
-            - run: npm publish
+            - run: yarn install
+            - run: yarn ci
+            - run: yarn publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.AUTH_GITHUB_TOKEN}}
