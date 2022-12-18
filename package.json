@@ -1,7 +1,7 @@
 {
 	"name": "@euclidesdry/electron-pretty-titlebar",
 	"license": "MIT",
-	"version": "0.0.4-beta-3",
+	"version": "0.0.4-beta-6",
 	"description": "A pretty way to add Titlebar in a Electron app using ReactJS",
 	"keywords": [
 		"awesome",
@@ -24,7 +24,8 @@
 	"types": "dist/index.d.ts",
 	"scripts": {
 		"ci": "npm install && npm run lint && npm run test && npm run build",
-		"build": "npm run rollup && npm run build-storybook",
+		"build": "npm run rollup",
+		"build:with-storybook": "npm run rollup && npm run build-storybook",
 		"publish:package": "npm run build && npm run publish --access public",
 		"tailwind": "npx tailwindcss -i ./src/index.scss -o ./src/components/Titlebar/titlebar.module.css",
 		"tailwind:minify": "npx tailwindcss -i ./src/index.scss -o ./src/components/Titlebar/titlebar.module.css --minify",
