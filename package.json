@@ -1,7 +1,7 @@
 {
 	"name": "@euclidesdry/electron-pretty-titlebar",
 	"license": "MIT",
-	"version": "0.0.4-beta-7",
+	"version": "0.0.4-beta-8",
 	"description": "A pretty way to add Titlebar in a Electron app using ReactJS",
 	"keywords": [
 		"awesome",
