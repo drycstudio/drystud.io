@@ -24,8 +24,8 @@
 	"types": "dist/index.d.ts",
 	"scripts": {
 		"ci": "npm install && npm run lint && npm run test && npm run build",
-		"publish:package": "npm run build && npm run publish --access public",
 		"build": "npm run rollup && npm run build-storybook",
+		"publish:package": "npm run build && npm run publish --access public",
 		"tailwind": "npx tailwindcss -i ./src/index.scss -o ./src/components/Titlebar/titlebar.module.css",
 		"tailwind:minify": "npx tailwindcss -i ./src/index.scss -o ./src/components/Titlebar/titlebar.module.css --minify",
 		"tailwind:watch": "npx tailwindcss -i ./src/index.scss -o ./src/components/Titlebar/titlebar.module.css --watch",
@@ -43,7 +43,7 @@
 		"prepare": "husky install"
 	},
 	"lint-staged": {
-		"*.{js,jsx,ts,tsx,json}": "npm run lint",
+		"*.{js,jsx,ts,tsx}": "npm run lint",
 		"*.{js,jsx,ts,tsx,css,md,html,json}": "npm run lint:format"
 	},
 	"dependencies": {
