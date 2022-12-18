@@ -9,7 +9,6 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - name: Running CI
             - uses: actions/setup-node@v2
               with:
                   node-version: 16
@@ -21,7 +20,6 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - name: Publishing package on NPM
             - uses: actions/setup-node@v3
               with:
                   node-version: 16
@@ -42,7 +40,6 @@ jobs:
             contents: read
         steps:
             - uses: actions/checkout@v3
-            - name: Publishing package on GitHub
             - uses: actions/setup-node@v3
               with:
                   node-version: 16
