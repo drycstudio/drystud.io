@@ -1,1 +1,2 @@
-export { default as Titlebar } from "./Titlebar";
+import { Titlebar } from './Titlebar';
+export default Titlebar;

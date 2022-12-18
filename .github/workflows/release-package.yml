@@ -25,7 +25,6 @@ jobs:
                   registry-url: "https://registry.npmjs.org"
                   scope: "@euclidesdry"
             - run: yarn ci
-            - run: yarn build
             - run: yarn publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.AUTH_NPM_TOKEN}}
@@ -44,7 +43,6 @@ jobs:
                   registry-url: https://npm.pkg.github.com/
             - run: npm install
             - run: npm run ci
-            - run: npm run build
             - run: npm publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.AUTH_GITHUB_TOKEN}}
