@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 
 import { ActionButton } from './ActionButton';
 
@@ -21,6 +21,8 @@ describe('ActionButton', () => {
 			expect(ExpectedActionButtonComponent).toBeTruthy();
 		});
 
-		fireEvent.click(ExpectedActionButtonComponent);
+		await act(() => {
+			fireEvent.click(ExpectedActionButtonComponent);
+		});
 	});
 });

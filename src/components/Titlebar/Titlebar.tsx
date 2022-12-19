@@ -8,6 +8,12 @@ import CSS from '../../assets/css/titlebar.module.css';
 
 const ALERT_DURATION = 5; // 5 seconds
 
+message.config({
+	top: 200,
+	duration: ALERT_DURATION,
+	maxCount: 3,
+});
+
 export interface TitlebarProps {
 	title?: string | null;
 	logo?: string;
@@ -22,22 +28,22 @@ export default function Titlebar({ title, logo, onClose, onMinus, onMinimizeMaxi
 	const LOGO = logo || titlebarLogo;
 
 	async function handleMinus() {
-		onMinus ? onMinus() : await messageApi.error('Please Add Electron Minus Button Handler', ALERT_DURATION);
+		onMinus ? onMinus() : await messageApi.error('Please Add Electron Minus Button Handler');
 	}
 
 	async function handleMinimazeMaximaze() {
 		onMinimizeMaximaze
 			? onMinimizeMaximaze()
-			: await messageApi.error('Please Add Electron Minimaze/Maximaze Button Handler', ALERT_DURATION);
+			: await messageApi.error('Please Add Electron Minimaze/Maximaze Button Handler');
 	}
 
 	async function handleClose() {
-		onClose ? onClose() : await messageApi.error('Please Add Electron Close Button Handler', ALERT_DURATION);
+		onClose ? onClose() : await messageApi.error('Please Add Electron Close Button Handler');
 	}
 
 	return (
 		<div className={CSS.epTitlebar}>
-			<ConfigProvider>
+			<ConfigProvider direction='ltr'>
 				{contextHolder}
 				<div className={CSS.epTitlebar__logo}>
 					<img className={CSS.logo__image} src={LOGO as unknown as string} alt='Electron Pretty Titlebar Logo' />
