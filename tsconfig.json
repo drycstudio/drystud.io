@@ -48,8 +48,6 @@
 		"esm",
 		"tests",
 		"stories",
-		"rollup.config.mjs",
-		"postcss.config.js",
 		"babel.config.js",
 		"jest.config.ts",
 		"jest.setup.ts",
