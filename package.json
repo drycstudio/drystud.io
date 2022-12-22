@@ -18,7 +18,7 @@
 	"private": false,
 	"main": "./dist/cjs/index.js",
 	"module": "./dist/esm/index.js",
-	"types": "./dist/esm/index.js",
+	"types": "./dist/index.js",
 	"files": [
 		"dist",
 		"LICENSE",
