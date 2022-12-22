@@ -13,6 +13,7 @@
 		"module": "ESNext",
 		"declaration": true,
 		"declarationDir": "types",
+		"declarationMap": true,
 		"sourceMap": true,
 		"outDir": "dist",
 		"moduleResolution": "node",
@@ -41,11 +42,15 @@
 	},
 	"exclude": [
 		"node_modules",
+		"package.json",
 		"dist",
 		"lib",
 		"esm",
 		"tests",
 		"stories",
+		"rollup.config.mjs",
+		"postcss.config.js",
+		"babel.config.js",
 		"jest.config.ts",
 		"jest.setup.ts",
 		"jest.config.*.ts"

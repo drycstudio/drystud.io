@@ -25,15 +25,62 @@ App to your App.(tsx/jsx) file:
 
 ```jsx
 import React from 'react';
+import electronEnabled from 'is-electron';
+
+import { Titlebar } from '@euclidesdry/electron-pretty-titlebar';
+// TitleBar Styles
+import '@euclidesdry/electron-pretty-titlebar/dist/cjs/titlebar.css';
+
+const requiredModule = electronEnabled() ? 'electron' : 'is-electron';
+const { ipcRenderer } = window.require ? window.require(requiredModule) : false;
+
+const ipc = ipcRenderer;
 
 export default function App() {
+	const handleVerifyIfWindowIsMaximized = async (size: number[] = []) => {
+        if (ipcRenderer) {
+            const response_ = await ipcRenderer.invoke('windowsIsMaximized');
+            setAppIsMaximized(!!response_);
+            return await response_;
+        }
+    };
+
+    useLayoutEffect(() => {
+        if (ipcRenderer) {
+            const updateSize = async () => {
+                setSize([window.innerWidth, window.innerHeight]);
+
+                const body = document.querySelector('body') as HTMLBodyElement;
+                body.style.width = window.innerWidth.toString();
+                handleVerifyIfWindowIsMaximized(size);
+            };
+            window.addEventListener('resize', updateSize);
+            updateSize();
+            return () => window.removeEventListener('resize', updateSize);
+        }
+    }, []);
+
+	const handleMinimizeApp = () => {
+		if (ipc) ipc.send('minimizeApp');
+	};
+
+	const handleMaximizeRestoreApp = async () => {
+		if (ipc) ipc.send('maximizeRestoreApp');
+
+		handleVerifyIfWindowIsMaximized();
+	};
+
+	const handleCloseApp = () => {
+		if (ipc) ipc.send('closeApp');
+	};
+
 	return (
 		<Titlebar
 			title='Hello World'
 			logo={logoPathOrURL}
-			onClose={handleClose}
-			onMinus={handleMinimize}
-			onMinimazeMaximaze={handleToggleWindowsExpansion}
+			onClose={handleCloseApp}
+			onMinus={handleMinimizeApp}
+			onMinimazeMaximaze={handleMaximizeRestoreApp}
 		/>
 	);
 }
