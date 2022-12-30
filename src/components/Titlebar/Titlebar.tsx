@@ -5,6 +5,8 @@ import { ConfigProvider, message } from 'antd';
 import { ActionButton } from '../ActionButton';
 import titlebarLogo from '../../assets/icon/logo/electron-pretty-titlebar-logo.svg';
 import CSS from '../../assets/css/titlebar.module.css';
+import { globalStyles } from '../../styles/global';
+import { actionButtonIconStyle } from '../ActionButton/styles';
 
 const ALERT_DURATION = 5; // 5 seconds
 
@@ -23,7 +25,11 @@ export interface TitlebarProps {
 }
 
 export default function Titlebar({ title, logo, onClose, onMinus, onMinimizeMaximaze }: TitlebarProps) {
-	const [messageApi, contextHolder] = message.useMessage();
+	globalStyles();
+
+	const [messageApi, contextHolder] = message.useMessage({
+		top: 40,
+	});
 
 	const LOGO = logo || titlebarLogo;
 
@@ -59,19 +65,19 @@ export default function Titlebar({ title, logo, onClose, onMinus, onMinimizeMaxi
 						onClick={() => {
 							handleMinus();
 						}}>
-						<FiMinus className={CSS.actionButtons__icon} />
+						<FiMinus className={actionButtonIconStyle()} />
 					</ActionButton>
 					<ActionButton
 						onClick={() => {
 							handleMinimazeMaximaze();
 						}}>
-						<FiSquare className={CSS.actionButtons__icon} />
+						<FiSquare className={actionButtonIconStyle()} />
 					</ActionButton>
 					<ActionButton
 						onClick={() => {
 							handleClose();
 						}}>
-						<FiX className={CSS.actionButtons__icon} />
+						<FiX className={actionButtonIconStyle()} />
 					</ActionButton>
 				</div>
 			</ConfigProvider>

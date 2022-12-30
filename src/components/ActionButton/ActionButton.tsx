@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CSS from '../../assets/css/titlebar.module.css';
+import { Button } from './styles';
 
 type ActionButtonProps = {
 	children: React.ReactNode;
@@ -8,9 +8,5 @@ type ActionButtonProps = {
 };
 
 export function ActionButton({ children, onClick }: ActionButtonProps) {
-	return (
-		<button type='button' className={`${CSS.actionButtons__button} ${CSS.actionButtons__minus}`} onClick={onClick}>
-			{children}
-		</button>
-	);
+	return <Button onClick={onClick}>{children}</Button>;
 }
