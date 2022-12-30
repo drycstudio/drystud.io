@@ -7,6 +7,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import CSS from '../../assets/css/titlebar.module.css';
 
 import { ActionButton } from './ActionButton';
+import { actionButtonIconStyle } from './styles';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -24,15 +25,16 @@ const Template: ComponentStory<typeof ActionButton> = args => <ActionButton {...
 export const Minimize = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Minimize.args = {
-	children: <FiMinus className={CSS.actionButtons__icon} />,
+	children: <FiMinus className={actionButtonIconStyle()} />,
 };
 
 export const MinimizeMaximaze = Template.bind({});
 MinimizeMaximaze.args = {
-	children: <FiSquare className={CSS.actionButtons__icon} />,
+	children: <FiSquare className={actionButtonIconStyle()} />,
 };
 
 export const Close = Template.bind({});
 Close.args = {
-	children: <FiX className={CSS.actionButtons__icon} />,
+	children: <FiX className={actionButtonIconStyle()} />,
+	type: 'close',
 };

@@ -8,6 +8,12 @@ export const actionButtonIconStyle = css({
 	padding: '8px',
 });
 
+export const ButtonContainer = styled('div', {
+	display: 'flex',
+	flexDirection: 'row',
+	height: '100%',
+});
+
 export const Button = styled('button', {
 	alignContent: 'center',
 	alignItems: 'center',
@@ -17,6 +23,26 @@ export const Button = styled('button', {
 	overflow: 'hidden',
 	textAlign: 'center',
 	width: '48px',
+	transition: 'all 0.3s ease',
+
+	variants: {
+		type: {
+			default: {
+				'&:hover': {
+					backgroundColor: 'rgb(95 95 163)',
+				},
+			},
+			close: {
+				'&:hover': {
+					backgroundColor: '#cd0000',
+				},
+			},
+		},
+	},
+
+	defaultVariants: {
+		type: 'default',
+	},
 
 	[`& .${actionButtonIconStyle}`]: {
 		transitionDuration: '0.2s',

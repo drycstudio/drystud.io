@@ -20,6 +20,13 @@ Default.args = {
 	title: 'Hello world!',
 };
 
+export const Small = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+Small.args = {
+	title: 'Hello world!',
+	size: 'small',
+};
+
 export const WithActions = Template.bind({});
 WithActions.args = {
 	title: 'Testing Component Titlebar',
