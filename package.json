@@ -1,9 +1,10 @@
 {
 	"name": "@euclidesdry/electron-pretty-titlebar",
 	"license": "MIT",
-	"version": "0.0.4-beta.16",
+	"version": "0.1.1",
 	"description": "A pretty way to add Titlebar in a Electron app using ReactJS",
 	"keywords": [
+		"pretty",
 		"awesome",
 		"pretty",
 		"electron",
@@ -18,7 +19,7 @@
 	"private": false,
 	"main": "./dist/cjs/index.js",
 	"module": "./dist/esm/index.js",
-	"types": "./dist/esm/index.js",
+	"types": "./dist/index.js",
 	"files": [
 		"dist",
 		"LICENSE",
@@ -29,9 +30,6 @@
 		"build": "yarn rollup",
 		"build:with-storybook": "yarn rollup && yarn build-storybook",
 		"publish:package": "yarn build && npm publish --access public",
-		"tailwind": "npx tailwindcss -i ./src/index.scss -o ./src/assets/css/titlebar.module.css",
-		"tailwind:minify": "npx tailwindcss -i ./src/index.scss -o ./src/assets/css/titlebar.module.css --minify",
-		"tailwind:watch": "npx tailwindcss -i ./src/index.scss -o ./src/assets/css/titlebar.module.css --watch",
 		"rollup": "rollup -c",
 		"test": "jest --runInBand --logHeapUsage",
 		"test:silent": "jest --silent",
@@ -42,7 +40,7 @@
 		"lint:fix": "eslint --fix src/**/*.{js,jsx,ts,tsx,json}",
 		"lint:format": "prettier --write src/**/*.{js,jsx,ts,tsx,css,md,json} --config ./.prettierrc",
 		"storybook": "start-storybook -p 6086",
-		"build-storybook": "yarn tailwind:minify && yarn build-storybook",
+		"build-storybook": "yarn build-storybook",
 		"prepare": "husky install"
 	},
 	"lint-staged": {
@@ -50,7 +48,10 @@
 		"*.{js,jsx,ts,tsx,css,md,html,json}": "yarn lint:format"
 	},
 	"dependencies": {
+		"@stitches/core": "^1.2.8",
+		"@stitches/react": "^1.2.8",
 		"antd": "^5.0.7",
+		"is-electron": "^2.2.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"
 	},
@@ -86,7 +87,6 @@
 		"babel-jest": "^29.3.1",
 		"babel-loader": "^8.2.3",
 		"babel-plugin-module-resolver": "^4.1.0",
-		"babel-plugin-tailwind": "^0.1.10",
 		"css-loader": "^6.5.1",
 		"eslint": "^8.30.0",
 		"eslint-config-airbnb": "^19.0.4",
@@ -116,13 +116,10 @@
 		"rollup-plugin-postcss": "^4.0.2",
 		"rollup-plugin-scss": "^3.0.0",
 		"rollup-plugin-svg-import": "^1.6.0",
-		"rollup-plugin-tailwind": "^1.0.0",
-		"rollup-plugin-tailwindcss": "^1.0.0",
 		"rollup-plugin-terser": "^7.0.2",
 		"sass": "^1.45.2",
 		"sass-loader": "^12.4.0",
 		"style-loader": "^3.3.1",
-		"tailwindcss": "^3.0.12",
 		"ts-jest": "^29.0.3",
 		"tslib": "^2.3.1",
 		"typescript": "^4.9.4",

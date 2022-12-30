@@ -16,7 +16,6 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import packageJson from './package.json' assert { type: 'json' };
 
 import postcss from 'rollup-plugin-postcss';
-import tailwindcss from 'rollup-plugin-tailwindcss';
 import image from '@rollup/plugin-image';
 import svgImport from 'rollup-plugin-svg-import';
 
@@ -50,11 +49,6 @@ export default defineConfig([
 				},
 				extract: true,
 				extract: 'titlebar.css',
-			}),
-			// TailwindCSS Config
-			tailwindcss({
-				input: './src/index.scss', // required
-				purge: false,
 			}),
 			nodeResolve(),
 			commonjs(),

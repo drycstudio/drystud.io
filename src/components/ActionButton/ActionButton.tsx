@@ -1,16 +1,17 @@
 import React from 'react';
 
-import CSS from '../../assets/css/titlebar.module.css';
+import { Button } from './styles';
 
 type ActionButtonProps = {
 	children: React.ReactNode;
+	type?: 'default' | 'close';
 	onClick: () => void;
 };
 
-export function ActionButton({ children, onClick }: ActionButtonProps) {
+export function ActionButton({ children, type, onClick }: ActionButtonProps) {
 	return (
-		<button type='button' className={`${CSS.actionButtons__button} ${CSS.actionButtons__minus}`} onClick={onClick}>
+		<Button onClick={onClick} type={type}>
 			{children}
-		</button>
+		</Button>
 	);
 }

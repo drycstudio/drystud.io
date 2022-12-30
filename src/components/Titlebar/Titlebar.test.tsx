@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 
 import Titlebar from './Titlebar';
 
@@ -21,9 +21,14 @@ describe('Titlebar', () => {
 		});
 	});
 
-	// test('should click on options', () => {
-	// 	const { getByText } = render(<Titlebar title={MOCK_TEST_TITLE} />);
+	// test('should be action buttons clickable', async () => {
+	// 	const { getAllByRole } = render(
+	// 		<Titlebar title={MOCK_TEST_TITLE} onMinus={jest.fn()} onMinimizeMaximaze={jest.fn()} onClose={jest.fn()} />
+	// 	);
+	// 	const expectedActionButtons = getAllByRole('button');
 
-	// 	expect(getByText(MOCK_TEST_TITLE)).toBeTruthy();
+	// 	await act(() => {
+	// 		expectedActionButtons[0];
+	// 	})
 	// });
 });
