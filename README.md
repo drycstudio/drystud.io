@@ -27,7 +27,7 @@ App to your App.(tsx/jsx) file:
 import React from 'react';
 import electronEnabled from 'is-electron';
 
-import Titlebar from '@euclidesdry/electron-pretty-titlebar';
+import { Titlebar } from '@euclidesdry/electron-pretty-titlebar';
 // TitleBar Styles
 import '@euclidesdry/electron-pretty-titlebar/dist/cjs/titlebar.css';
 
