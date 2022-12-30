@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FiMinus, FiSquare, FiX, FiMinimize, FiMaximize } from 'react-icons/fi';
 
 import message from 'antd/lib/message';
 import isElectronProject from 'is-electron';
 import { ActionButton } from '../ActionButton';
 import titlebarLogo from '../../assets/icon/logo/electron-pretty-titlebar-logo.svg';
-import CSS from '../../assets/css/titlebar.module.css';
 import { globalStyles } from '../../styles/global';
 import { ButtonContainer, actionButtonIconStyle } from '../ActionButton/styles';
 import { Logo, LogoImage, Menu, Text, Title, TitlebarContainer } from './styles';
@@ -22,7 +21,7 @@ export interface TitlebarProps {
 }
 
 export default function Titlebar({
-	title,
+	title = 'Pretty Titlebar',
 	logo,
 	size = 'default',
 	onClose,
@@ -51,7 +50,7 @@ export default function Titlebar({
 		onClose ? onClose() : await messageApi.error('Please Add Electron Close Button Handler');
 	}
 
-	useEffect(() => {
+	React.useEffect(() => {
 		if (!isElectron) {
 			console.warn(
 				'Please Add Electron Button Handler functions manually because this is not an ElectronJS Application!'

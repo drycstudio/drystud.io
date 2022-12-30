@@ -1,10 +1,6 @@
-import React from 'react';
-
 import { FiMinus, FiSquare, FiX } from 'react-icons/fi';
 
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-
-import CSS from '../../assets/css/titlebar.module.css';
 
 import { ActionButton } from './ActionButton';
 import { actionButtonIconStyle } from './styles';
