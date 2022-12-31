@@ -7,7 +7,7 @@ import { globalStyles } from '../../styles/global';
 import { ButtonContainer, actionButtonIconStyle } from '../ActionButton/styles';
 import { Logo, LogoImage, Menu, Text, Title, TitlebarContainer } from './styles';
 
-const ipcRenderer = ('ipcRenderer' in window ? window.ipcRenderer : null) as Electron.IpcRenderer;
+const ipcRenderer = (window && 'ipcRenderer' in window ? window.ipcRenderer : null) as Electron.IpcRenderer;
 const isElectron = isElectronProject();
 
 export interface TitlebarProps {
@@ -101,7 +101,7 @@ export default function Titlebar({
 						handleMinimazeMaximaze();
 					}}>
 					{isWindowMaximized ? (
-						<FiCopy className={actionButtonIconStyle()} />
+						<FiCopy className={actionButtonIconStyle()} style={{ transform: 'scaleX(-1)' }} />
 					) : (
 						<FiSquare className={actionButtonIconStyle()} />
 					)}
