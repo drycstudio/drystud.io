@@ -7,7 +7,9 @@ import { globalStyles } from '../../styles/global';
 import { ButtonContainer, actionButtonIconStyle } from '../ActionButton/styles';
 import { Logo, LogoImage, Menu, Text, Title, TitlebarContainer } from './styles';
 
-const ipcRenderer = (window && 'ipcRenderer' in window ? window.ipcRenderer : null) as Electron.IpcRenderer;
+const ipcRenderer = (
+	typeof window !== 'undefined' && window && 'ipcRenderer' in window ? window.ipcRenderer : null
+) as Electron.IpcRenderer;
 const isElectron = isElectronProject();
 
 export interface TitlebarProps {
