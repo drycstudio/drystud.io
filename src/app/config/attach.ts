@@ -2,12 +2,10 @@ import { BrowserWindow, IpcMain } from 'electron';
 
 export default function attachToWindow(ipcMain: IpcMain, mainWindow: BrowserWindow) {
 	ipcMain.on('minimizeWindow', () => {
-		console.log('!Titlebar Trigger!: on(minimizeWindow)');
 		mainWindow?.minimize();
 	});
 
 	ipcMain.on('maximizeRestoreWindow', () => {
-		console.log('!Titlebar Trigger!: on(maximizeRestoreWindow)');
 		if (mainWindow?.isMaximized()) {
 			mainWindow?.restore();
 		} else {
@@ -20,7 +18,6 @@ export default function attachToWindow(ipcMain: IpcMain, mainWindow: BrowserWind
 	});
 
 	ipcMain.handle('windowsIsMaximized', () => {
-		console.log('!Titlebar Trigger!: on(maximizeRestoreWindow)');
 		const response = mainWindow?.isMaximized();
 		mainWindow?.webContents.send('isMaximized', response);
 		return response;
