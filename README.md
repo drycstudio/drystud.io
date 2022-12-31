@@ -27,7 +27,7 @@ App to your App.(tsx/jsx) file:
 import React from 'react';
 import electronEnabled from 'is-electron';
 
-import Titlebar from '@euclidesdry/electron-pretty-titlebar';
+import { Titlebar } from '@euclidesdry/electron-pretty-titlebar';
 
 const requiredModule = electronEnabled() ? 'electron' : 'is-electron';
 const { ipcRenderer } = window.require ? window.require(requiredModule) : false;

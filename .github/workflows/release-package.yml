@@ -2,7 +2,11 @@ name: Release Electron Titlebar Package
 
 on:
     release:
-        types: [created]
+        types:
+            - created
+    # push:
+    #     tags:
+    #         - "*"
 
 jobs:
     build-ci:
