@@ -71,14 +71,17 @@ export default function Titlebar({
 
 	const handleMinus = React.useCallback(() => {
 		onMinus ? onMinus() : handleMinimizeApp();
+		console.log('onMinus:TitlebarEvent::');
 	}, [onMinus]);
 
 	const handleMinimazeMaximaze = React.useCallback(async () => {
 		onMinimizeMaximaze ? onMinimizeMaximaze() : await handleMaximizeRestoreApp();
+		console.log('onMinimizeMaximaze:TitlebarEvent::');
 	}, [handleMaximizeRestoreApp, onMinimizeMaximaze]);
 
 	const handleClose = React.useCallback(() => {
 		onClose ? onClose() : handleCloseApp();
+		console.log('onClose:TitlebarEvent::');
 	}, [onClose]);
 
 	const titlebarComponents = React.useMemo(
@@ -115,7 +118,7 @@ export default function Titlebar({
 				</ActionButton>
 			</ButtonContainer>,
 		],
-		[handleClose, handleMinimazeMaximaze, handleMinus, title]
+		[handleClose, handleMinimazeMaximaze, handleMinus, isWindowMaximized, title]
 	);
 
 	React.useEffect(() => {
