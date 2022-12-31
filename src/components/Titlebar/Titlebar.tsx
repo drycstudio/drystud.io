@@ -1,7 +1,5 @@
 import React from 'react';
-import { FiMinus, FiSquare, FiX, FiMinimize, FiMaximize } from 'react-icons/fi';
-
-import message from 'antd/lib/message';
+import { FiMinus, FiSquare, FiX, FiCopy } from 'react-icons/fi';
 import isElectronProject from 'is-electron';
 import { ActionButton } from '../ActionButton';
 import titlebarLogo from '../../assets/icon/logo/electron-pretty-titlebar-logo.svg';
@@ -9,6 +7,7 @@ import { globalStyles } from '../../styles/global';
 import { ButtonContainer, actionButtonIconStyle } from '../ActionButton/styles';
 import { Logo, LogoImage, Menu, Text, Title, TitlebarContainer } from './styles';
 
+const ipcRenderer = ('ipcRenderer' in window ? window.ipcRenderer : null) as Electron.IpcRenderer;
 const isElectron = isElectronProject();
 
 export interface TitlebarProps {
@@ -30,48 +29,67 @@ export default function Titlebar({
 }: TitlebarProps) {
 	globalStyles();
 
-	const [messageApi, contextHolder] = message.useMessage({
-		top: 40,
-	});
+	const [isWindowMaximized, setIsWindowMaximized] = React.useState<boolean>(false);
 
 	const LOGO = logo || titlebarLogo;
 
-	async function handleMinus() {
-		onMinus ? onMinus() : await messageApi.error('Please Add Electron Minus Button Handler');
-	}
+	const handleVerifyIfWindowIsMaximized = async () => {
+		if (ipcRenderer) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+			const response_ = await ipcRenderer.invoke('windowsIsMaximized');
+			setIsWindowMaximized(!!response_);
+			return response_;
+		}
+	};
 
-	async function handleMinimazeMaximaze() {
-		onMinimizeMaximaze
-			? onMinimizeMaximaze()
-			: await messageApi.error('Please Add Electron Minimaze/Maximaze Button Handler');
-	}
-
-	async function handleClose() {
-		onClose ? onClose() : await messageApi.error('Please Add Electron Close Button Handler');
-	}
-
-	React.useEffect(() => {
-		if (!isElectron) {
-			console.warn(
-				'Please Add Electron Button Handler functions manually because this is not an ElectronJS Application!'
-			);
+	React.useLayoutEffect(() => {
+		if (ipcRenderer) {
+			const updateSize = async () => {
+				const body = document.querySelector('body') as HTMLBodyElement;
+				body.style.width = window.innerWidth.toString();
+				await handleVerifyIfWindowIsMaximized();
+			};
+			window.addEventListener('resize', updateSize);
+			// eslint-disable-next-line @typescript-eslint/no-floating-promises
+			updateSize();
+			return () => window.removeEventListener('resize', updateSize);
 		}
 	}, []);
 
-	return (
-		<TitlebarContainer size={size}>
-			{contextHolder}
-			<Logo>
-				<LogoImage src={LOGO as unknown as string} alt='Electron Pretty Titlebar Logo' />
-			</Logo>
+	const handleMinimizeApp = () => {
+		if (ipcRenderer) ipcRenderer.send('minimizeWindow');
+	};
 
-			<Menu />
+	const handleMaximizeRestoreApp = React.useCallback(async () => {
+		if (ipcRenderer) ipcRenderer.send('maximizeRestoreWindow');
+		await handleVerifyIfWindowIsMaximized();
+	}, []);
 
-			<Title>
+	const handleCloseApp = () => {
+		if (ipcRenderer) ipcRenderer.send('closeWindow');
+	};
+
+	const handleMinus = React.useCallback(() => {
+		onMinus ? onMinus() : handleMinimizeApp();
+	}, [onMinus]);
+
+	const handleMinimazeMaximaze = React.useCallback(async () => {
+		onMinimizeMaximaze ? onMinimizeMaximaze() : await handleMaximizeRestoreApp();
+	}, [handleMaximizeRestoreApp, onMinimizeMaximaze]);
+
+	const handleClose = React.useCallback(() => {
+		onClose ? onClose() : handleCloseApp();
+	}, [onClose]);
+
+	const titlebarComponents = React.useMemo(
+		() => [
+			<Menu key={0} />,
+
+			<Title key={1}>
 				<Text>{title}</Text>
-			</Title>
+			</Title>,
 
-			<ButtonContainer>
+			<ButtonContainer key={2}>
 				<ActionButton
 					onClick={() => {
 						handleMinus();
@@ -82,7 +100,11 @@ export default function Titlebar({
 					onClick={() => {
 						handleMinimazeMaximaze();
 					}}>
-					<FiSquare className={actionButtonIconStyle()} />
+					{isWindowMaximized ? (
+						<FiCopy className={actionButtonIconStyle()} />
+					) : (
+						<FiSquare className={actionButtonIconStyle()} />
+					)}
 				</ActionButton>
 				<ActionButton
 					type='close'
@@ -91,7 +113,27 @@ export default function Titlebar({
 					}}>
 					<FiX className={actionButtonIconStyle()} />
 				</ActionButton>
-			</ButtonContainer>
+			</ButtonContainer>,
+		],
+		[handleClose, handleMinimazeMaximaze, handleMinus, title]
+	);
+
+	React.useEffect(() => {
+		if (!isElectron)
+			console.warn(
+				'!Titlebar Alert!: Please Add Electron Button Handler functions manually because this is not an ElectronJS Application!'
+			);
+		if (ipcRenderer)
+			console.warn('!Titlebar Alert!: Please Add the preload configuration on your app preload.(js/ts) file.');
+	}, []);
+
+	return (
+		<TitlebarContainer size={size}>
+			<Logo>
+				<LogoImage src={LOGO as unknown as string} alt='Electron Pretty Titlebar Logo' />
+			</Logo>
+
+			{titlebarComponents}
 		</TitlebarContainer>
 	);
 }
