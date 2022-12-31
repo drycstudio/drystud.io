@@ -4,5 +4,5 @@ export default function setup() {
 		return;
 	}
 
-	console.log('?Titlebar Message?: Setup complete!');
+	console.log('?Titlebar Message?: Setup completed!');
 }
