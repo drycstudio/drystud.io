@@ -7,7 +7,7 @@
 
 A pretty way to add Titlebar in a Electron app using ReactJS
 
-## How to use
+## Installation
 
 ```bash
 npm install @euclidesdry/electron-pretty-titlebar
@@ -19,9 +19,65 @@ Or
 yarn add @euclidesdry/electron-pretty-titlebar
 ```
 
-## Instructions
+Set the `frame` property to `fasle` and `webPreferences.nodeInteraction` to `true` on the `BrowserWindow` Instance inside your `main.(js/ts)` file.
+
+```js
+mainWindow = new BrowserWindow({
+	width: 1280,
+	height: 840,
+	frame: false, // <- Add this line
+	webPreferences: {
+		nodeIntegration: true, // <- Add this line too
+	},
+});
+```
+
+Set the `setup` and `attachToWindow` built-in functions into your project `main.(js/ts)` file as the following:
+
+```js
+import { setup, attachToWindow } from '@euclidesdry/electron-pretty-titlebar';
+import { BrowserWindow, ipcMain } from 'electron';
+
+let mainWindow: BrowserWindow | null;
+
+setup(); // <- Add this line
+
+async function createWindow(): Promise<void> {
+	// Create the browser window.
+	mainWindow = new BrowserWindow({
+		width: 1280,
+		height: 840,
+		frame: false,
+		webPreferences: {
+			nodeIntegration: true,
+		},
+	});
+
+	mainWindow.on('closed', function () {
+		mainWindow = null;
+	});
+
+	attachToWindow(ipcMain, mainWindow);  // <- Add this line too
+
+	...
+}
+```
+
+## Instructions (How to use)
 
 App to your App.(tsx/jsx) file:
+
+```jsx
+import React from 'react';
+
+import { Titlebar } from '@euclidesdry/electron-pretty-titlebar';
+
+export default function App() {
+	return <Titlebar title='Hello World' logo={logoPathOrURL} />;
+}
+```
+
+if you want to add your own custom window triggers then do the following:
 
 ```jsx
 import React from 'react';
