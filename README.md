@@ -63,6 +63,17 @@ async function createWindow(): Promise<void> {
 }
 ```
 
+and last but not least, add `preloadConfig()` function to your project `preload.(js|ts)` file:
+
+```js
+// See the Electron documentation for details on how to use preload scripts:
+// https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
+
+import { preloadConfig } from '@euclidesdry/electron-pretty-titlebar';
+
+preloadConfig();
+```
+
 ## Instructions (How to use)
 
 App to your App.(tsx/jsx) file:
