@@ -1,10 +1,13 @@
 import React from 'react';
 import { FiMinus, FiSquare, FiX, FiCopy } from 'react-icons/fi';
 import isElectronProject from 'is-electron';
+
+import { globalStyles } from '~/styles/global';
+import titlebarLogo from '~/assets/icon/logo/electron-pretty-titlebar-logo.svg';
+
 import { ActionButton } from '../ActionButton';
-import titlebarLogo from '../../assets/icon/logo/electron-pretty-titlebar-logo.svg';
-import { globalStyles } from '../../styles/global';
 import { ButtonContainer, actionButtonIconStyle } from '../ActionButton/styles';
+
 import { Logo, LogoImage, Menu, Text, Title, TitlebarContainer } from './styles';
 
 type ipcRendererType = Electron.IpcRenderer | null | undefined;
@@ -15,13 +18,68 @@ const ipcRenderer = (
 
 const isElectron = isElectronProject();
 
-export interface TitlebarProps {
+export type TitlebarProps = {
 	title?: string | null;
 	logo?: string;
 	size?: 'default' | 'small';
 	onMinus?: () => void;
 	onMinimizeMaximaze?: () => void;
 	onClose?: () => void;
+};
+
+export type TitlebarComponentsProps = Pick<TitlebarProps, 'title'> & {
+	isWindowMaximized: boolean;
+	handleMinimazeMaximaze(): Promise<void>;
+	handleMinus(): void;
+	handleClose(): void;
+};
+
+function TitlebarComponents({
+	title,
+	isWindowMaximized,
+	handleMinimazeMaximaze,
+	handleMinus,
+	handleClose,
+}: TitlebarComponentsProps) {
+	return (
+		<>
+			<Menu key={0} />
+
+			<Title key={1}>
+				<Text>{title}</Text>
+			</Title>
+
+			<ButtonContainer key={2}>
+				<ActionButton
+					onClick={() => {
+						handleMinus();
+					}}>
+					<FiMinus className={actionButtonIconStyle()} />
+				</ActionButton>
+				<ActionButton
+					onClick={() => {
+						handleMinimazeMaximaze();
+					}}>
+					{isWindowMaximized ? (
+						<FiCopy
+							className={actionButtonIconStyle()}
+							style={{ transform: 'scaleX(-1)' }}
+							data-testid='action-button-minimize'
+						/>
+					) : (
+						<FiSquare className={actionButtonIconStyle()} data-testid='action-button-maximize' />
+					)}
+				</ActionButton>
+				<ActionButton
+					type='close'
+					onClick={() => {
+						handleClose();
+					}}>
+					<FiX className={actionButtonIconStyle()} />
+				</ActionButton>
+			</ButtonContainer>
+		</>
+	);
 }
 
 export default function Titlebar({
@@ -40,7 +98,6 @@ export default function Titlebar({
 
 	const handleVerifyIfWindowIsMaximized = async () => {
 		if (ipcRenderer) {
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			const response_ = await ipcRenderer.invoke('windowsIsMaximized');
 			setIsWindowMaximized(!!response_);
 			return response_;
@@ -55,7 +112,6 @@ export default function Titlebar({
 				await handleVerifyIfWindowIsMaximized();
 			};
 			window.addEventListener('resize', updateSize);
-			// eslint-disable-next-line @typescript-eslint/no-floating-promises
 			updateSize();
 			return () => window.removeEventListener('resize', updateSize);
 		}
@@ -89,43 +145,6 @@ export default function Titlebar({
 		console.log('onClose:TitlebarEvent::');
 	}, [onClose]);
 
-	const titlebarComponents = React.useMemo(
-		() => [
-			<Menu key={0} />,
-
-			<Title key={1}>
-				<Text>{title}</Text>
-			</Title>,
-
-			<ButtonContainer key={2}>
-				<ActionButton
-					onClick={() => {
-						handleMinus();
-					}}>
-					<FiMinus className={actionButtonIconStyle()} />
-				</ActionButton>
-				<ActionButton
-					onClick={() => {
-						handleMinimazeMaximaze();
-					}}>
-					{isWindowMaximized ? (
-						<FiCopy className={actionButtonIconStyle()} style={{ transform: 'scaleX(-1)' }} />
-					) : (
-						<FiSquare className={actionButtonIconStyle()} />
-					)}
-				</ActionButton>
-				<ActionButton
-					type='close'
-					onClick={() => {
-						handleClose();
-					}}>
-					<FiX className={actionButtonIconStyle()} />
-				</ActionButton>
-			</ButtonContainer>,
-		],
-		[handleClose, handleMinimazeMaximaze, handleMinus, isWindowMaximized, title]
-	);
-
 	React.useEffect(() => {
 		if (!isElectron)
 			console.warn(
@@ -141,7 +160,7 @@ export default function Titlebar({
 				<LogoImage src={LOGO as unknown as string} alt='Electron Pretty Titlebar Logo' />
 			</Logo>
 
-			{titlebarComponents}
+			<TitlebarComponents {...{ title, isWindowMaximized, handleMinimazeMaximaze, handleMinus, handleClose }} />
 		</TitlebarContainer>
 	);
 }

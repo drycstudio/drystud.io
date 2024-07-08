@@ -1,15 +1,12 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
-	"include": ["src/**/*", "**/*.spec.{ts,tsx}", "**/*.test.{ts,tsx}"],
-	"display": "Node 16",
-	"extends": "@tsconfig/node16/tsconfig.json",
+	"include": ["src/**/*", "lib", "**/*.spec.{ts,tsx}", "**/*.test.{ts,tsx}"],
 	"compilerOptions": {
-		"types": ["@types/node", "jest", "@types/jest"],
 		"target": "esnext",
 		"forceConsistentCasingInFileNames": true,
 		"allowJs": true,
 		"strict": true,
-		"jsx": "react-jsx",
+		"jsx": "react",
 		"module": "ESNext",
 		"declaration": true,
 		"declarationDir": "types",
@@ -17,22 +14,13 @@
 		"sourceMap": true,
 		"outDir": "dist",
 		"moduleResolution": "node",
-		"lib": ["dom", "dom.iterable", "es2018"],
+		"lib": ["dom", "dom.iterable", "es2022"],
 		"isolatedModules": true,
 		"baseUrl": ".",
 		"paths": {
-			"@assets/*": ["src/assets/*"],
-			"@config/*": ["src/config/*"],
-			"@components/*": ["src/components/*"],
-			"@constants/*": ["src/constants/*"],
-			"@contexts/*": ["src/contexts/*"],
-			"@global-types/*": ["src/@types/*"],
-			"@helpers/*": ["src/helpers/*"],
-			"@hooks/*": ["src/hooks/*"],
-			"@project-types/*": ["src/types/*"],
-			"@theme/*": ["src/theme/*"],
-			"@utils/*": ["src/utils/*"]
+			"~/*": ["src/*"]
 		},
+		"types": ["vite/client", "electron"],
 		"typeRoots": ["src/@types"],
 		"allowSyntheticDefaultImports": true,
 		"emitDeclarationOnly": true,
@@ -40,17 +28,5 @@
 		"skipLibCheck": true,
 		"resolveJsonModule": true
 	},
-	"exclude": [
-		"node_modules",
-		"package.json",
-		"dist",
-		"lib",
-		"esm",
-		"tests",
-		"stories",
-		"babel.config.js",
-		"jest.config.ts",
-		"jest.setup.ts",
-		"jest.config.*.ts"
-	]
+	"exclude": ["node_modules", "package.json", "dist", "lib", "esm", "tests", "stories"]
 }

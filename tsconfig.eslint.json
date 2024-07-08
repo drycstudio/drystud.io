@@ -3,5 +3,5 @@
 	"compilerOptions": {
 		"noEmit": true
 	},
-	"include": ["src/**/*", "tools/**/*.ts", ".eslintrc", "jest.config.js"]
+	"include": ["src/**/*", "tools/**/*.ts", ".eslintrc"]
 }
