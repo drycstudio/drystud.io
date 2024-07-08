@@ -31,6 +31,7 @@ bower_components
 
 # Build directories
 dist/
+types/
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
@@ -79,3 +80,5 @@ typings/
 
 # FuseBox cache
 .fusebox/
+
+*storybook.log

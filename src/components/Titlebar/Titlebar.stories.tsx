@@ -1,33 +1,44 @@
-import React from 'react';
-
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import Titlebar from './Titlebar';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-export default {
-	title: 'ReactComponentLibrary/Titlebar',
+const meta = {
+	title: 'PrettierTittleBar/Titlebar',
 	component: Titlebar,
-	argTypes: { onClick: { action: 'clicked' } },
-} as ComponentMeta<typeof Titlebar>;
+	tags: ['autodocs'],
+	argTypes: {
+		// More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+		onMinus: { action: 'onMinus clicked' },
+		onMinimizeMaximaze: { action: 'onMinimizeMaximaze clicked' },
+		onClose: { action: 'onClose clicked' },
+	},
+	args: {
+		onMinus: fn(),
+		onMinimizeMaximaze: fn(),
+		onClose: fn(),
+	},
+} satisfies Meta<typeof Titlebar>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Titlebar> = args => <Titlebar {...args} />;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.args = {
-	title: 'Hello world!',
-};
+export const Default = {
+	args: {
+		title: 'Hello world!',
+	},
+} satisfies Story;
 
-export const Small = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Small.args = {
-	title: 'Hello world!',
-	size: 'small',
-};
+export const Small = {
+	args: {
+		title: 'Hello world!',
+		size: 'small',
+	},
+} satisfies Story;
 
-export const WithActions = Template.bind({});
-WithActions.args = {
-	title: 'Testing Component Titlebar',
-};
+export const WithActions = {
+	args: {
+		title: 'Testing Component Titlebar',
+	},
+} satisfies Story;
