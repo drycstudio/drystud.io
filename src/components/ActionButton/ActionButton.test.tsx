@@ -1,5 +1,6 @@
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 
 import { ActionButton } from './ActionButton';
 
@@ -8,10 +9,7 @@ const MOCK_TESTID = 'action-button-children';
 describe('ActionButton', () => {
 	test('renders the correctly with all props', async () => {
 		const { getByTestId } = render(
-			<ActionButton
-				onClick={() => {
-					jest.fn();
-				}}>
+			<ActionButton onClick={() => {}}>
 				<div data-testid={MOCK_TESTID}>-</div>
 			</ActionButton>
 		);

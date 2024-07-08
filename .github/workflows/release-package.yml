@@ -1,56 +1,56 @@
 name: Release Electron Titlebar Package
 
 on:
-    release:
-        types:
-            - created
-    # push:
-    #     tags:
-    #         - "*"
+  release:
+    types:
+      - created
+  # push:
+  #     tags:
+  #         - "*"
 
 jobs:
-    build-ci:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-node@v2
-              with:
-                  node-version: 16
-                  cache: "yarn"
-            - run: yarn ci
+  build-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'yarn'
+      - run: yarn ci
 
-    publish-npm:
-        needs: build-ci
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: 16
-                  cache: "yarn"
-                  registry-url: "https://registry.npmjs.org"
-                  scope: "@euclidesdry"
-            - run: yarn install
-            - run: yarn build
-            - run: yarn publish:package
-              env:
-                  NODE_AUTH_TOKEN: ${{secrets.AUTH_NPM_TOKEN}}
+  publish-npm:
+    needs: build-ci
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 186
+          cache: 'yarn'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@euclidesdry'
+      - run: yarn install
+      - run: yarn build
+      - run: yarn publish:package
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.AUTH_NPM_TOKEN}}
 
-    publish-gpr:
-        needs: build-ci
-        runs-on: ubuntu-latest
-        permissions:
-            packages: write
-            contents: read
-        steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: 16
-                  cache: "yarn"
-                  registry-url: https://npm.pkg.github.com/
-            - run: yarn install
-            - run: yarn build
-            - run: yarn publish:package
-              env:
-                  NODE_AUTH_TOKEN: ${{secrets.AUTH_GITHUB_TOKEN}}
+  publish-gpr:
+    needs: build-ci
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'yarn'
+          registry-url: https://npm.pkg.github.com/
+      - run: yarn install
+      - run: yarn build
+      - run: yarn publish:package
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.AUTH_GITHUB_TOKEN}}

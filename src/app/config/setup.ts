@@ -3,6 +3,4 @@ export default function setup() {
 		console.warn('!Titlebar Alert!: type is not supported');
 		return;
 	}
-
-	console.log('?Titlebar Message?: Setup completed!');
 }

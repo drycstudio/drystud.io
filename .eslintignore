@@ -1,8 +1,0 @@
-/*.mjs
-**/*.js
-/*.js
-**/*.d.ts
-/*.d.ts
-node_modules
-build
-dist
