@@ -12,12 +12,16 @@ jobs:
   build-ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
           cache: 'yarn'
-      - run: yarn ci
+
+      - name: 📦 Installing Packageds
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: ci # will run `yarn ci` command
 
   publish-npm:
     needs: build-ci
@@ -30,7 +34,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 186
+          node-version: 18
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
           scope: '@euclidesdry'
