@@ -1,36 +1,44 @@
+import React from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { FiMinus, FiSquare, FiX } from 'react-icons/fi';
-
-import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { ActionButton } from './ActionButton';
 import { actionButtonIconStyle } from './styles';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-export default {
-	title: 'ReactComponentLibrary/ActionButton',
+// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
+const meta = {
+	title: 'PrettierTittleBar/ActionButton',
 	component: ActionButton,
-	argTypes: { onClick: { action: 'clicked' } },
 	parameters: {
+		// Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
 		layout: 'centered',
 	},
-} as ComponentMeta<typeof ActionButton>;
+	tags: ['autodocs'],
+	argTypes: { onClick: { action: 'clicked' } },
+	// Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
+	args: { onClick: fn() },
+} satisfies Meta<typeof ActionButton>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof ActionButton> = args => <ActionButton {...args} />;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Minimize = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Minimize.args = {
-	children: <FiMinus className={actionButtonIconStyle()} />,
-};
+export const Minimize = {
+	args: {
+		children: <FiMinus className={actionButtonIconStyle()} />,
+	},
+} satisfies Story;
 
-export const MinimizeMaximaze = Template.bind({});
-MinimizeMaximaze.args = {
-	children: <FiSquare className={actionButtonIconStyle()} />,
-};
+export const MinimizeMaximaze = {
+	args: {
+		children: <FiSquare className={actionButtonIconStyle()} />,
+	},
+} satisfies Story;
 
-export const Close = Template.bind({});
-Close.args = {
-	children: <FiX className={actionButtonIconStyle()} />,
-	type: 'close',
-};
+export const Close = {
+	args: {
+		children: <FiX className={actionButtonIconStyle()} />,
+		type: 'close',
+	},
+} satisfies Story;

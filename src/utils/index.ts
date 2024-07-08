@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-binary-expression */
 // OS detection
 const isElectronRenderer =
 	typeof process &&

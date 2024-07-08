@@ -1,7 +1,9 @@
 {
-	"editor.codeActionsOnSave": { "source.fixAll.eslint": true },
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	},
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
 	"conventionalCommits.scopes": ["new version", "lint", "ci", "test", "component", "build", "types", "project"],
-	"cSpell.words": ["npmrc"]
+	"cSpell.words": ["autodocs", "Docgen", "npmrc"]
 }
