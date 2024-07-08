@@ -23,6 +23,10 @@ jobs:
     needs: build-ci
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-node@v4
+      - name: Enable Corepack before setting up Node
+        run: corepack enable
+
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -43,6 +47,10 @@ jobs:
       packages: write
       contents: read
     steps:
+      - uses: actions/setup-node@v4
+      - name: Enable Corepack before setting up Node
+        run: corepack enable
+
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
