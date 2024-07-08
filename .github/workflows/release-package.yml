@@ -30,7 +30,7 @@ jobs:
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
           scope: '@euclidesdry'
-      - run: yarn install
+      - run: corepack enable && yarn install
       - run: yarn build
       - run: yarn publish:package
         env:
@@ -49,7 +49,7 @@ jobs:
           node-version: 18
           cache: 'yarn'
           registry-url: https://npm.pkg.github.com/
-      - run: yarn install
+      - run: corepack enable && yarn install
       - run: yarn build
       - run: yarn publish:package
         env:

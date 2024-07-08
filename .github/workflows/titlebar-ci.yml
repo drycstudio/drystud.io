@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 18
           cache: 'yarn'
-      - run: yarn install --prefer-offline
+      - run: corepack enable && yarn install --prefer-offline
       - run: yarn lint
       - run: yarn test
       - run: yarn build
