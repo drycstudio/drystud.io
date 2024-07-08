@@ -34,7 +34,7 @@ jobs:
       - name: 📦 Installing Packageds
         uses: borales/actions-yarn@v5
         with:
-          cmd: install --cached # will run `yarn install --preferoffline` command
+          cmd: install # will run `yarn install --preferoffline` command
       - name: ✏️ Checking for lint errors
         uses: borales/actions-yarn@v5
         with:
