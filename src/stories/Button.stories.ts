@@ -56,5 +56,5 @@ export const Warning: Story = {
 		primary: true,
 		label: 'Delete now',
 		backgroundColor: 'red',
-	}
+	},
 };
