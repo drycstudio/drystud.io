@@ -25,12 +25,6 @@ jobs:
           node-version: 18
           cache: 'yarn'
 
-      # - run: yarn set version stable
-      # - run: yarn install --prefer-offline
-      # - run: yarn lint
-      # - run: yarn test
-      # - run: yarn build
-
       - name: 📦 Installing Packageds
         uses: borales/actions-yarn@v5
         with:
