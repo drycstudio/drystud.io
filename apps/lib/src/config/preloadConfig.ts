@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /**
  *  @description adds preload configurations on preload.(js,ts) electron built-in file
  *  @requires you to set `nodeIntegration: true` in main BrowserWindow
  */
-export default async function preloadConfig() {
+export default function preloadConfig() {
   if ('electron' in window) return;
 
-  const { contextBridge } = await import('electron');
-  const { electronAPI } = await import('@electron-toolkit/preload');
+  const { contextBridge } = require('electron');
+  const { electronAPI } = require('@electron-toolkit/preload');
 
   // Custom APIs for renderer
   const api = {};
@@ -20,7 +21,7 @@ export default async function preloadConfig() {
         electron: process.versions.electron,
       });
     } catch (error) {
-      console.error(error);
+      console.error('-- Prettier Titlebar :: Preload Config - Error: ', error);
     }
   } else {
     // @ts-expect-error (define in dts)
