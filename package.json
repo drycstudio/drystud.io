@@ -30,11 +30,12 @@
     "preview": "turbo preview",
     "test": "turbo test",
     "lint": "turbo lint",
+    "lint:format": "turbo lint:format",
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "yarn lint",
-    "*.{js,jsx,ts,tsx,css,md,html,json}": "yarn lint:format"
+    "*.{js,jsx,ts,tsx}": "yarn turbo run lint",
+    "*.{js,jsx,ts,tsx,css,md,html,json}": "yarn turbo run lint:format"
   },
   "dependencies": {
     "lib": "workspace:*"

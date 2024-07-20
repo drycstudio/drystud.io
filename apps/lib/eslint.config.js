@@ -15,7 +15,6 @@ export default [
   },
   {
     ignores: [
-      ...pluginJs.configs.all.ignores,
       '/*.mjs',
       '**/*.js',
       '/*.js',
