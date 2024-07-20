@@ -40,7 +40,7 @@
     "packages/*.{js,jsx,ts,tsx,css,md,html,json}": "yarn lint:format"
   },
   "dependencies": {
-    "lib": "workspace:*"
+    "lib": "0.1.0"
   },
   "devDependencies": {
     "@titlebar/config-typescript": "workspace:*",
