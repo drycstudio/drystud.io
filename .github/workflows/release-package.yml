@@ -64,6 +64,10 @@ jobs:
         with:
           name: app
 
+      - name: 📂 Checking app directory
+        run: |
+          ls -la
+
       - uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -74,7 +78,7 @@ jobs:
       - name: 🖥️ Publishing package
         uses: borales/actions-yarn@v5
         with:
-          cmd: turbo run publish:package --filter=lib # will run `yarn build:prod` command
+          cmd: publish:package # will run `yarn build:prod` command
         env:
           NODE_AUTH_TOKEN: ${{secrets.AUTH_NPM_TOKEN}}
 #   publish-gpr:
