@@ -1,4 +1,25 @@
-import { styled } from '@stitches/react';
+import { css, styled } from '@stitches/react';
+
+const DIMENSIONS = {
+  default: '38px',
+  small: '32px',
+};
+
+export const htmlTagStyles = css({
+  variants: {
+    size: {
+      default: {
+        paddingTop: DIMENSIONS.default,
+      },
+      small: {
+        paddingTop: DIMENSIONS.small,
+      },
+    },
+  },
+  defaultVariants: {
+    size: 'default',
+  },
+});
 
 export const TitlebarContainer = styled('div', {
   width: '100%',
@@ -9,14 +30,17 @@ export const TitlebarContainer = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
   position: 'fixed',
-  zIndex: 999999999,
+  top: 0,
+  left: 0,
+  right: 0,
+  zIndex: 999_999_999,
   variants: {
     size: {
       default: {
-        height: '38px',
+        height: DIMENSIONS.default,
       },
       small: {
-        height: '32px',
+        height: DIMENSIONS.small,
       },
     },
   },

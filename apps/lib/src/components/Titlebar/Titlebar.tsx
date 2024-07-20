@@ -1,4 +1,6 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import { globalStyles } from '~/styles/global';
 import titlebarLogo from '~/assets/icon/logo/electron-pretty-titlebar-logo.svg';
@@ -7,7 +9,7 @@ import { useTitlebarActions } from './hooks/useTitlebarActions';
 
 import { WindowControls } from './components/WindowControls';
 
-import { Logo, LogoImage, TitlebarContainer } from './styles';
+import { htmlTagStyles, Logo, LogoImage, TitlebarContainer } from './styles';
 
 const ipcHandle = 'electron' in window ? window.electron.ipcRenderer : null;
 
@@ -40,18 +42,26 @@ export default function Titlebar({
   const LOGO = logo || titlebarLogo;
 
   return (
-    <TitlebarContainer size={size}>
-      <Logo>
-        <LogoImage src={LOGO} alt='Electron Pretty Titlebar Logo' />
-      </Logo>
+    <HelmetProvider>
+      <Helmet>
+        <html data-titlebar="prettier" lang='pt' className={htmlTagStyles({size})} />
+      </Helmet>
+      {createPortal(
+        <TitlebarContainer size={size}>
+          <Logo>
+            <LogoImage src={LOGO} alt='Electron Pretty Titlebar Logo' />
+          </Logo>
 
-      <WindowControls
-        title={title}
-        isWindowMaximized={isWindowMaximized}
-        handleMinimazeMaximaze={handleMinimazeMaximaze}
-        handleMinus={handleMinus}
-        handleClose={handleClose}
-      />
-    </TitlebarContainer>
+          <WindowControls
+            title={title}
+            isWindowMaximized={isWindowMaximized}
+            handleMinimazeMaximaze={handleMinimazeMaximaze}
+            handleMinus={handleMinus}
+            handleClose={handleClose}
+          />
+        </TitlebarContainer>,
+        document.body
+      )}
+    </HelmetProvider>
   );
 }

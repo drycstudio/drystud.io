@@ -4,6 +4,17 @@
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "conventionalCommits.scopes": ["new version", "lint", "ci", "test", "component", "build", "types", "project", "apps"],
+  "conventionalCommits.scopes": [
+    "new version",
+    "lint",
+    "ci",
+    "test",
+    "component",
+    "build",
+    "types",
+    "project",
+    "apps",
+    "packages"
+  ],
   "cSpell.words": ["autodocs", "Docgen", "npmrc", "typecheck"]
 }
