@@ -1,32 +1,5 @@
 {
-	"$schema": "https://json.schemastore.org/tsconfig",
-	"include": ["src/**/*", "lib", "**/*.spec.{ts,tsx}", "**/*.test.{ts,tsx}"],
-	"compilerOptions": {
-		"target": "esnext",
-		"forceConsistentCasingInFileNames": true,
-		"allowJs": true,
-		"strict": true,
-		"jsx": "react",
-		"module": "ESNext",
-		"declaration": true,
-		"declarationDir": "types",
-		"declarationMap": true,
-		"sourceMap": true,
-		"outDir": "dist",
-		"moduleResolution": "node",
-		"lib": ["dom", "dom.iterable", "es2022"],
-		"isolatedModules": true,
-		"baseUrl": ".",
-		"paths": {
-			"~/*": ["src/*"]
-		},
-		"types": ["vite/client", "electron"],
-		"typeRoots": ["src/@types"],
-		"allowSyntheticDefaultImports": true,
-		"emitDeclarationOnly": true,
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"resolveJsonModule": true
-	},
-	"exclude": ["node_modules", "package.json", "dist", "lib", "esm", "tests", "stories"]
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "include": ["apps/lib"],
+  "extends": "@titlebar/config-typescript/base.json"
 }
