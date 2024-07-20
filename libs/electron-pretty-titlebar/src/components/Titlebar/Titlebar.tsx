@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import { globalStyles } from '~/styles/global';
-import titlebarLogo from '~/assets/icon/logo/electron-electron-pretty-titlebar-logo.svg';
+import titlebarLogo from '~/assets/icon/logo/electron-pretty-titlebar-logo.svg';
 
 import { useTitlebarActions } from './hooks/useTitlebarActions';
 
@@ -36,7 +36,7 @@ export default function Titlebar({
     toggleWindowMaximized: setIsWindowMaximized,
     onMinus,
     onMinimizeMaximaze,
-    onClose
+    onClose,
   });
 
   const LOGO = logo || titlebarLogo;
@@ -44,7 +44,7 @@ export default function Titlebar({
   return (
     <HelmetProvider>
       <Helmet>
-        <html data-titlebar="prettier" lang='pt' className={htmlTagStyles({size})} />
+        <html data-titlebar='prettier' lang='pt' className={htmlTagStyles({ size })} />
       </Helmet>
       {createPortal(
         <TitlebarContainer size={size}>

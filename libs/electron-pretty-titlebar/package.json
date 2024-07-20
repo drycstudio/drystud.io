@@ -34,9 +34,9 @@
     "plugin"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/euclidesdry"
+    "registry": "https://registry.npmjs.org/drycstudio"
   },
-  "repository": "https://www.github.com/euclidesdry/electron-electron-pretty-titlebar",
+  "repository": "https://www.github.com/drycstudio/drystud.io",
   "author": "euclidesdry <euclidesdry@gmail.com>",
   "packageManager": "yarn@4.3.1",
   "scripts": {

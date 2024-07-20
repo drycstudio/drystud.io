@@ -1,5 +1,5 @@
 {
-  "name": "@euclidesdry/electron-pretty-titlebar",
+  "name": "drycstud.io",
   "version": "0.3.10",
   "type": "module",
   "license": "MIT",
@@ -28,6 +28,7 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "publish:package": "turbo publish:package",
+    "publish-packages": "turbo lint test build && changeset version && changeset publish",
     "preview": "turbo preview",
     "test": "turbo test",
     "lint": "turbo lint",

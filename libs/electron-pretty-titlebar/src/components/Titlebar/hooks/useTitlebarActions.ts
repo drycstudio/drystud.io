@@ -54,22 +54,16 @@ export function useTitlebarActions(
   const handleMinus = React.useCallback(() => {
     if (onMinus) onMinus();
     else handleMinimizeApp();
-
-    console.log('onMinus:TitlebarEvent::');
   }, [onMinus]);
 
   const handleMinimazeMaximaze = React.useCallback(async () => {
     if (onMinimizeMaximaze) onMinimizeMaximaze();
     else await handleMaximizeRestoreApp();
-
-    console.log('onMinimizeMaximaze:TitlebarEvent::');
   }, [handleMaximizeRestoreApp, onMinimizeMaximaze]);
 
   const handleClose = React.useCallback(() => {
     if (onClose) onClose();
     else handleCloseApp();
-
-    console.log('onClose:TitlebarEvent::');
   }, [onClose]);
 
   React.useEffect(() => {
