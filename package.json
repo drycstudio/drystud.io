@@ -1,49 +1,49 @@
 {
-	"name": "@euclidesdry/electron-pretty-titlebar",
-	"version": "0.3.3",
-	"type": "module",
-	"license": "MIT",
-	"description": "A pretty way to add Titlebar in a Electron app using ReactJS",
-	"keywords": [
-		"awesome",
-		"pretty",
-		"electron",
-		"react",
-		"titlebar",
-		"menu",
-		"plugin"
-	],
-	"author": "euclidesdry <euclidesdry@gmail.com>",
-	"workspaces": [
-		"apps/*",
-		"packages/*"
-	],
-	"packageManager": "yarn@4.3.1",
-	"engines": {
-		"node": ">=18"
-	},
-	"scripts": {
-		"predev": "turbo build --filter=lib",
-		"dev": "turbo dev",
-		"build": "turbo build",
-		"publish:package": "turbo publish:package",
-		"preview": "turbo preview",
-		"test": "turbo test",
-		"lint": "turbo lint",
-		"prepare": "husky install"
-	},
-	"lint-staged": {
-		"*.{js,jsx,ts,tsx}": "yarn lint",
-		"*.{js,jsx,ts,tsx,css,md,html,json}": "yarn lint:format"
-	},
-	"dependencies": {
-		"lib": "workspace:*"
-	},
-	"devDependencies": {
-		"@titlebar/config-typescript": "workspace:*",
-		"husky": "^9.1.1",
-		"prettier": "^3.3.3",
-		"turbo": "^2.0.8",
-		"typescript": "^5.5.3"
-	}
+  "name": "@euclidesdry/electron-pretty-titlebar",
+  "version": "0.3.3",
+  "type": "module",
+  "license": "MIT",
+  "description": "A pretty way to add Titlebar in a Electron app using ReactJS",
+  "keywords": [
+    "awesome",
+    "pretty",
+    "electron",
+    "react",
+    "titlebar",
+    "menu",
+    "plugin"
+  ],
+  "author": "euclidesdry <euclidesdry@gmail.com>",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "packageManager": "yarn@4.3.1",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "predev": "turbo build --filter=lib",
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "publish:package": "turbo publish:package",
+    "preview": "turbo preview",
+    "test": "turbo test",
+    "lint": "turbo lint",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "yarn lint",
+    "*.{js,jsx,ts,tsx,css,md,html,json}": "yarn lint:format"
+  },
+  "dependencies": {
+    "lib": "workspace:*"
+  },
+  "devDependencies": {
+    "@titlebar/config-typescript": "workspace:*",
+    "husky": "^9.1.1",
+    "prettier": "^3.3.3",
+    "turbo": "^2.0.8",
+    "typescript": "^5.5.3"
+  }
 }

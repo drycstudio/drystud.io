@@ -1,0 +1,8 @@
+{
+  "files": [],
+  "extends": "@titlebar/config-typescript/base.json",
+  "compilerOptions": {
+    "moduleResolution": "Node"
+  },
+  "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }]
+}
