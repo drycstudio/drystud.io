@@ -1,5 +1,5 @@
 {
-  "name": "pretty-titlebar",
+  "name": "electron-pretty-titlebar",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/main.cjs",
@@ -36,7 +36,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/euclidesdry"
   },
-  "repository": "https://www.github.com/euclidesdry/electron-pretty-titlebar",
+  "repository": "https://www.github.com/euclidesdry/electron-electron-pretty-titlebar",
   "author": "euclidesdry <euclidesdry@gmail.com>",
   "packageManager": "yarn@4.3.1",
   "scripts": {

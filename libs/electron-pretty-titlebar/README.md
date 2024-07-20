@@ -1,30 +1,30 @@
 # Pretty Electron Titlebar
 
-<img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/euclidesdry/electron-pretty-titlebar/titlebar-ci.yml?style=for-the-badge&label=CI">
+<img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/euclidesdry/electron-electron-pretty-titlebar/titlebar-ci.yml?style=for-the-badge&label=CI">
 
-[![NPM Version (scoped)](https://img.shields.io/npm/v/@euclidesdry/electron-pretty-titlebar?style=for-the-badge&logo=appveyor)](https://www.npmjs.com/package/@euclidesdry/electron-pretty-titlebar)
-![npm](https://img.shields.io/npm/dm/@euclidesdry/electron-pretty-titlebar?style=for-the-badge)
+[![NPM Version (scoped)](https://img.shields.io/npm/v/@euclidesdry/electron-electron-pretty-titlebar?style=for-the-badge&logo=appveyor)](https://www.npmjs.com/package/@euclidesdry/electron-electron-pretty-titlebar)
+![npm](https://img.shields.io/npm/dm/@euclidesdry/electron-electron-pretty-titlebar?style=for-the-badge)
 ![Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=for-the-badge&logo=appveyor)
-[![GitHub license](https://img.shields.io/github/license/euclidesdry/electron-pretty-titlebar?style=for-the-badge)](https://github.com/euclidesdry/electron-pretty-titlebar/blob/main/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/euclidesdry/electron-electron-pretty-titlebar?style=for-the-badge)](https://github.com/euclidesdry/electron-electron-pretty-titlebar/blob/main/LICENSE)
 
 A pretty way to add Titlebar in a Electron app using ReactJS
 
 ## Installation
 
 ```bash
-npm install @euclidesdry/electron-pretty-titlebar
+npm install @euclidesdry/electron-electron-pretty-titlebar
 ```
 
 Yarn
 
 ```bash
-yarn add @euclidesdry/electron-pretty-titlebar
+yarn add @euclidesdry/electron-electron-pretty-titlebar
 ```
 
 PNPM
 
 ```bash
-pnpm install @euclidesdry/electron-pretty-titlebar
+pnpm install @euclidesdry/electron-electron-pretty-titlebar
 ```
 
 Set the `frame` property to `false` and `webPreferences.nodeInteraction` to `true` on the `BrowserWindow` Instance inside your `main.(js/ts)` file.
@@ -43,7 +43,7 @@ mainWindow = new BrowserWindow({
 Set the `setup` and `attachToWindow` built-in `main.(js/ts)` file as the following:
 
 ```js
-import { setup, attachToWindow } from '@euclidesdry/electron-pretty-titlebar/config';
+import { setup, attachToWindow } from '@euclidesdry/electron-electron-pretty-titlebar/config';
 import { BrowserWindow, ipcMain } from 'electron';
 
 let mainWindow: BrowserWindow | null;
@@ -74,7 +74,7 @@ async function createWindow(): Promise<void> {
 For window buttons actions to be enabled, you need to add the `preloadConfig` into built-in `preload.(js/ts)` project file as the following:
 
 ```js
-import { preloadConfig } from '@euclidesdry/electron-pretty-titlebar/config'; // <- Add this line
+import { preloadConfig } from '@euclidesdry/electron-electron-pretty-titlebar/config'; // <- Add this line
 
 preloadConfig(); // <- Add this line
 ```
@@ -86,14 +86,14 @@ App to your App.(tsx/jsx) file:
 ```jsx
 import React from 'react';
 
-import { Titlebar } from '@euclidesdry/electron-pretty-titlebar';
+import { Titlebar } from '@euclidesdry/electron-electron-pretty-titlebar';
 
 export default function App() {
   return <Titlebar title='Hello World' logo={logoPathOrURL} />;
 }
 ```
 
-You can check the example of this configuration here: [Implementation Example](https://github.com/euclidesdry/electron-pretty-titlebar/tree/main/apps/example)
+You can check the example of this configuration here: [Implementation Example](https://github.com/euclidesdry/electron-electron-pretty-titlebar/tree/main/apps/example)
 
 If you want to add your own custom window triggers then do the following:
 
@@ -101,7 +101,7 @@ If you want to add your own custom window triggers then do the following:
 import React from 'react';
 import electronEnabled from 'is-electron';
 
-import { Titlebar } from '@euclidesdry/electron-pretty-titlebar';
+import { Titlebar } from '@euclidesdry/electron-electron-pretty-titlebar';
 
 const requiredModule = electronEnabled() ? 'electron' : 'is-electron';
 const { ipcRenderer } = window.require ? window.require(requiredModule) : false;

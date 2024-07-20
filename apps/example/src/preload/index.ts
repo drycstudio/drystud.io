@@ -1,3 +1,3 @@
-import { preloadConfig } from 'pretty-titlebar/config'
+import { preloadConfig } from 'electron-pretty-titlebar/config'
 
 preloadConfig()

@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@changesets/cli": "^2.27.7",
-    "pretty-titlebar": "workspace:*"
+    "electron-pretty-titlebar": "workspace:*"
   },
   "devDependencies": {
     "@euclidesdry/config-eslint": "workspace:*",

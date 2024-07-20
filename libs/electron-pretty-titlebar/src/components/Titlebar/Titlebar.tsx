@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import { globalStyles } from '~/styles/global';
-import titlebarLogo from '~/assets/icon/logo/electron-pretty-titlebar-logo.svg';
+import titlebarLogo from '~/assets/icon/logo/electron-electron-pretty-titlebar-logo.svg';
 
 import { useTitlebarActions } from './hooks/useTitlebarActions';
 
