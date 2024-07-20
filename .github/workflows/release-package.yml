@@ -52,7 +52,7 @@ jobs:
       - name: 🔼 Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: app
+          name: lib
           path: ./apps/lib
 
   publish-npm:
@@ -64,12 +64,19 @@ jobs:
       - name: Enable Corepack before setting up Node
         run: corepack enable
 
+      - name: 📂 Checking app directory (before downloading the artifact)
+        run: |
+          ls -la
+
+      - name: 🗑️ Deleting all files be
+        run: rm -rf ./*
+
       - name: 📥 Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: app
+          name: lib
 
-      - name: 📂 Checking app directory
+      - name: 📂 Checking app directory (after Donloading artifact)
         run: |
           ls -la
 
