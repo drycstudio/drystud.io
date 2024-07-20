@@ -85,13 +85,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
           scope: '@euclidesdry'
 
       - name: 🖥️ Publishing package
         run: |
-          npm install
+          yarn install
           npm run publish:package
         env:
           NODE_AUTH_TOKEN: ${{secrets.AUTH_NPM_TOKEN}}

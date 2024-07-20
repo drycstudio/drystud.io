@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@titlebar/config-typescript/vite.json",
+  "extends": "@euclidesdry/config-typescript/vite.json",
   "include": ["./src"],
   "compilerOptions": {
     "forceConsistentCasingInFileNames": true,

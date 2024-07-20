@@ -1,3 +1,3 @@
-import { preloadConfig } from 'lib/config'
+import { preloadConfig } from 'pretty-titlebar/config'
 
 preloadConfig()
