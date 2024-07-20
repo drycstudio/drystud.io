@@ -44,6 +44,11 @@ jobs:
         with:
           cmd: turbo run build --filter=lib # will run `yarn build:prod` command
 
+      - name: 📂 Checking app directory
+        run: |
+          cd ./apps/web-static
+          ls -la
+
       - name: 🔼 Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
