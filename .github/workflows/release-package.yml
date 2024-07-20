@@ -87,7 +87,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
           scope: '@euclidesdry'
 
