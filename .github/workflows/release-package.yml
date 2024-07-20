@@ -67,6 +67,8 @@ jobs:
       - name: 📂 Checking app directory (before downloading the artifact)
         run: |
           ls -la
+          echo "Checking package.json"
+          cat package.json
 
       - name: 🗑️ Deleting all files be
         run: rm -rf ./*
@@ -79,6 +81,8 @@ jobs:
       - name: 📂 Checking app directory (after Donloading artifact)
         run: |
           ls -la
+          echo "Checking package.json"
+          cat package.json
 
       - uses: actions/setup-node@v4
         with:
