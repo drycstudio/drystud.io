@@ -1,11 +1,14 @@
 import Versions from './components/Versions'
 import electronLogo from './assets/electron.svg'
 
+import Titlebar from 'lib'
+
 function App(): JSX.Element {
   const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
 
   return (
     <>
+      <Titlebar title="Titlebar Title Example" logo={electronLogo} />
       <img alt="logo" className="logo" src={electronLogo} />
       <div className="creator">Powered by electron-vite</div>
       <div className="text">
@@ -27,7 +30,7 @@ function App(): JSX.Element {
           </a>
         </div>
       </div>
-      <Versions></Versions>
+      <Versions />
     </>
   )
 }
