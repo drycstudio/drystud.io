@@ -46,7 +46,7 @@ jobs:
 
       - name: 📂 Checking app directory
         run: |
-          cd ./apps/web-static
+          cd ./apps/lib
           ls -la
 
       - name: 🔼 Upload artifact for deployment job
