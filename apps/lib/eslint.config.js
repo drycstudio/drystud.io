@@ -16,10 +16,12 @@ export default [
   {
     ignores: [
       '/*.mjs',
-      '**/*.js',
+      '/**/*.js',
       '/*.js',
       '/**/*.d.ts',
       '/*.d.ts',
+      '/**/package.json',
+      'package.json',
       'node_modules',
       'build',
       'dist'

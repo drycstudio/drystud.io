@@ -57,7 +57,7 @@ async function createWindow(): Promise<void> {
   height: 840,
   frame: false,
   webPreferences: {
-   nodeIntegration: true,
+   nodeIntegration: true, // <-And this
   },
  });
 
@@ -74,7 +74,6 @@ async function createWindow(): Promise<void> {
 Optional: you can also add the `preloadConfig` to built-in `preload.(js/ts)` file as the following:
 
 ```js
-import { contextBridge } from 'electron';
 import { preloadConfig } from '@euclidesdry/electron-pretty-titlebar/config'; // <- Add this line
 
 preloadConfig(); // <- Add this line

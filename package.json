@@ -1,6 +1,6 @@
 {
   "name": "@euclidesdry/electron-pretty-titlebar",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "type": "module",
   "license": "MIT",
   "description": "A pretty way to add Titlebar in a Electron app using ReactJS",
@@ -34,8 +34,10 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "yarn turbo run lint",
-    "*.{js,jsx,ts,tsx,css,md,html,json}": "yarn turbo run lint:format"
+    "apps/*.{js,jsx,ts,tsx}": "yarn lint",
+    "apps/*.{js,jsx,ts,tsx,css,md,html,json}": "yarn lint:format",
+    "packages/*.{js,jsx,ts,tsx}": "yarn lint",
+    "packages/*.{js,jsx,ts,tsx,css,md,html,json}": "yarn lint:format"
   },
   "dependencies": {
     "lib": "workspace:*"
