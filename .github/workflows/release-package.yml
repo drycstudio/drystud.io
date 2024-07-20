@@ -61,8 +61,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-      - name: Enable Corepack before setting up Node
-        run: corepack enable
 
       - name: 📂 Checking app directory (before downloading the artifact)
         run: |
@@ -87,13 +85,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
           scope: '@euclidesdry'
 
       - name: 🖥️ Publishing package
-        uses: borales/actions-yarn@v5
-        with:
-          cmd: publish:package # will run `yarn build:prod` command
+        run: |
+          npm install
+          npm run publish:package
         env:
           NODE_AUTH_TOKEN: ${{secrets.AUTH_NPM_TOKEN}}
 #   publish-gpr:

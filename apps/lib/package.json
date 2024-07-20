@@ -91,8 +91,6 @@
     "@storybook/test": "^8.2.4",
     "@testing-library/dom": "^10.3.2",
     "@testing-library/react": "^16.0.0",
-    "@titlebar/config-eslint": "*",
-    "@titlebar/config-typescript": "*",
     "@types/node": "^20.14.11",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

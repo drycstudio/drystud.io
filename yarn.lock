@@ -1990,6 +1990,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@euclidesdry/electron-pretty-titlebar@workspace:."
   dependencies:
+    "@titlebar/config-eslint": "workspace:*"
     "@titlebar/config-typescript": "workspace:*"
     husky: "npm:^9.1.1"
     lib: "workspace:*"
@@ -3189,7 +3190,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@titlebar/config-eslint@npm:*, @titlebar/config-eslint@workspace:*, @titlebar/config-eslint@workspace:packages/config-eslint":
+"@titlebar/config-eslint@workspace:*, @titlebar/config-eslint@workspace:packages/config-eslint":
   version: 0.0.0-use.local
   resolution: "@titlebar/config-eslint@workspace:packages/config-eslint"
   dependencies:
@@ -3199,7 +3200,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@titlebar/config-typescript@npm:*, @titlebar/config-typescript@workspace:*, @titlebar/config-typescript@workspace:packages/config-typescript":
+"@titlebar/config-typescript@workspace:*, @titlebar/config-typescript@workspace:packages/config-typescript":
   version: 0.0.0-use.local
   resolution: "@titlebar/config-typescript@workspace:packages/config-typescript"
   languageName: unknown
@@ -8879,8 +8880,6 @@ __metadata:
     "@storybook/test": "npm:^8.2.4"
     "@testing-library/dom": "npm:^10.3.2"
     "@testing-library/react": "npm:^16.0.0"
-    "@titlebar/config-eslint": "npm:*"
-    "@titlebar/config-typescript": "npm:*"
     "@types/node": "npm:^20.14.11"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"

@@ -43,6 +43,7 @@
     "lib": "workspace:*"
   },
   "devDependencies": {
+    "@titlebar/config-eslint": "workspace:*",
     "@titlebar/config-typescript": "workspace:*",
     "husky": "^9.1.1",
     "prettier": "^3.3.3",
