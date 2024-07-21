@@ -1,7 +1,6 @@
 {
   "name": "with-electron-vite",
   "version": "0.0.0",
-  "type": "module",
   "private": true,
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
