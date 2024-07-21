@@ -41,7 +41,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://www.github.com/drycstudio/drystud.io"
+    "url": "https://www.github.com/drycstudio/drystud.io"
   },
   "author": "euclidesdry <euclidesdry@gmail.com>",
   "packageManager": "yarn@4.3.1",
