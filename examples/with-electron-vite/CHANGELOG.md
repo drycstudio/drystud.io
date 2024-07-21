@@ -1,4 +1,4 @@
-# example
+# with-electron-vite
 
 ## 1.0.1
 

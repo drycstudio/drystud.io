@@ -24,5 +24,11 @@
       "@euclidesdry/*": ["packages/*"]
     }
   },
-  "exclude": ["node_modules", "**/*.d.ts", "./**/package.json", "apps/example", "packages/config-eslint/**/*.js"]
+  "exclude": [
+    "node_modules",
+    "**/*.d.ts",
+    "./**/package.json",
+    "example/with-electron-vite",
+    "packages/config-eslint/**/*.js"
+  ]
 }
