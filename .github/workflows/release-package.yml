@@ -11,6 +11,8 @@ on:
 jobs:
   build-ci:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -44,16 +46,11 @@ jobs:
         with:
           cmd: turbo run build --filter=lib # will run `yarn build:prod` command
 
-      - name: 📂 Checking app directory
-        run: |
-          cd ./apps/lib
-          ls -la
-
       - name: 🔼 Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: lib
-          path: ./apps/lib
+          name: libs
+          path: ./
 
   publish-npm:
     needs: build-ci
@@ -61,28 +58,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-
-      - name: 📂 Checking app directory (before downloading the artifact)
-        run: |
-          ls -la
-          echo "Checking package.json"
-          cat package.json
-
-      - name: 🗑️ Deleting all files be
-        run: rm -rf ./*
+      - name: Enable Corepack before setting up Node
+        run: corepack enable
 
       - name: 📥 Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: lib
+          name: libs
 
       - name: 📂 Checking app directory (after Donloading artifact)
         run: |
           ls -la
-          echo "Checking package.json"
-          cat package.json
 
-      - uses: actions/setup-node@v4
+      - name: 📦 Publishing NPM Packages
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
@@ -91,7 +80,7 @@ jobs:
       - name: 🖥️ Publishing package
         run: |
           yarn install
-          npm run publish:package
+          yarn publish-packages
         env:
           NODE_AUTH_TOKEN: ${{secrets.AUTH_NPM_TOKEN}}
 #   publish-gpr:

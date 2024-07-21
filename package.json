@@ -49,11 +49,11 @@
   },
   "dependencies": {
     "@changesets/cli": "^2.27.7",
-    "electron-pretty-titlebar": "workspace:*"
+    "electron-titlebar": "workspace:*"
   },
   "devDependencies": {
-    "@euclidesdry/config-eslint": "workspace:*",
-    "@euclidesdry/config-typescript": "workspace:*",
+    "@drycstud.io/config-eslint": "workspace:*",
+    "@drycstud.io/config-typescript": "workspace:*",
     "husky": "^9.1.1",
     "prettier": "^3.3.3",
     "turbo": "^2.0.8",

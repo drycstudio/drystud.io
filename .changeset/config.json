@@ -1,11 +1,12 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.2/schema.json",
-  "changelog": "@changesets/cli/changelog",
+  "changelog": ["@changesets/cli/changelog", { "repo": "drycstudio/drycstud.io" }],
   "commit": false,
   "fixed": [],
-  "linked": [],
+  "linked": [["@drycstud.io/electron-titlebar"]],
   "access": "public",
   "baseBranch": "main",
+  "privatePackages": false,
   "updateInternalDependencies": "patch",
   "ignore": []
 }

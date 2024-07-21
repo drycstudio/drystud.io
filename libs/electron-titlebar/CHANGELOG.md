@@ -1,4 +1,4 @@
-# electron-pretty-titlebar
+# electron-titlebar
 
 ## 1.0.0
 

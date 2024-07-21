@@ -1851,6 +1851,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@drycstud.io/config-eslint@workspace:*, @drycstud.io/config-eslint@workspace:packages/config-eslint":
+  version: 0.0.0-use.local
+  resolution: "@drycstud.io/config-eslint@workspace:packages/config-eslint"
+  dependencies:
+    "@typescript-eslint/eslint-plugin": "npm:^7.1.0"
+    "@typescript-eslint/parser": "npm:^7.1.0"
+    eslint-config-prettier: "npm:^9.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@drycstud.io/config-typescript@workspace:*, @drycstud.io/config-typescript@workspace:packages/config-typescript":
+  version: 0.0.0-use.local
+  resolution: "@drycstud.io/config-typescript@workspace:packages/config-typescript"
+  languageName: unknown
+  linkType: soft
+
 "@electron-toolkit/eslint-config-prettier@npm:^2.0.0":
   version: 2.0.0
   resolution: "@electron-toolkit/eslint-config-prettier@npm:2.0.0"
@@ -2233,22 +2249,6 @@ __metadata:
   checksum: 10c0/e9885532ea70e483fb007bf1275968b05bb15ebaa506d98560c41a41220d33d342e19023d5f2939fed6eb59676c1bda5c847c284b4b55fce521d282004da4dda
   languageName: node
   linkType: hard
-
-"@euclidesdry/config-eslint@workspace:*, @euclidesdry/config-eslint@workspace:packages/config-eslint":
-  version: 0.0.0-use.local
-  resolution: "@euclidesdry/config-eslint@workspace:packages/config-eslint"
-  dependencies:
-    "@typescript-eslint/eslint-plugin": "npm:^7.1.0"
-    "@typescript-eslint/parser": "npm:^7.1.0"
-    eslint-config-prettier: "npm:^9.1.0"
-  languageName: unknown
-  linkType: soft
-
-"@euclidesdry/config-typescript@workspace:*, @euclidesdry/config-typescript@workspace:packages/config-typescript":
-  version: 0.0.0-use.local
-  resolution: "@euclidesdry/config-typescript@workspace:packages/config-typescript"
-  languageName: unknown
-  linkType: soft
 
 "@humanwhocodes/config-array@npm:^0.11.14":
   version: 0.11.14
@@ -6153,9 +6153,9 @@ __metadata:
   resolution: "drycstud.io@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.27.7"
-    "@euclidesdry/config-eslint": "workspace:*"
-    "@euclidesdry/config-typescript": "workspace:*"
-    electron-pretty-titlebar: "workspace:*"
+    "@drycstud.io/config-eslint": "workspace:*"
+    "@drycstud.io/config-typescript": "workspace:*"
+    electron-titlebar: "workspace:*"
     husky: "npm:^9.1.1"
     prettier: "npm:^3.3.3"
     turbo: "npm:^2.0.8"
@@ -6215,9 +6215,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron-pretty-titlebar@workspace:*, electron-pretty-titlebar@workspace:libs/electron-pretty-titlebar":
+"electron-publish@npm:24.13.1":
+  version: 24.13.1
+  resolution: "electron-publish@npm:24.13.1"
+  dependencies:
+    "@types/fs-extra": "npm:^9.0.11"
+    builder-util: "npm:24.13.1"
+    builder-util-runtime: "npm:9.2.4"
+    chalk: "npm:^4.1.2"
+    fs-extra: "npm:^10.1.0"
+    lazy-val: "npm:^1.0.5"
+    mime: "npm:^2.5.2"
+  checksum: 10c0/d31e14f836c7cb4e56f897fcebedbe4c13c32974688d5c3a77681df882a24229188de4c0d46e9ae4981df6f308889118671a6ef5279105f8e6b920c34e1fcc2c
+  languageName: node
+  linkType: hard
+
+"electron-titlebar@workspace:*, electron-titlebar@workspace:libs/electron-titlebar":
   version: 0.0.0-use.local
-  resolution: "electron-pretty-titlebar@workspace:libs/electron-pretty-titlebar"
+  resolution: "electron-titlebar@workspace:libs/electron-titlebar"
   dependencies:
     "@chromatic-com/storybook": "npm:^1.6.1"
     "@electron-toolkit/preload": "npm:^3.0.1"
@@ -6284,21 +6299,6 @@ __metadata:
     react-icons: ^5.2.1
   languageName: unknown
   linkType: soft
-
-"electron-publish@npm:24.13.1":
-  version: 24.13.1
-  resolution: "electron-publish@npm:24.13.1"
-  dependencies:
-    "@types/fs-extra": "npm:^9.0.11"
-    builder-util: "npm:24.13.1"
-    builder-util-runtime: "npm:9.2.4"
-    chalk: "npm:^4.1.2"
-    fs-extra: "npm:^10.1.0"
-    lazy-val: "npm:^1.0.5"
-    mime: "npm:^2.5.2"
-  checksum: 10c0/d31e14f836c7cb4e56f897fcebedbe4c13c32974688d5c3a77681df882a24229188de4c0d46e9ae4981df6f308889118671a6ef5279105f8e6b920c34e1fcc2c
-  languageName: node
-  linkType: hard
 
 "electron-to-chromium@npm:^1.4.820":
   version: 1.4.831
@@ -7328,14 +7328,13 @@ __metadata:
     "@electron-toolkit/preload": "npm:^3.0.1"
     "@electron-toolkit/tsconfig": "npm:^1.0.1"
     "@electron-toolkit/utils": "npm:^3.0.0"
-    "@euclidesdry/config-eslint": "workspace:*"
     "@types/node": "npm:^20.14.8"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     "@vitejs/plugin-react": "npm:^4.3.1"
     electron: "npm:31.2.1"
     electron-builder: "npm:^24.13.3"
-    electron-pretty-titlebar: "workspace:*"
+    electron-titlebar: "workspace:*"
     electron-vite: "npm:^2.3.0"
     eslint: "npm:^8.57.0"
     eslint-plugin-react: "npm:^7.34.3"

@@ -1,7 +1,7 @@
 import Versions from './components/Versions'
 import electronLogo from './assets/electron.svg'
 
-import Titlebar from 'electron-pretty-titlebar'
+import Titlebar from 'electron-titlebar'
 
 function App(): JSX.Element {
   const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
