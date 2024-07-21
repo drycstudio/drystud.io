@@ -1,3 +1,3 @@
-import { preloadConfig } from 'electron-titlebar/config'
+import { preloadConfig } from '@drycstud.io/electron-titlebar/config'
 
 preloadConfig()

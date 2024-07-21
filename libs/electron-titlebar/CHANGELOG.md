@@ -1,5 +1,13 @@
 # @drycstud.io/electron-titlebar
 
+## 1.0.3
+
+### Patch Changes
+
+- Fixes:
+
+  - Adding config type to the `electron-titlebar` library
+
 ## 1.0.2
 
 ### Patch Changes
