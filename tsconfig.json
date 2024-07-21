@@ -1,5 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "include": ["libs/electron-pretty-titlebar/src/**/*"],
+  "include": ["libs/electron-titlebar"],
   "extends": "@drycstud.io/config-typescript/base.json"
 }

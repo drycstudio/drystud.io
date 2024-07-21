@@ -15,7 +15,8 @@
     "project",
     "apps",
     "packages",
-    "libs"
+    "libs",
+    "examples"
   ],
   "cSpell.words": ["autodocs", "Docgen", "drycstud", "npmrc", "typecheck"]
 }

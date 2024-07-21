@@ -1,5 +1,5 @@
 {
-  "name": "example",
+  "name": "with-electron-vite",
   "version": "0.0.0",
   "private": true,
   "description": "An Electron application with React and TypeScript",

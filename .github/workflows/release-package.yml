@@ -73,9 +73,12 @@ jobs:
       - name: 📦 Publishing NPM Packages
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '18.x'
+          cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
           scope: '@drycstud.io'
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.AUTH_NPM_TOKEN}}
 
       - name: 📦 Installing Packageds
         uses: borales/actions-yarn@v5
@@ -86,37 +89,34 @@ jobs:
         uses: borales/actions-yarn@v5
         with:
           cmd: publish-packages # will run `yarn build:prod` command
+
+  publish-gpr:
+    needs: build-ci
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - name: Enable Corepack before setting up Node
+        run: corepack enable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'yarn'
+          registry-url: https://npm.pkg.github.com/
+          scope: '@drycstud.io'
+
+      - name: 📦 Installing Packageds
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: install # will run `yarn ci` command
+
+      - name: 🖥️ Publishing package
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: publish-packages # will run `yarn build:prod` command
         env:
           NODE_AUTH_TOKEN: ${{secrets.AUTH_NPM_TOKEN}}
-#   publish-gpr:
-#     needs: build-ci
-#     runs-on: ubuntu-latest
-#     permissions:
-#       packages: write
-#       contents: read
-#     steps:
-#       - uses: actions/checkout@v4
-#       - uses: actions/setup-node@v4
-#       - name: Enable Corepack before setting up Node
-#         run: corepack enable
-
-#       - uses: actions/setup-node@v4
-#         with:
-#           node-version: 18
-#           cache: 'yarn'
-#           registry-url: https://npm.pkg.github.com/
-
-#       - name: 📦 Installing Packageds
-#         uses: borales/actions-yarn@v5
-#         with:
-#           cmd: install # will run `yarn ci` command
-#       - name: 💻 Building production bundle
-#         uses: borales/actions-yarn@v5
-#         with:
-#           cmd: build # will run `yarn build:prod` command
-#       - name: 🖥️ Publishing package
-#         uses: borales/actions-yarn@v5
-#         with:
-#           cmd: publish:package # will run `yarn build:prod` command
-#         env:
-#           NODE_AUTH_TOKEN: ${{secrets.AUTH_NPM_TOKEN}}

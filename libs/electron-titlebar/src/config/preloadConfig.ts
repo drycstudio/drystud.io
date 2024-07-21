@@ -1,4 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+import electron from 'electron';
+import toolkit from '@electron-toolkit/preload';
+
 /**
  *  @description adds preload configurations on preload.(js,ts) electron built-in file
  *  @requires you to set `nodeIntegration: true` in main BrowserWindow
@@ -6,16 +8,13 @@
 export default function preloadConfig() {
   if ('electron' in window) return;
 
-  const { contextBridge } = require('electron');
-  const { electronAPI } = require('@electron-toolkit/preload');
-
   // Custom APIs for renderer
   const api = {};
 
   if (process.contextIsolated) {
     try {
-      contextBridge.exposeInMainWorld('electron', electronAPI);
-      contextBridge.exposeInMainWorld('versions', {
+      electron.contextBridge.exposeInMainWorld('electron', toolkit.electronAPI);
+      electron.contextBridge.exposeInMainWorld('versions', {
         chrome: process.versions.chrome,
         node: process.versions.node,
         electron: process.versions.electron,
