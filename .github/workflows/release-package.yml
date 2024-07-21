@@ -11,6 +11,8 @@ on:
 jobs:
   build-ci:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -32,23 +34,23 @@ jobs:
       - name: ✏️ Checking for lint errors
         uses: borales/actions-yarn@v5
         with:
-          cmd: turbo run lint --filter=lib # will run `yarn lint` command
+          cmd: turbo run lint # will run `yarn lint` command
 
       - name: 🧪 Testing the app
         uses: borales/actions-yarn@v5
         with:
-          cmd: turbo run test --filter=lib # will run `yarn test` command
+          cmd: turbo run test # will run `yarn test` command
 
       - name: 💻 Building production bundle
         uses: borales/actions-yarn@v5
         with:
-          cmd: turbo run build --filter=lib # will run `yarn build:prod` command
+          cmd: turbo run build # will run `yarn build:prod` command
 
-      - name: 🔼 Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: app
-          path: ./apps/lib
+    #   - name: 🔼 Upload artifact for deployment job
+    #     uses: actions/upload-artifact@v4
+    #     with:
+    #       name: libs
+    #       path: ./
 
   publish-npm:
     needs: build-ci
@@ -59,22 +61,31 @@ jobs:
       - name: Enable Corepack before setting up Node
         run: corepack enable
 
-      - name: 📥 Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: app
+      #   - name: 📥 Download artifact from build job
+      #     uses: actions/download-artifact@v4
+      #     with:
+      #       name: libs
 
-      - uses: actions/setup-node@v4
+      #   - name: 📂 Checking app directory (after Donloading artifact)
+      #     run: |
+      #       ls -la
+
+      - name: 📦 Publishing NPM Packages
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
-          scope: '@euclidesdry'
+          scope: '@drycstud.io'
 
-      - name: 🖥️ Publishing package
+      - name: 📦 Installing Packageds
         uses: borales/actions-yarn@v5
         with:
-          cmd: turbo run publish:package --filter=lib # will run `yarn build:prod` command
+          cmd: install # will run `yarn install --preferoffline` command
+
+      - name: 💻 Building production bundle
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: publish-packages # will run `yarn build:prod` command
         env:
           NODE_AUTH_TOKEN: ${{secrets.AUTH_NPM_TOKEN}}
 #   publish-gpr:

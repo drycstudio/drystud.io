@@ -1,6 +1,6 @@
 {
-  "name": "@euclidesdry/electron-pretty-titlebar",
-  "version": "0.3.6",
+  "name": "drycstud.io",
+  "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "description": "A pretty way to add Titlebar in a Electron app using ReactJS",
@@ -16,6 +16,7 @@
   "author": "euclidesdry <euclidesdry@gmail.com>",
   "workspaces": [
     "apps/*",
+    "libs/*",
     "packages/*"
   ],
   "packageManager": "yarn@4.3.1",
@@ -23,10 +24,10 @@
     "node": ">=18"
   },
   "scripts": {
-    "predev": "turbo build --filter=lib",
     "dev": "turbo dev",
     "build": "turbo build",
     "publish:package": "turbo publish:package",
+    "publish-packages": "turbo lint test build && changeset version && changeset publish",
     "preview": "turbo preview",
     "test": "turbo test",
     "lint": "turbo lint",
@@ -34,16 +35,24 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "apps/*.{js,jsx,ts,tsx}": "yarn lint",
-    "apps/*.{js,jsx,ts,tsx,css,md,html,json}": "yarn lint:format",
+    "libs/*.{js,jsx,ts,tsx}": "yarn lint",
+    "libs/*.{js,jsx,ts,tsx,css,md,html,json}": "yarn lint:format",
     "packages/*.{js,jsx,ts,tsx}": "yarn lint",
     "packages/*.{js,jsx,ts,tsx,css,md,html,json}": "yarn lint:format"
   },
+  "peerDependencies": {
+    "electron": "*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.2.1"
+  },
   "dependencies": {
-    "lib": "workspace:*"
+    "@changesets/cli": "^2.27.7",
+    "@drycstud.io/electron-titlebar": "workspace:*"
   },
   "devDependencies": {
-    "@titlebar/config-typescript": "workspace:*",
+    "@drycstud.io/config-eslint": "workspace:*",
+    "@drycstud.io/config-typescript": "workspace:*",
     "husky": "^9.1.1",
     "prettier": "^3.3.3",
     "turbo": "^2.0.8",

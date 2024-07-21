@@ -1,6 +1,6 @@
 {
   "files": [],
-  "extends": "@titlebar/config-typescript/base.json",
+  "extends": "@drycstud.io/config-typescript/base.json",
   "compilerOptions": {
     "moduleResolution": "Node"
   },

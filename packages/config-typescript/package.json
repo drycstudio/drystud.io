@@ -1,8 +1,8 @@
 {
-	"name": "@titlebar/config-typescript",
-	"version": "0.0.0",
-	"private": true,
-	"publishConfig": {
-		"access": "public"
-	}
+  "name": "@drycstud.io/config-typescript",
+  "version": "0.0.0",
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  }
 }
