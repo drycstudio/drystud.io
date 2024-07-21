@@ -1,9 +1,15 @@
-import { resolve } from 'node:path';
+import path, { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import svgLoader from 'vite-plugin-svgr';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
+import rm from 'rollup-plugin-rm'
+
+import packages from './package.json';
+
+const external = ['esbuild', ...Object.keys(packages.dependencies || {}), ...Object.keys(packages.peerDependencies || {})]
 
 export default defineConfig({
   plugins: [react(), libInjectCss(), svgLoader(), dts({ include: ['src'], insertTypesEntry: true })],
@@ -22,7 +28,8 @@ export default defineConfig({
       formats: ['es', 'cjs'],
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime', resolve(__dirname, 'src/stories')],
+      external: ['react', 'react-dom', 'react/jsx-runtime', resolve(__dirname, 'src/stories'), ...external],
+      plugins: [rm("dist", "buildStart"), rm("types", "buildEnd")],
       output: {
         globals: {
           react: 'React',
