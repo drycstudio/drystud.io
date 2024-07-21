@@ -93,7 +93,7 @@ export default function App() {
 }
 ```
 
-You can check the example of this configuration here: [Implementation Example](https://github.com/euclidesdry/electron-electron-pretty-titlebar/tree/main/apps/example)
+You can check the with-electron-vite of this configuration here: [Implementation with-electron-vite](https://github.com/euclidesdry/electron-electron-pretty-titlebar/tree/main/apps/with-electron-vite)
 
 If you want to add your own custom window triggers then do the following:
 

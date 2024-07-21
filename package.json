@@ -15,7 +15,7 @@
   ],
   "author": "euclidesdry <euclidesdry@gmail.com>",
   "workspaces": [
-    "apps/*",
+    "examples/*",
     "libs/*",
     "packages/*"
   ],
@@ -25,6 +25,7 @@
   },
   "scripts": {
     "dev": "turbo dev",
+    "start": "turbo start",
     "build": "turbo build",
     "publish:package": "turbo publish:package",
     "publish-packages": "turbo lint test build && changeset version && changeset publish",
@@ -53,6 +54,7 @@
   "devDependencies": {
     "@drycstud.io/config-eslint": "workspace:*",
     "@drycstud.io/config-typescript": "workspace:*",
+    "electron": "^31.2.1",
     "husky": "^9.1.1",
     "prettier": "^3.3.3",
     "turbo": "^2.0.8",

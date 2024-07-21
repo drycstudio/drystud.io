@@ -12,7 +12,7 @@
     "declarationMap": true,
     "outDir": "dist",
     "useDefineForClassFields": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "isolatedModules": true,
     "baseUrl": ".",

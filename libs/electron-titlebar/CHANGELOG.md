@@ -1,5 +1,14 @@
 # @drycstud.io/electron-titlebar
 
+## 1.0.4
+
+### Patch Changes
+
+- b14ef2c: Fixes:
+
+  - Not loading preload file: https://github.com/drycstudio/drystud.io/issues/30
+  - Changing example folder
+
 ## 1.0.3
 
 ### Patch Changes

@@ -3,7 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
-import { attachToWindow, setup } from 'electron-titlebar/config'
+import { attachToWindow, setup } from '@drycstud.io/electron-titlebar/config'
 
 setup() // <- Add this line
 
