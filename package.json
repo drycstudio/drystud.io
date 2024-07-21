@@ -1,6 +1,6 @@
 {
   "name": "drycstud.io",
-  "version": "0.3.10",
+  "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "description": "A pretty way to add Titlebar in a Electron app using ReactJS",
@@ -24,7 +24,6 @@
     "node": ">=18"
   },
   "scripts": {
-    "predev": "turbo build --filter=lib",
     "dev": "turbo dev",
     "build": "turbo build",
     "publish:package": "turbo publish:package",
