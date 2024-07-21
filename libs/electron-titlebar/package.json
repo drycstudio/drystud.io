@@ -1,6 +1,6 @@
 {
   "name": "@drycstud.io/electron-titlebar",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "dist/main.mjs",
   "module": "dist/main.js",
   "types": "dist/main.d.ts",
