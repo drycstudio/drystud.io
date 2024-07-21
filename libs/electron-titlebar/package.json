@@ -19,6 +19,8 @@
   },
   "files": [
     "dist",
+    "types",
+    "config.d.ts",
     "LICENSE",
     "README.md"
   ],
