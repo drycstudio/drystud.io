@@ -22,9 +22,9 @@
     "build:linux": "electron-vite build && electron-builder --linux"
   },
   "dependencies": {
+    "@drycstud.io/electron-titlebar": "workspace:*",
     "@electron-toolkit/preload": "^3.0.1",
-    "@electron-toolkit/utils": "^3.0.0",
-    "electron-titlebar": "workspace:*"
+    "@electron-toolkit/utils": "^3.0.0"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",

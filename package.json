@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@changesets/cli": "^2.27.7",
-    "electron-titlebar": "workspace:*"
+    "@drycstud.io/electron-titlebar": "workspace:*"
   },
   "devDependencies": {
     "@drycstud.io/config-eslint": "workspace:*",

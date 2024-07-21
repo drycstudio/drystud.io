@@ -2,8 +2,8 @@
 
 <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/euclidesdry/electron-electron-pretty-titlebar/titlebar-ci.yml?style=for-the-badge&label=CI">
 
-[![NPM Version (scoped)](https://img.shields.io/npm/v/@euclidesdry/electron-electron-pretty-titlebar?style=for-the-badge&logo=appveyor)](https://www.npmjs.com/package/@euclidesdry/electron-electron-pretty-titlebar)
-![npm](https://img.shields.io/npm/dm/@euclidesdry/electron-electron-pretty-titlebar?style=for-the-badge)
+[![NPM Version (scoped)](https://img.shields.io/npm/v/@drycstud.io/electron-titlebar?style=for-the-badge&logo=appveyor)](https://www.npmjs.com/package/@drycstud.io/electron-titlebar)
+![npm](https://img.shields.io/npm/dm/@drycstud.io/electron-titlebar?style=for-the-badge)
 ![Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=for-the-badge&logo=appveyor)
 [![GitHub license](https://img.shields.io/github/license/euclidesdry/electron-electron-pretty-titlebar?style=for-the-badge)](https://github.com/euclidesdry/electron-electron-pretty-titlebar/blob/main/LICENSE)
 
@@ -12,19 +12,19 @@ A pretty way to add Titlebar in a Electron app using ReactJS
 ## Installation
 
 ```bash
-npm install @euclidesdry/electron-electron-pretty-titlebar
+npm install @drycstud.io/electron-titlebar
 ```
 
 Yarn
 
 ```bash
-yarn add @euclidesdry/electron-electron-pretty-titlebar
+yarn add @drycstud.io/electron-titlebar
 ```
 
 PNPM
 
 ```bash
-pnpm install @euclidesdry/electron-electron-pretty-titlebar
+pnpm install @drycstud.io/electron-titlebar
 ```
 
 Set the `frame` property to `false` and `webPreferences.nodeInteraction` to `true` on the `BrowserWindow` Instance inside your `main.(js/ts)` file.
@@ -43,7 +43,7 @@ mainWindow = new BrowserWindow({
 Set the `setup` and `attachToWindow` built-in `main.(js/ts)` file as the following:
 
 ```js
-import { setup, attachToWindow } from '@euclidesdry/electron-electron-pretty-titlebar/config';
+import { setup, attachToWindow } from '@drycstud.io/electron-titlebar/config';
 import { BrowserWindow, ipcMain } from 'electron';
 
 let mainWindow: BrowserWindow | null;
@@ -74,7 +74,7 @@ async function createWindow(): Promise<void> {
 Optional: you can also add the `preloadConfig` to built-in `preload.(js/ts)` file as the following:
 
 ```js
-import { preloadConfig } from '@euclidesdry/electron-electron-pretty-titlebar/config'; // <- Add this line
+import { preloadConfig } from '@drycstud.io/electron-titlebar/config'; // <- Add this line
 
 preloadConfig(); // <- Add this line
 ```
@@ -86,7 +86,7 @@ App to your App.(tsx/jsx) file:
 ```jsx
 import React from 'react';
 
-import { Titlebar } from '@euclidesdry/electron-electron-pretty-titlebar';
+import { Titlebar } from '@drycstud.io/electron-titlebar';
 
 export default function App() {
   return <Titlebar title='Hello World' logo={logoPathOrURL} />;
@@ -101,7 +101,7 @@ If you want to add your own custom window triggers then do the following:
 import React from 'react';
 import electronEnabled from 'is-electron';
 
-import { Titlebar } from '@euclidesdry/electron-electron-pretty-titlebar';
+import { Titlebar } from '@drycstud.io/electron-titlebar';
 
 const requiredModule = electronEnabled() ? 'electron' : 'is-electron';
 const { ipcRenderer } = window.require ? window.require(requiredModule) : false;

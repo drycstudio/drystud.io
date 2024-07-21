@@ -1,5 +1,5 @@
 {
-  "name": "electron-titlebar",
+  "name": "@drycstud.io/electron-titlebar",
   "version": "1.0.1",
   "type": "module",
   "main": "dist/main.cjs",
@@ -35,7 +35,7 @@
   ],
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org/drycstud.io"
+    "registry": "https://npm.pkg.github.com/drycstudio"
   },
   "repository": {
     "type": "git",

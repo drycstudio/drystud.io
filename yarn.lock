@@ -1867,6 +1867,76 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@drycstud.io/electron-titlebar@workspace:*, @drycstud.io/electron-titlebar@workspace:libs/electron-titlebar":
+  version: 0.0.0-use.local
+  resolution: "@drycstud.io/electron-titlebar@workspace:libs/electron-titlebar"
+  dependencies:
+    "@chromatic-com/storybook": "npm:^1.6.1"
+    "@electron-toolkit/preload": "npm:^3.0.1"
+    "@eslint/compat": "npm:^1.1.1"
+    "@eslint/js": "npm:^9.7.0"
+    "@stitches/core": "npm:^1.2.8"
+    "@stitches/react": "npm:^1.2.8"
+    "@storybook/addon-actions": "npm:^8.2.4"
+    "@storybook/addon-essentials": "npm:^8.2.4"
+    "@storybook/addon-interactions": "npm:^8.2.4"
+    "@storybook/addon-links": "npm:^8.2.4"
+    "@storybook/addon-onboarding": "npm:^8.2.4"
+    "@storybook/blocks": "npm:^8.2.4"
+    "@storybook/react": "npm:^8.2.4"
+    "@storybook/react-vite": "npm:^8.2.4"
+    "@storybook/test": "npm:^8.2.4"
+    "@testing-library/dom": "npm:^10.3.2"
+    "@testing-library/react": "npm:^16.0.0"
+    "@types/node": "npm:^20.14.11"
+    "@types/react": "npm:^18.3.3"
+    "@types/react-dom": "npm:^18.3.0"
+    "@types/react-test-renderer": "npm:^18.3.0"
+    "@typescript-eslint/eslint-plugin": "npm:^7.16.1"
+    "@typescript-eslint/parser": "npm:^7.16.1"
+    "@vitejs/plugin-react": "npm:^4.3.1"
+    "@vitest/coverage-v8": "npm:^2.0.3"
+    c8: "npm:^10.1.2"
+    electron: "npm:^31.2.1"
+    eslint: "npm:9.7.0"
+    eslint-config-airbnb: "npm:^19.0.4"
+    eslint-config-standard-with-typescript: "npm:^43.0.1"
+    eslint-config-universe: "npm:^13.0.0"
+    eslint-plugin-import: "npm:^2.29.1"
+    eslint-plugin-jsx-a11y: "npm:^6.9.0"
+    eslint-plugin-n: "npm:^17.9.0"
+    eslint-plugin-promise: "npm:^6.4.0"
+    eslint-plugin-react: "npm:^7.34.4"
+    eslint-plugin-react-hooks: "npm:^4.6.2"
+    eslint-plugin-storybook: "npm:^0.8.0"
+    eslint-plugin-styled-components-a11y: "npm:^2.1.35"
+    globals: "npm:^15.8.0"
+    identity-obj-proxy: "npm:^3.0.0"
+    is-electron: "npm:^2.2.2"
+    jsdom: "npm:^24.1.0"
+    prettier: "npm:3.3.3"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    react-helmet-async: "npm:^2.0.5"
+    react-icons: "npm:^5.2.1"
+    react-test-renderer: "npm:^18.3.1"
+    sass: "npm:^1.77.8"
+    storybook: "npm:^8.2.4"
+    typescript-eslint: "npm:^7.16.1"
+    vite: "npm:^5.3.4"
+    vite-plugin-dts: "npm:^4.0.0-beta.1"
+    vite-plugin-lib-inject-css: "npm:^2.1.1"
+    vite-plugin-svgr: "npm:^4.2.0"
+    vite-tsconfig-paths: "npm:^4.3.2"
+    vitest: "npm:^2.0.3"
+  peerDependencies:
+    electron: "*"
+    react: ^18.3.1
+    react-dom: ^18.3.1
+    react-icons: ^5.2.1
+  languageName: unknown
+  linkType: soft
+
 "@electron-toolkit/eslint-config-prettier@npm:^2.0.0":
   version: 2.0.0
   resolution: "@electron-toolkit/eslint-config-prettier@npm:2.0.0"
@@ -6155,7 +6225,7 @@ __metadata:
     "@changesets/cli": "npm:^2.27.7"
     "@drycstud.io/config-eslint": "workspace:*"
     "@drycstud.io/config-typescript": "workspace:*"
-    electron-titlebar: "workspace:*"
+    "@drycstud.io/electron-titlebar": "workspace:*"
     husky: "npm:^9.1.1"
     prettier: "npm:^3.3.3"
     turbo: "npm:^2.0.8"
@@ -6229,76 +6299,6 @@ __metadata:
   checksum: 10c0/d31e14f836c7cb4e56f897fcebedbe4c13c32974688d5c3a77681df882a24229188de4c0d46e9ae4981df6f308889118671a6ef5279105f8e6b920c34e1fcc2c
   languageName: node
   linkType: hard
-
-"electron-titlebar@workspace:*, electron-titlebar@workspace:libs/electron-titlebar":
-  version: 0.0.0-use.local
-  resolution: "electron-titlebar@workspace:libs/electron-titlebar"
-  dependencies:
-    "@chromatic-com/storybook": "npm:^1.6.1"
-    "@electron-toolkit/preload": "npm:^3.0.1"
-    "@eslint/compat": "npm:^1.1.1"
-    "@eslint/js": "npm:^9.7.0"
-    "@stitches/core": "npm:^1.2.8"
-    "@stitches/react": "npm:^1.2.8"
-    "@storybook/addon-actions": "npm:^8.2.4"
-    "@storybook/addon-essentials": "npm:^8.2.4"
-    "@storybook/addon-interactions": "npm:^8.2.4"
-    "@storybook/addon-links": "npm:^8.2.4"
-    "@storybook/addon-onboarding": "npm:^8.2.4"
-    "@storybook/blocks": "npm:^8.2.4"
-    "@storybook/react": "npm:^8.2.4"
-    "@storybook/react-vite": "npm:^8.2.4"
-    "@storybook/test": "npm:^8.2.4"
-    "@testing-library/dom": "npm:^10.3.2"
-    "@testing-library/react": "npm:^16.0.0"
-    "@types/node": "npm:^20.14.11"
-    "@types/react": "npm:^18.3.3"
-    "@types/react-dom": "npm:^18.3.0"
-    "@types/react-test-renderer": "npm:^18.3.0"
-    "@typescript-eslint/eslint-plugin": "npm:^7.16.1"
-    "@typescript-eslint/parser": "npm:^7.16.1"
-    "@vitejs/plugin-react": "npm:^4.3.1"
-    "@vitest/coverage-v8": "npm:^2.0.3"
-    c8: "npm:^10.1.2"
-    electron: "npm:^31.2.1"
-    eslint: "npm:9.7.0"
-    eslint-config-airbnb: "npm:^19.0.4"
-    eslint-config-standard-with-typescript: "npm:^43.0.1"
-    eslint-config-universe: "npm:^13.0.0"
-    eslint-plugin-import: "npm:^2.29.1"
-    eslint-plugin-jsx-a11y: "npm:^6.9.0"
-    eslint-plugin-n: "npm:^17.9.0"
-    eslint-plugin-promise: "npm:^6.4.0"
-    eslint-plugin-react: "npm:^7.34.4"
-    eslint-plugin-react-hooks: "npm:^4.6.2"
-    eslint-plugin-storybook: "npm:^0.8.0"
-    eslint-plugin-styled-components-a11y: "npm:^2.1.35"
-    globals: "npm:^15.8.0"
-    identity-obj-proxy: "npm:^3.0.0"
-    is-electron: "npm:^2.2.2"
-    jsdom: "npm:^24.1.0"
-    prettier: "npm:3.3.3"
-    react: "npm:^18.3.1"
-    react-dom: "npm:^18.3.1"
-    react-helmet-async: "npm:^2.0.5"
-    react-icons: "npm:^5.2.1"
-    react-test-renderer: "npm:^18.3.1"
-    sass: "npm:^1.77.8"
-    storybook: "npm:^8.2.4"
-    typescript-eslint: "npm:^7.16.1"
-    vite: "npm:^5.3.4"
-    vite-plugin-dts: "npm:^4.0.0-beta.1"
-    vite-plugin-lib-inject-css: "npm:^2.1.1"
-    vite-plugin-svgr: "npm:^4.2.0"
-    vite-tsconfig-paths: "npm:^4.3.2"
-    vitest: "npm:^2.0.3"
-  peerDependencies:
-    electron: "*"
-    react: ^18.3.1
-    react-dom: ^18.3.1
-    react-icons: ^5.2.1
-  languageName: unknown
-  linkType: soft
 
 "electron-to-chromium@npm:^1.4.820":
   version: 1.4.831
@@ -7323,6 +7323,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "example@workspace:apps/example"
   dependencies:
+    "@drycstud.io/electron-titlebar": "workspace:*"
     "@electron-toolkit/eslint-config-prettier": "npm:^2.0.0"
     "@electron-toolkit/eslint-config-ts": "npm:^2.0.0"
     "@electron-toolkit/preload": "npm:^3.0.1"
@@ -7334,7 +7335,6 @@ __metadata:
     "@vitejs/plugin-react": "npm:^4.3.1"
     electron: "npm:31.2.1"
     electron-builder: "npm:^24.13.3"
-    electron-titlebar: "workspace:*"
     electron-vite: "npm:^2.3.0"
     eslint: "npm:^8.57.0"
     eslint-plugin-react: "npm:^7.34.3"

@@ -1,4 +1,4 @@
-# electron-titlebar
+# @drycstud.io/electron-titlebar
 
 ## 1.0.1
 
