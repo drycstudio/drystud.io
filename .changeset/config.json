@@ -3,7 +3,7 @@
   "changelog": ["@changesets/cli/changelog", { "repo": "drycstudio/drycstud.io" }],
   "commit": false,
   "fixed": [],
-  "linked": [["@drycstud.io/electron-titlebar"]],
+  "linked": [],
   "access": "public",
   "baseBranch": "main",
   "privatePackages": false,
