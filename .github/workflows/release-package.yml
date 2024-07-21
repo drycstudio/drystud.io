@@ -34,17 +34,17 @@ jobs:
       - name: ✏️ Checking for lint errors
         uses: borales/actions-yarn@v5
         with:
-          cmd: turbo run lint --filter=lib # will run `yarn lint` command
+          cmd: turbo run lint # will run `yarn lint` command
 
       - name: 🧪 Testing the app
         uses: borales/actions-yarn@v5
         with:
-          cmd: turbo run test --filter=lib # will run `yarn test` command
+          cmd: turbo run test # will run `yarn test` command
 
       - name: 💻 Building production bundle
         uses: borales/actions-yarn@v5
         with:
-          cmd: turbo run build --filter=lib # will run `yarn build:prod` command
+          cmd: turbo run build # will run `yarn build:prod` command
 
       - name: 🔼 Upload artifact for deployment job
         uses: actions/upload-artifact@v4
