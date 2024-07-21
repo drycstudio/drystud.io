@@ -1,5 +1,11 @@
 # @drycstud.io/electron-titlebar
 
+## 1.0.2
+
+### Patch Changes
+
+- 12a0a0d: adding new lib (@drycstud.io/electron-titlebar) documentation
+
 ## 1.0.1
 
 ### Patch Changes
