@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import * as HelmetAsync from 'react-helmet-async';
 
 import { globalStyles } from '~/styles/global';
 import titlebarLogo from '~/assets/icon/logo/electron-pretty-titlebar-logo.svg';
@@ -42,10 +42,10 @@ export default function Titlebar({
   const LOGO = logo || titlebarLogo;
 
   return (
-    <HelmetProvider>
-      <Helmet>
+    <HelmetAsync.HelmetProvider>
+      <HelmetAsync.Helmet>
         <html data-titlebar='prettier' lang='pt' className={htmlTagStyles({ size })} />
-      </Helmet>
+      </HelmetAsync.Helmet>
       {createPortal(
         <TitlebarContainer size={size}>
           <Logo>
@@ -62,6 +62,6 @@ export default function Titlebar({
         </TitlebarContainer>,
         document.body
       )}
-    </HelmetProvider>
+    </HelmetAsync.HelmetProvider>
   );
 }
