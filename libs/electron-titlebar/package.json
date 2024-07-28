@@ -1,6 +1,6 @@
 {
   "name": "@drycstud.io/electron-titlebar",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/main.mjs",
   "module": "dist/main.js",
   "types": "dist/main.d.ts",
@@ -22,6 +22,7 @@
     "types",
     "config.d.ts",
     "electron.d.ts",
+    "react-helmet-async.d.ts",
     "LICENSE",
     "README.md"
   ],
@@ -69,11 +70,10 @@
     "**/*.css"
   ],
   "peerDependencies": {
-    "electron": "^31.2.1",
+    "electron": "^31.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-icons": "^5.2.1",
-    "vite": "^5.0.0"
+    "react-icons": "^5.2.1"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",

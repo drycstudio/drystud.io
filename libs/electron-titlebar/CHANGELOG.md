@@ -1,12 +1,22 @@
 # @drycstud.io/electron-titlebar
 
+## 1.0.5
+
+### Patch Changes
+
+- 7a84d7d: Fixing library cjs syntax error
+
+  Fix:
+
+  - SyntaxError: Named export 'HelmetProvider' not found.
+
 ## 1.0.4
 
 ### Patch Changes
 
 - b14ef2c: Fixes:
 
-  - Not loading preload file: https://github.com/drycstudio/drystud.io/issues/30
+  - Not loading preload file: <https://github.com/drycstudio/drystud.io/issues/30>
   - Changing example folder
 
 ## 1.0.3

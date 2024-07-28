@@ -54,10 +54,10 @@
   "devDependencies": {
     "@drycstud.io/config-eslint": "workspace:*",
     "@drycstud.io/config-typescript": "workspace:*",
-    "electron": "^31.2.1",
-    "husky": "^9.1.1",
+    "electron": "^31.3.0",
+    "husky": "^9.1.3",
     "prettier": "^3.3.3",
-    "turbo": "^2.0.8",
-    "typescript": "^5.5.3"
+    "turbo": "^2.0.9",
+    "typescript": "^5.5.4"
   }
 }
