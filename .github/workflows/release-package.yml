@@ -23,7 +23,7 @@ jobs:
       - name: Setting up NodeJS and Yarn
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: 'yarn'
 
       - name: 📦 Installing Packageds
@@ -73,7 +73,7 @@ jobs:
       - name: 📦 Publishing NPM Packages
         uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '22.x'
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
           scope: '@drycstud.io'
@@ -104,7 +104,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '22.x'
           cache: 'yarn'
           registry-url: https://npm.pkg.github.com/
           scope: '@drycstud.io'
