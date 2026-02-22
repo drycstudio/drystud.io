@@ -1,5 +1,42 @@
 # @drycstud.io/electron-titlebar
 
+## 2.0.0
+
+### Major Changes
+
+- Complete titlebar overhaul with new features, components, and architecture:
+
+  **New Components**
+
+  - **Menu bar** — Full dropdown menus with submenus, keyboard navigation (Arrow keys, Enter, Escape), hover switching, separators, disabled items, and automatic keyboard shortcut formatting (Ctrl+S → ⌘S on macOS)
+  - **Responsive overflow** — Menu items collapse one-by-one into an overflow button (`⋯`) when the window is resized, and restore individually when space is available again
+  - **Command palette** — Searchable command palette with sections, filter chips, keyboard navigation, custom item rendering, loading/empty states, and footer actions
+  - **User profile** — Avatar with initials fallback, status indicator (online/away/busy/offline), dropdown with custom actions, sign-in/sign-out flow
+  - **Notification panel** — Pre-styled building blocks (`NotificationPanelRoot`, `NotificationItem`, `NotificationBadge`, etc.) for rich notification dropdowns
+  - **Custom dropdown content** — `renderDropdown` prop on toolbar actions for fully custom dropdown content (e.g., notification panels)
+  - **Filled split button** — Colored split buttons with main action + chevron dropdown for toolbar actions
+
+  **Improvements**
+
+  - Dropdown menus now scroll with a styled scrollbar when exceeding viewport height
+  - SearchBar container clips cleanly instead of overlapping menu items on narrow windows
+  - `void` handling for async promise in window maximize/restore
+  - Action guard in menu overflow flattening prevents undefined actions
+  - Render-phase ref mutation replaced with `useMemo` for React concurrent mode safety
+
+  **Infrastructure**
+
+  - Upgraded to React 19, Electron 40, Vite 7, TypeScript 5.9
+  - 341 tests with 100% coverage (statements, branches, functions, lines)
+  - Comprehensive Storybook documentation for all components
+  - Cursor rules and skills for development guidance
+  - Rewritten README with architecture diagrams, full API reference, and demo GIF
+
+  **Breaking Changes**
+
+  - Peer dependency: `react` now requires `^18.3.1 || ^19.0.0`
+  - Peer dependency: `electron` now requires `>=31.0.0`
+
 ## 1.0.4
 
 ### Patch Changes
