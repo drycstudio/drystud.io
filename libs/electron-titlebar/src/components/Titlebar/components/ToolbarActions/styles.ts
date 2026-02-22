@@ -60,6 +60,11 @@ export const ActionButton = styled('button', {
       backgroundColor: 'rgba(255, 255, 255, 0.12)',
     },
 
+    '&:focus-visible': {
+      outline: '2px solid rgba(79, 70, 229, 0.6)',
+      outlineOffset: '-2px',
+    },
+
     '&:disabled': {
       opacity: 0.4,
       cursor: 'default',

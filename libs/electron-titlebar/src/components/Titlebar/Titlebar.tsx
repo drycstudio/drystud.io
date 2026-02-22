@@ -30,6 +30,29 @@ export type {
   SearchResult,
 } from './components/SearchBar';
 export type { TitlebarAction, TitlebarActionDropdownItem, ToolbarActionsProps } from './components/ToolbarActions';
+export {
+  NotificationPanelRoot,
+  NotificationHeader,
+  NotificationTitle,
+  NotificationHeaderActions,
+  NotificationHeaderButton,
+  NotificationList,
+  NotificationItem,
+  NotificationDot,
+  NotificationIcon,
+  NotificationContent,
+  NotificationItemTitle,
+  NotificationDescription,
+  NotificationMeta,
+  NotificationBadge,
+  NotificationSeparator,
+  NotificationFooter,
+  NotificationFooterButton,
+  NotificationEmpty,
+  NotificationEmptyText,
+  NotificationGroup,
+  NotificationGroupLabel,
+} from './components/ToolbarActions';
 
 export type TitlebarProps = {
   title?: string | null;
@@ -90,7 +113,7 @@ export default function Titlebar({
         <html data-titlebar='prettier' lang='pt' className={htmlTagStyles({ size })} />
       </Helmet>
       {createPortal(
-        <TitlebarContainer size={size} platform={platform}>
+        <TitlebarContainer size={size} platform={platform} role="banner" aria-label="Application titlebar">
           {!isMac && (
             <Logo>
               <LogoImage src={LOGO} alt='Electron Pretty Titlebar Logo' />

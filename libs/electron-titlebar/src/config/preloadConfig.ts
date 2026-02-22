@@ -24,7 +24,7 @@ export default function preloadConfig() {
     }
   } else {
     // @ts-expect-error (define in dts)
-    window.electron = electronAPI;
+    window.electron = toolkit.electronAPI;
     // @ts-expect-error (define in dts)
     window.api = api;
   }

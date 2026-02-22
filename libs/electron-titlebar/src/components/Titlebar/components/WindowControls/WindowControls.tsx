@@ -1,43 +1,91 @@
-import { TitlebarProps } from '~/components/Titlebar';
+import type { TitlebarProps } from '~/components/Titlebar';
 
 import { FiCopy, FiMinus, FiSquare, FiX } from 'react-icons/fi';
 
 import { ActionButton } from '../ActionButton';
 import { ButtonContainer, actionButtonIconStyle } from '../ActionButton/styles';
-import { Menu, Text, Title } from './styles';
+import { Menu as MenuPlaceholder, Text, Title } from './styles';
+import { Menu } from '../Menu';
+import { UserProfile } from '../UserProfile';
+import { SearchBar } from '../SearchBar';
+import { ToolbarActions } from '../ToolbarActions';
 
-export type WindowControlsProps = Pick<TitlebarProps, 'title'> & {
+type WindowControlsBaseProps = Pick<TitlebarProps, 'title' | 'menuItems' | 'platform' | 'user' | 'userActions' | 'onSignIn' | 'onSignOut' | 'commandPalette' | 'actions' | 'renderActions'>;
+
+type WindowControlsWithButtons = WindowControlsBaseProps & {
+  macOnly?: false;
   isWindowMaximized: boolean;
   handleMinimazeMaximaze(): Promise<void>;
   handleMinus(): void;
   handleClose(): void;
 };
 
-export function WindowControls({
-  title,
-  isWindowMaximized,
-  handleMinimazeMaximaze,
-  handleMinus,
-  handleClose,
-}: WindowControlsProps) {
+type WindowControlsMacOnly = WindowControlsBaseProps & {
+  macOnly: true;
+  isWindowMaximized?: never;
+  handleMinimazeMaximaze?: never;
+  handleMinus?: never;
+  handleClose?: never;
+};
+
+export type WindowControlsProps = WindowControlsWithButtons | WindowControlsMacOnly;
+
+export function WindowControls(props: WindowControlsProps) {
+  const { title, menuItems, macOnly, platform, user, userActions, onSignIn, onSignOut, commandPalette, actions, renderActions } = props;
+
+  const showSearch = commandPalette !== undefined;
+
+  if (macOnly) {
+    return (
+      <>
+        {menuItems?.length ? <Menu items={menuItems} platform={platform} /> : null}
+        {showSearch ? (
+          <SearchBar
+            {...commandPalette}
+            platform={platform}
+            centered
+          />
+        ) : (
+          <Title />
+        )}
+        <ToolbarActions actions={actions} renderActions={renderActions} />
+        <UserProfile user={user} actions={userActions} onSignIn={onSignIn} onSignOut={onSignOut} />
+      </>
+    );
+  }
+
+  const { isWindowMaximized, handleMinimazeMaximaze, handleMinus, handleClose } = props;
+
   return (
     <>
-      <Menu key={0} />
+      {menuItems?.length ? <Menu items={menuItems} platform={platform} /> : <MenuPlaceholder />}
 
-      <Title key={1}>
+      <Title>
         <Text>{title}</Text>
       </Title>
 
-      <ButtonContainer key={2}>
+      {showSearch && (
+        <SearchBar
+          {...commandPalette}
+          platform={platform}
+        />
+      )}
+
+      <ToolbarActions actions={actions} renderActions={renderActions} />
+      <UserProfile user={user} actions={userActions} onSignIn={onSignIn} onSignOut={onSignOut} />
+
+      <ButtonContainer role="group" aria-label="Window controls">
         <ActionButton
+          aria-label="Minimize"
           onClick={() => {
             handleMinus();
           }}>
           <FiMinus className={actionButtonIconStyle()} />
         </ActionButton>
         <ActionButton
+          aria-label={isWindowMaximized ? 'Restore' : 'Maximize'}
           onClick={() => {
-            handleMinimazeMaximaze();
+            void handleMinimazeMaximaze();
           }}>
           {isWindowMaximized ? (
             <FiCopy
@@ -51,6 +99,7 @@ export function WindowControls({
         </ActionButton>
         <ActionButton
           type='close'
+          aria-label="Close"
           onClick={() => {
             handleClose();
           }}>

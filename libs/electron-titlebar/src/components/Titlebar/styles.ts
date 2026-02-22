@@ -23,17 +23,44 @@ export const htmlTagStyles = css({
 
 export const TitlebarContainer = styled('div', {
   width: '100%',
-  alignContent: 'space-between',
   alignItems: 'center',
-  backgroundColor: 'rgb(27, 27, 47 , 1)',
-  color: 'rgb(255, 255, 255 , 1)',
+  backgroundColor: '#1C1C1C',
+  color: 'rgba(255, 255, 255, 0.9)',
   display: 'flex',
-  flexWrap: 'wrap',
+  flexWrap: 'nowrap',
   position: 'fixed',
   top: 0,
   left: 0,
   right: 0,
   zIndex: 999_999_999,
+  overflow: 'visible',
+  appRegion: 'drag',
+  userSelect: 'none',
+  fontFamily:
+    '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji',
+  lineHeight: 1.5,
+
+  '& *': {
+    margin: 0,
+    padding: 0,
+    border: '0 solid',
+    boxSizing: 'border-box',
+  },
+  '& button': {
+    color: 'inherit',
+    fontFamily: 'inherit',
+    fontSize: '100%',
+    lineHeight: 'inherit',
+    appearance: 'button',
+    backgroundColor: 'transparent',
+    backgroundImage: 'none',
+    cursor: 'pointer',
+    border: 'none',
+    '&:disabled': {
+      cursor: 'default',
+    },
+  },
+
   variants: {
     size: {
       default: {
@@ -42,6 +69,13 @@ export const TitlebarContainer = styled('div', {
       small: {
         height: DIMENSIONS.small,
       },
+    },
+    platform: {
+      macos: {
+        paddingLeft: '70px',
+      },
+      windows: {},
+      linux: {},
     },
   },
   defaultVariants: {
@@ -53,13 +87,16 @@ export const Logo = styled('div', {
   alignContent: 'center',
   alignItems: 'center',
   display: 'flex',
+  justifyContent: 'center',
   height: '100%',
-  width: '38px',
+  width: '36px',
+  flexShrink: 0,
+  appRegion: 'no-drag',
 });
 
 export const LogoImage = styled('img', {
-  flex: '1 1 0%',
-  height: '38px',
-  padding: '6px',
-  width: '38px',
+  height: '20px',
+  width: '20px',
+  padding: 0,
+  objectFit: 'contain',
 });

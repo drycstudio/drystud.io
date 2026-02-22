@@ -5,13 +5,14 @@ export const actionButtonIconStyle = css({
   flex: '1 1 0%',
   height: '100%',
   width: '100%',
-  padding: '8px',
+  padding: '10px',
 });
 
 export const ButtonContainer = styled('div', {
   display: 'flex',
   flexDirection: 'row',
   height: '100%',
+  flexShrink: 0,
 });
 
 export const Button = styled('button', {
@@ -22,19 +23,28 @@ export const Button = styled('button', {
   margin: 0,
   overflow: 'hidden',
   textAlign: 'center',
-  width: '48px',
-  transition: 'all 0.3s ease',
+  width: '46px',
+
+  '&:focus-visible': {
+    outline: '2px solid rgba(79, 70, 229, 0.6)',
+    outlineOffset: '-2px',
+  },
+
+  '@media (max-width: 540px)': {
+    width: '36px',
+  },
+  transition: 'background-color 150ms ease',
 
   variants: {
     type: {
       default: {
         '&:hover': {
-          backgroundColor: 'rgb(95 95 163)',
+          backgroundColor: 'rgba(255, 255, 255, 0.08)',
         },
       },
       close: {
         '&:hover': {
-          backgroundColor: '#cd0000',
+          backgroundColor: '#e81123',
         },
       },
     },
@@ -45,13 +55,12 @@ export const Button = styled('button', {
   },
 
   [`& .${actionButtonIconStyle}`]: {
-    transitionDuration: '0.2s',
-    transitionProperty: 'all',
+    transitionDuration: '0.15s',
+    transitionProperty: 'transform',
     transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
 
     '&:hover': {
-      scale: 1.25,
-      transitionDuration: '0.3s',
+      scale: 1.1,
     },
     '&:active': {
       scale: 0.95,

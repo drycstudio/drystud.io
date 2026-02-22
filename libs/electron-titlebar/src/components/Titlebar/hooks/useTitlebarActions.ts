@@ -28,7 +28,7 @@ export function useTitlebarActions(
 
     const updateSize = async () => {
       const body = document.querySelector('body') as HTMLBodyElement;
-      body.style.width = window.innerWidth.toString();
+      body.style.width = `${window.innerWidth}px`;
       await handleVerifyIfWindowIsMaximized();
     };
 
@@ -73,7 +73,7 @@ export function useTitlebarActions(
       );
     }
 
-    if (ipcHandle) {
+    if (!ipcHandle) {
       console.warn('!Titlebar Alert!: Please Add the preload configuration on your app preload.(js/ts) file.');
     }
   }, []);

@@ -15,6 +15,8 @@ export type TitlebarAction = {
   highlight?: boolean;
   onClick?: () => void;
   dropdown?: TitlebarActionDropdownItem[];
+  renderDropdown?: (close: () => void) => ReactNode;
+  dropdownWidth?: number | string;
   disabled?: boolean;
 };
 

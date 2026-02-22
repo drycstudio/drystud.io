@@ -1,5 +1,3 @@
-import attachToWindow from './attach';
-import setup from './setup';
-import preloadConfig from './preloadConfig';
-
-export { attachToWindow, setup, preloadConfig };
+export { default as attachToWindow } from './attach';
+export { default as setup, getTitlebarOptions } from './setup';
+export { default as preloadConfig } from './preloadConfig';

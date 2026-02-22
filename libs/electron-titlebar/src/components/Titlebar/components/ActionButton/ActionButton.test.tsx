@@ -1,25 +1,45 @@
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
-
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, test, expect, vi } from 'vitest';
 import { ActionButton } from './ActionButton';
 
-const MOCK_TESTID = 'action-button-children';
-
 describe('ActionButton', () => {
-  test('renders the correctly with all props', async () => {
-    const { getByTestId } = render(
+  test('renders children correctly', () => {
+    render(
       <ActionButton onClick={() => {}}>
-        <div data-testid={MOCK_TESTID}>-</div>
-      </ActionButton>
+        <span data-testid="child">icon</span>
+      </ActionButton>,
     );
-    const ExpectedActionButtonComponent = getByTestId(MOCK_TESTID);
+    expect(screen.getByTestId('child')).toBeTruthy();
+  });
 
-    await waitFor(() => {
-      expect(ExpectedActionButtonComponent).toBeTruthy();
-    });
+  test('calls onClick when clicked', () => {
+    const onClick = vi.fn();
+    render(
+      <ActionButton onClick={onClick}>
+        <span>icon</span>
+      </ActionButton>,
+    );
+    fireEvent.click(screen.getByRole('button'));
+    expect(onClick).toHaveBeenCalledOnce();
+  });
 
-    await act(() => {
-      fireEvent.click(ExpectedActionButtonComponent);
-    });
+  test('renders with default type', () => {
+    const { container } = render(
+      <ActionButton onClick={() => {}}>
+        <span>icon</span>
+      </ActionButton>,
+    );
+    const button = container.querySelector('button');
+    expect(button).toBeTruthy();
+  });
+
+  test('renders with close type', () => {
+    const { container } = render(
+      <ActionButton type="close" onClick={() => {}}>
+        <span>icon</span>
+      </ActionButton>,
+    );
+    const button = container.querySelector('button');
+    expect(button).toBeTruthy();
   });
 });

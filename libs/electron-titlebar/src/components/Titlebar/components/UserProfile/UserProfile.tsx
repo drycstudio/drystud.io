@@ -51,19 +51,25 @@ export function UserProfile({ user, actions, onSignIn, onSignOut }: UserProfileP
 
   return (
     <Container ref={containerRef}>
-      <AvatarButton onClick={() => setOpen(!open)} data-testid="avatar-button">
+      <AvatarButton
+        onClick={() => setOpen(!open)}
+        aria-haspopup="true"
+        aria-expanded={open || undefined}
+        aria-label={`User menu for ${user.name}`}
+        data-testid="avatar-button"
+      >
         <div style={{ position: 'relative', display: 'flex' }}>
           {user.avatar ? (
             <AvatarImage src={user.avatar} alt={user.name} />
           ) : (
-            <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+            <AvatarFallback aria-hidden="true">{getInitials(user.name)}</AvatarFallback>
           )}
-          {user.status && <StatusDot status={user.status} data-testid="status-dot" />}
+          {user.status && <StatusDot status={user.status} aria-label={`Status: ${user.status}`} data-testid="status-dot" />}
         </div>
       </AvatarButton>
 
       {open && (
-        <Dropdown data-testid="user-dropdown">
+        <Dropdown role="menu" aria-label="User menu" data-testid="user-dropdown">
           <UserHeader>
             <UserName>{user.name}</UserName>
             {user.email && <UserEmail>{user.email}</UserEmail>}
@@ -71,10 +77,11 @@ export function UserProfile({ user, actions, onSignIn, onSignOut }: UserProfileP
 
           {actions?.map((item, index) =>
             item.type === 'separator' ? (
-              <Separator key={`sep-${index}`} />
+              <Separator key={`sep-${index}`} role="separator" />
             ) : (
               <DropdownItem
                 key={item.label}
+                role="menuitem"
                 onClick={() => {
                   item.action();
                   setOpen(false);
@@ -87,8 +94,9 @@ export function UserProfile({ user, actions, onSignIn, onSignOut }: UserProfileP
 
           {onSignOut && (
             <>
-              {actions?.length ? <Separator /> : null}
+              {actions?.length ? <Separator role="separator" /> : null}
               <DropdownItem
+                role="menuitem"
                 onClick={() => {
                   onSignOut();
                   setOpen(false);

@@ -613,5 +613,169 @@ describe('ToolbarActionItem', () => {
       fireEvent.keyDown(document, { key: 'Escape' });
       expect(screen.queryByTestId('toolbar-dropdown-upgrade')).toBeNull();
     });
+
+    test('hides tooltip on mouseLeave for filled variant', () => {
+      const action: TitlebarAction = {
+        id: 'upgrade',
+        icon: zapIcon,
+        label: 'Update',
+        variant: 'filled',
+        tooltip: 'Update Available',
+      };
+      render(<ToolbarActionItem action={action} />);
+      const wrapper = screen.getByTestId('toolbar-action-upgrade').parentElement!;
+      fireEvent.mouseEnter(wrapper);
+      expect(screen.getByText('Update Available')).toBeTruthy();
+      fireEvent.mouseLeave(wrapper);
+      expect(screen.queryByText('Update Available')).toBeNull();
+    });
+
+    test('does not show tooltip when dropdown is open for filled variant', () => {
+      const action: TitlebarAction = {
+        id: 'upgrade',
+        icon: zapIcon,
+        label: 'Update',
+        variant: 'filled',
+        tooltip: 'Update Available',
+        dropdown: [{ label: 'Download Only', action: vi.fn() }],
+      };
+      render(<ToolbarActionItem action={action} />);
+      fireEvent.click(screen.getByTestId('toolbar-action-upgrade-chevron'));
+      expect(screen.getByTestId('toolbar-dropdown-upgrade')).toBeTruthy();
+      const wrapper = screen.getByTestId('toolbar-action-upgrade').parentElement!;
+      fireEvent.mouseEnter(wrapper);
+      expect(screen.queryByText('Update Available')).toBeNull();
+    });
+
+    test('uses label as aria-label when tooltip is not provided', () => {
+      const action: TitlebarAction = {
+        id: 'upgrade',
+        icon: zapIcon,
+        label: 'Update',
+        variant: 'filled',
+      };
+      render(<ToolbarActionItem action={action} />);
+      const container = screen.getByTestId('toolbar-action-upgrade');
+      expect(container.getAttribute('aria-label')).toBe('Update');
+    });
+
+    test('uses default badgeVariant when not specified for filled variant', () => {
+      const action: TitlebarAction = {
+        id: 'upgrade',
+        icon: zapIcon,
+        label: 'Update',
+        variant: 'filled',
+      };
+      render(<ToolbarActionItem action={action} />);
+      expect(screen.getByTestId('toolbar-action-upgrade')).toBeTruthy();
+    });
+  });
+
+  describe('renderDropdown (custom dropdown)', () => {
+    test('renders custom dropdown content when renderDropdown is provided', () => {
+      const action: TitlebarAction = {
+        id: 'notif',
+        icon: bellIcon,
+        renderDropdown: () => <div data-testid="custom-panel">Custom Panel</div>,
+      };
+      render(<ToolbarActionItem action={action} />);
+      fireEvent.click(screen.getByTestId('toolbar-action-notif'));
+      expect(screen.getByTestId('toolbar-dropdown-notif')).toBeTruthy();
+      expect(screen.getByTestId('custom-panel')).toBeTruthy();
+      expect(screen.getByText('Custom Panel')).toBeTruthy();
+    });
+
+    test('passes close callback to renderDropdown', () => {
+      const action: TitlebarAction = {
+        id: 'notif',
+        icon: bellIcon,
+        renderDropdown: (close) => (
+          <button data-testid="close-btn" onClick={close}>Close</button>
+        ),
+      };
+      render(<ToolbarActionItem action={action} />);
+      fireEvent.click(screen.getByTestId('toolbar-action-notif'));
+      expect(screen.getByTestId('toolbar-dropdown-notif')).toBeTruthy();
+      fireEvent.click(screen.getByTestId('close-btn'));
+      expect(screen.queryByTestId('toolbar-dropdown-notif')).toBeNull();
+    });
+
+    test('applies dropdownWidth as number', () => {
+      const action: TitlebarAction = {
+        id: 'notif',
+        icon: bellIcon,
+        dropdownWidth: 360,
+        renderDropdown: () => <div>Panel</div>,
+      };
+      render(<ToolbarActionItem action={action} />);
+      fireEvent.click(screen.getByTestId('toolbar-action-notif'));
+      const dropdown = screen.getByTestId('toolbar-dropdown-notif');
+      expect(dropdown.style.width).toBe('360px');
+      expect(dropdown.style.minWidth).toBe('unset');
+    });
+
+    test('applies dropdownWidth as string', () => {
+      const action: TitlebarAction = {
+        id: 'notif',
+        icon: bellIcon,
+        dropdownWidth: '400px',
+        renderDropdown: () => <div>Panel</div>,
+      };
+      render(<ToolbarActionItem action={action} />);
+      fireEvent.click(screen.getByTestId('toolbar-action-notif'));
+      const dropdown = screen.getByTestId('toolbar-dropdown-notif');
+      expect(dropdown.style.width).toBe('400px');
+    });
+
+    test('renderDropdown takes precedence over dropdown items', () => {
+      const action: TitlebarAction = {
+        id: 'notif',
+        icon: bellIcon,
+        dropdown: [{ label: 'Should not show', action: vi.fn() }],
+        renderDropdown: () => <div data-testid="custom-content">Custom</div>,
+      };
+      render(<ToolbarActionItem action={action} />);
+      fireEvent.click(screen.getByTestId('toolbar-action-notif'));
+      expect(screen.getByTestId('custom-content')).toBeTruthy();
+      expect(screen.queryByText('Should not show')).toBeNull();
+    });
+
+    test('toggles custom dropdown on repeated clicks', () => {
+      const action: TitlebarAction = {
+        id: 'notif',
+        icon: bellIcon,
+        renderDropdown: () => <div>Panel</div>,
+      };
+      render(<ToolbarActionItem action={action} />);
+      fireEvent.click(screen.getByTestId('toolbar-action-notif'));
+      expect(screen.getByTestId('toolbar-dropdown-notif')).toBeTruthy();
+      fireEvent.click(screen.getByTestId('toolbar-action-notif'));
+      expect(screen.queryByTestId('toolbar-dropdown-notif')).toBeNull();
+    });
+
+    test('Escape closes custom dropdown', () => {
+      const action: TitlebarAction = {
+        id: 'notif',
+        icon: bellIcon,
+        renderDropdown: () => <div>Panel</div>,
+      };
+      render(<ToolbarActionItem action={action} />);
+      fireEvent.click(screen.getByTestId('toolbar-action-notif'));
+      expect(screen.getByTestId('toolbar-dropdown-notif')).toBeTruthy();
+      fireEvent.keyDown(document, { key: 'Escape' });
+      expect(screen.queryByTestId('toolbar-dropdown-notif')).toBeNull();
+    });
+
+    test('no dropdownWidth style applied when not specified', () => {
+      const action: TitlebarAction = {
+        id: 'notif',
+        icon: bellIcon,
+        renderDropdown: () => <div>Panel</div>,
+      };
+      render(<ToolbarActionItem action={action} />);
+      fireEvent.click(screen.getByTestId('toolbar-action-notif'));
+      const dropdown = screen.getByTestId('toolbar-dropdown-notif');
+      expect(dropdown.style.width).toBe('');
+    });
   });
 });
