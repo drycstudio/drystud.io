@@ -33,14 +33,14 @@ jobs:
       - name: ✏️ Checking for lint errors
         uses: borales/actions-yarn@v5
         with:
-          cmd: turbo run lint --filter=lib # will run `yarn lint` command
+          cmd: turbo run lint --filter=@drycstud.io/electron-titlebar
 
       - name: 🧪 Testing the app
         uses: borales/actions-yarn@v5
         with:
-          cmd: turbo run test --filter=lib # will run `yarn test` command
+          cmd: turbo run test --filter=@drycstud.io/electron-titlebar
 
       - name: 💻 Building production bundle
         uses: borales/actions-yarn@v5
         with:
-          cmd: turbo run build --filter=lib # will run `yarn build:prod` command
+          cmd: turbo run build --filter=@drycstud.io/electron-titlebar
