@@ -1,5 +1,4 @@
-import path, { resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
@@ -12,7 +11,7 @@ import packages from './package.json';
 const external = ['esbuild', ...Object.keys(packages.dependencies || {}), ...Object.keys(packages.peerDependencies || {})]
 
 export default defineConfig({
-  plugins: [react(), libInjectCss(), svgLoader(), dts({ include: ['src'], insertTypesEntry: true })],
+  plugins: [react(), libInjectCss(), svgLoader(), dts({ include: ['src'], exclude: ['**/*.test.*', '**/*.stories.*', 'src/__tests__', 'src/__mocks__', 'src/stories'], insertTypesEntry: true })],
   resolve: {
     alias: {
       '~': resolve(__dirname, './src'),

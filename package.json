@@ -33,6 +33,8 @@
     "test": "turbo test",
     "lint": "turbo lint",
     "lint:format": "turbo lint:format",
+    "storybook": "yarn workspace @drycstud.io/electron-titlebar storybook",
+    "storybook:build": "yarn workspace @drycstud.io/electron-titlebar storybook:build",
     "prepare": "husky install"
   },
   "lint-staged": {
@@ -48,16 +50,16 @@
     "react-icons": "^5.2.1"
   },
   "dependencies": {
-    "@changesets/cli": "^2.27.7",
+    "@changesets/cli": "^2.29.8",
     "@drycstud.io/electron-titlebar": "workspace:*"
   },
   "devDependencies": {
     "@drycstud.io/config-eslint": "workspace:*",
     "@drycstud.io/config-typescript": "workspace:*",
-    "electron": "^31.2.1",
-    "husky": "^9.1.1",
-    "prettier": "^3.3.3",
-    "turbo": "^2.0.8",
-    "typescript": "^5.5.3"
+    "electron": "^40.6.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.8.1",
+    "turbo": "^2.8.10",
+    "typescript": "^5.9.3"
   }
 }

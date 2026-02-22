@@ -19,7 +19,13 @@
     },
     "dev": {
       "persistent": true,
-      "cache": false
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "preview": {
+      "persistent": true,
+      "cache": false,
+      "dependsOn": ["^build"]
     }
   }
 }
