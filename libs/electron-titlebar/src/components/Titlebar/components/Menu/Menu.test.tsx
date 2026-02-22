@@ -854,3 +854,333 @@ describe('Menu overflow', () => {
     expect(screen.getByText('File')).toBeTruthy();
   });
 });
+
+describe('Cascading (nested) submenus', () => {
+  function createNestedItems(): MenuItem[] {
+    return [
+      {
+        label: 'File',
+        submenu: [
+          { label: 'New File', action: vi.fn(), shortcut: 'Ctrl+N' },
+          {
+            label: 'Open Recent',
+            submenu: [
+              { label: 'project-a', action: vi.fn() },
+              { label: 'project-b', action: vi.fn() },
+              { type: 'separator', label: '' },
+              { label: 'Clear Recently Opened', action: vi.fn() },
+            ],
+          },
+          { type: 'separator', label: '' },
+          { label: 'Save', action: vi.fn(), shortcut: 'Ctrl+S' },
+        ],
+      },
+      {
+        label: 'Edit',
+        submenu: [
+          { label: 'Undo', action: vi.fn() },
+        ],
+      },
+    ];
+  }
+
+  test('renders chevron indicator for items with nested submenu', () => {
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+    expect(screen.getByText('▸')).toBeTruthy();
+  });
+
+  test('items with nested submenu have aria-haspopup', () => {
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+    const trigger = screen.getByTestId('submenu-trigger-Open Recent');
+    expect(trigger.getAttribute('aria-haspopup')).toBe('true');
+  });
+
+  test('items without nested submenu do not have aria-haspopup', () => {
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+    const newFileBtn = screen.getByText('New File').closest('button')!;
+    expect(newFileBtn.getAttribute('aria-haspopup')).toBeNull();
+  });
+
+  test('clicking a nested submenu trigger opens the child dropdown', () => {
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+    fireEvent.click(screen.getByTestId('submenu-trigger-Open Recent'));
+    expect(screen.getByTestId('submenu-dropdown-Open Recent')).toBeTruthy();
+    expect(screen.getByText('project-a')).toBeTruthy();
+    expect(screen.getByText('project-b')).toBeTruthy();
+  });
+
+  test('clicking a nested submenu trigger again closes it', () => {
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+    fireEvent.click(screen.getByTestId('submenu-trigger-Open Recent'));
+    expect(screen.getByText('project-a')).toBeTruthy();
+
+    fireEvent.click(screen.getByTestId('submenu-trigger-Open Recent'));
+    expect(screen.queryByText('project-a')).toBeNull();
+  });
+
+  test('clicking a child item calls action and closes all menus', () => {
+    const items = createNestedItems();
+    render(<Menu items={items} />);
+    fireEvent.click(screen.getByText('File'));
+    fireEvent.click(screen.getByTestId('submenu-trigger-Open Recent'));
+    fireEvent.click(screen.getByText('project-a'));
+    expect(items[0].submenu![1].submenu![0].action).toHaveBeenCalled();
+    expect(screen.queryByText('project-a')).toBeNull();
+    expect(screen.queryByText('New File')).toBeNull();
+  });
+
+  test('nested submenu has correct aria-label', () => {
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+    fireEvent.click(screen.getByTestId('submenu-trigger-Open Recent'));
+    expect(screen.getByRole('menu', { name: 'Open Recent submenu' })).toBeTruthy();
+  });
+
+  test('nested submenu renders separators', () => {
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+    fireEvent.click(screen.getByTestId('submenu-trigger-Open Recent'));
+    const separators = screen.getAllByRole('separator');
+    expect(separators.length).toBeGreaterThan(0);
+  });
+
+  test('does not show shortcut for items with children', () => {
+    const items: MenuItem[] = [
+      {
+        label: 'File',
+        submenu: [
+          { label: 'Open Recent', shortcut: 'Ctrl+R', submenu: [{ label: 'A', action: vi.fn() }] },
+        ],
+      },
+    ];
+    render(<Menu items={items} />);
+    fireEvent.click(screen.getByText('File'));
+    expect(screen.queryByText('Ctrl+R')).toBeNull();
+    expect(screen.getByText('▸')).toBeTruthy();
+  });
+
+  test('hover on nested trigger opens child after delay', async () => {
+    vi.useFakeTimers();
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+    const trigger = screen.getByTestId('submenu-trigger-Open Recent');
+    fireEvent.mouseEnter(trigger);
+
+    expect(screen.queryByText('project-a')).toBeNull();
+
+    act(() => { vi.advanceTimersByTime(250); });
+    expect(screen.getByText('project-a')).toBeTruthy();
+
+    vi.useRealTimers();
+  });
+
+  test('hover on non-nested item closes open child after delay', async () => {
+    vi.useFakeTimers();
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+
+    const trigger = screen.getByTestId('submenu-trigger-Open Recent');
+    fireEvent.mouseEnter(trigger);
+    act(() => { vi.advanceTimersByTime(250); });
+    expect(screen.getByText('project-a')).toBeTruthy();
+
+    const saveBtn = screen.getByText('Save').closest('button')!;
+    fireEvent.mouseEnter(saveBtn);
+    act(() => { vi.advanceTimersByTime(250); });
+    expect(screen.queryByText('project-a')).toBeNull();
+
+    vi.useRealTimers();
+  });
+
+  test('mouseLeave on nested trigger clears hover timer', () => {
+    vi.useFakeTimers();
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+    const trigger = screen.getByTestId('submenu-trigger-Open Recent');
+    fireEvent.mouseEnter(trigger);
+    fireEvent.mouseLeave(trigger);
+
+    act(() => { vi.advanceTimersByTime(250); });
+    expect(screen.queryByText('project-a')).toBeNull();
+
+    vi.useRealTimers();
+  });
+
+  describe('keyboard navigation in nested submenus', () => {
+    test('ArrowDown/ArrowUp navigates within parent submenu', () => {
+      render(<Menu items={createNestedItems()} />);
+      fireEvent.click(screen.getByText('File'));
+      const nav = screen.getByRole('menubar');
+      fireEvent.keyDown(nav, { key: 'ArrowDown' });
+      const newFileBtn = screen.getByText('New File').closest('button');
+      expect(newFileBtn?.getAttribute('class')).toContain('focused');
+
+      fireEvent.keyDown(nav, { key: 'ArrowDown' });
+      const openRecentBtn = screen.getByTestId('submenu-trigger-Open Recent');
+      expect(openRecentBtn.getAttribute('class')).toContain('focused');
+    });
+
+    test('Enter on item with children opens child submenu', () => {
+      render(<Menu items={createNestedItems()} />);
+      fireEvent.click(screen.getByText('File'));
+      const nav = screen.getByRole('menubar');
+      fireEvent.keyDown(nav, { key: 'ArrowDown' });
+      fireEvent.keyDown(nav, { key: 'ArrowDown' });
+      fireEvent.keyDown(nav, { key: 'Enter' });
+      expect(screen.queryByText('project-a')).toBeNull();
+    });
+
+    test('clicking outside closes all including nested submenus', async () => {
+      render(<Menu items={createNestedItems()} />);
+      fireEvent.click(screen.getByText('File'));
+      fireEvent.click(screen.getByTestId('submenu-trigger-Open Recent'));
+      expect(screen.getByText('project-a')).toBeTruthy();
+
+      fireEvent.mouseDown(document.body);
+      await waitFor(() => {
+        expect(screen.queryByText('project-a')).toBeNull();
+        expect(screen.queryByText('New File')).toBeNull();
+      });
+    });
+  });
+
+  test('deeply nested (3 levels) submenus work', () => {
+    const deepAction = vi.fn();
+    const items: MenuItem[] = [
+      {
+        label: 'File',
+        submenu: [
+          {
+            label: 'Level 1',
+            submenu: [
+              {
+                label: 'Level 2',
+                submenu: [
+                  { label: 'Deep Action', action: deepAction },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    render(<Menu items={items} />);
+    fireEvent.click(screen.getByText('File'));
+    fireEvent.click(screen.getByTestId('submenu-trigger-Level 1'));
+    fireEvent.click(screen.getByTestId('submenu-trigger-Level 2'));
+    expect(screen.getByText('Deep Action')).toBeTruthy();
+
+    fireEvent.click(screen.getByText('Deep Action'));
+    expect(deepAction).toHaveBeenCalled();
+    expect(screen.queryByText('Deep Action')).toBeNull();
+  });
+
+  test('disabled nested submenu trigger does not open', () => {
+    const items: MenuItem[] = [
+      {
+        label: 'File',
+        submenu: [
+          {
+            label: 'Locked Submenu',
+            disabled: true,
+            submenu: [{ label: 'Hidden', action: vi.fn() }],
+          },
+        ],
+      },
+    ];
+    render(<Menu items={items} />);
+    fireEvent.click(screen.getByText('File'));
+
+    vi.useFakeTimers();
+    const trigger = screen.getByText('Locked Submenu').closest('button')!;
+    fireEvent.mouseEnter(trigger);
+    act(() => { vi.advanceTimersByTime(250); });
+    expect(screen.queryByText('Hidden')).toBeNull();
+    vi.useRealTimers();
+  });
+
+  test('switching top-level menus closes nested submenus', () => {
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+    fireEvent.click(screen.getByTestId('submenu-trigger-Open Recent'));
+    expect(screen.getByText('project-a')).toBeTruthy();
+
+    fireEvent.mouseEnter(screen.getByText('Edit'));
+    expect(screen.getByText('Undo')).toBeTruthy();
+    expect(screen.queryByText('project-a')).toBeNull();
+    expect(screen.queryByText('New File')).toBeNull();
+  });
+
+  test('child submenu opens to the right by default', () => {
+    const getBoundingClientRectSpy = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+      right: 200,
+      left: 0,
+      top: 40,
+      bottom: 70,
+      width: 200,
+      height: 30,
+      x: 0,
+      y: 40,
+      toJSON: () => {},
+    });
+    Object.defineProperty(window, 'innerWidth', { value: 1024, writable: true, configurable: true });
+
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+    fireEvent.click(screen.getByTestId('submenu-trigger-Open Recent'));
+    const dropdown = screen.getByTestId('submenu-dropdown-Open Recent');
+    const left = parseInt(dropdown.style.left, 10);
+    expect(left).toBeGreaterThan(0);
+
+    getBoundingClientRectSpy.mockRestore();
+  });
+
+  test('child submenu flips to left when not enough space on right', () => {
+    Object.defineProperty(window, 'innerWidth', { value: 300, writable: true, configurable: true });
+
+    const getBoundingClientRectSpy = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+      right: 280,
+      left: 260,
+      top: 40,
+      bottom: 70,
+      width: 220,
+      height: 30,
+      x: 260,
+      y: 40,
+      toJSON: () => {},
+    });
+
+    vi.useFakeTimers();
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+
+    const trigger = screen.getByTestId('submenu-trigger-Open Recent');
+    fireEvent.mouseEnter(trigger);
+    act(() => { vi.advanceTimersByTime(250); });
+
+    const dropdown = screen.getByTestId('submenu-dropdown-Open Recent');
+    const left = parseInt(dropdown.style.left, 10);
+    expect(left).toBeLessThan(260);
+
+    vi.useRealTimers();
+    getBoundingClientRectSpy.mockRestore();
+  });
+
+  test('aria-expanded toggles on nested submenu trigger', () => {
+    render(<Menu items={createNestedItems()} />);
+    fireEvent.click(screen.getByText('File'));
+    const trigger = screen.getByTestId('submenu-trigger-Open Recent');
+    expect(trigger.getAttribute('aria-expanded')).toBeNull();
+
+    fireEvent.click(trigger);
+    expect(trigger.getAttribute('aria-expanded')).toBe('true');
+
+    fireEvent.click(trigger);
+    expect(trigger.getAttribute('aria-expanded')).toBeNull();
+  });
+});

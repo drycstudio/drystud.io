@@ -56,10 +56,10 @@ const meta = {
       description: {
         component: `Interactive dropdown menu bar for the titlebar. Supports:
 
-- **Submenus** with labels, actions, and separators
+- **Cascading submenus** — any item can nest children to any depth, with flyout panels and edge detection
 - **Keyboard shortcuts** — displayed alongside labels, auto-formatted per platform (⌘ on macOS, Ctrl on Windows/Linux)
 - **Disabled items** — visually dimmed and non-interactive
-- **Keyboard navigation** — Arrow keys, Enter, Escape
+- **Keyboard navigation** — Arrow keys, Enter, Escape; ArrowRight opens nested children
 - **Hover switching** — move between menus by hovering when one is open
 - **Click outside** — closes any open dropdown`,
       },
@@ -175,6 +175,71 @@ export const NoShortcuts: Story = {
           { label: 'Deploy', action: fn() },
           { type: 'separator', label: '' },
           { label: 'Clean Cache', action: fn() },
+        ],
+      },
+    ],
+    platform: 'windows',
+  },
+};
+
+/** Cascading (nested) submenus — items can contain child menus that fly out to the side. */
+export const CascadingSubmenus: Story = {
+  args: {
+    items: [
+      {
+        label: 'File',
+        submenu: [
+          { label: 'New File', shortcut: 'Ctrl+N', action: fn() },
+          { label: 'New Window', shortcut: 'Ctrl+Shift+N', action: fn() },
+          { type: 'separator', label: '' },
+          { label: 'Open File...', shortcut: 'Ctrl+O', action: fn() },
+          {
+            label: 'Open Recent',
+            submenu: [
+              { label: '~/projects/my-app', action: fn() },
+              { label: '~/projects/dashboard', action: fn() },
+              { label: '~/projects/electron-titlebar', action: fn() },
+              { type: 'separator', label: '' },
+              { label: 'Clear Recently Opened', action: fn() },
+            ],
+          },
+          { type: 'separator', label: '' },
+          { label: 'Save', shortcut: 'Ctrl+S', action: fn() },
+          { label: 'Exit', shortcut: 'Alt+F4', action: fn() },
+        ],
+      },
+      {
+        label: 'View',
+        submenu: [
+          { label: 'Command Palette...', shortcut: 'Ctrl+Shift+P', action: fn() },
+          { type: 'separator', label: '' },
+          {
+            label: 'Appearance',
+            submenu: [
+              { label: 'Zoom In', shortcut: 'Ctrl+=', action: fn() },
+              { label: 'Zoom Out', shortcut: 'Ctrl+-', action: fn() },
+              { label: 'Reset Zoom', shortcut: 'Ctrl+0', action: fn() },
+              { type: 'separator', label: '' },
+              {
+                label: 'Color Theme',
+                submenu: [
+                  { label: 'Dark+ (default)', action: fn() },
+                  { label: 'Light+', action: fn() },
+                  { label: 'Monokai', action: fn() },
+                  { label: 'Solarized Dark', action: fn() },
+                ],
+              },
+            ],
+          },
+          { type: 'separator', label: '' },
+          { label: 'Toggle Full Screen', shortcut: 'F11', action: fn() },
+        ],
+      },
+      {
+        label: 'Help',
+        submenu: [
+          { label: 'Documentation', action: fn() },
+          { label: 'About', action: fn() },
         ],
       },
     ],

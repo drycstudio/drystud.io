@@ -16,7 +16,7 @@ A pretty, cross-platform titlebar for Electron apps built with React. Automatica
 ## Features
 
 - **Cross-platform** — Native look on macOS (traffic lights), custom window controls on Windows/Linux
-- **Menu bar** — Full dropdown menus with submenus, keyboard navigation, separators, and disabled items
+- **Menu bar** — Full dropdown menus with **cascading (nested) submenus**, keyboard navigation, separators, and disabled items
 - **Toolbar actions** — Customizable action buttons (notifications, settings, upgrade) with badges, tooltips, dropdowns, and highlight effects
 - **User profile** — Avatar with status indicator, dropdown actions, sign-in/sign-out flow
 - **Command palette** — Searchable command palette with sections, filters, keyboard navigation, and footer actions
@@ -108,6 +108,7 @@ graph TD
     E --> P["<b>Dropdown</b>"]
     P --> Q["<b>DropdownItem</b> + <b>Shortcut</b>"]
     P --> R["<b>Separator</b>"]
+    P --> CS["<b>SubMenuDropdown</b><br/><i>Cascading children (recursive)</i>"]
 
     TAm --> TAI["<b>ToolbarActionItem</b><br/><i>Icon + badge + tooltip + dropdown</i>"]
 
@@ -341,6 +342,15 @@ const menuItems: MenuItem[] = [
     submenu: [
       { label: 'New File', shortcut: 'Ctrl+N', action: () => console.log('New File') },
       { label: 'Open File...', shortcut: 'Ctrl+O', action: () => console.log('Open') },
+      {
+        label: 'Open Recent',
+        submenu: [
+          { label: '~/projects/my-app', action: () => console.log('Open my-app') },
+          { label: '~/projects/dashboard', action: () => console.log('Open dashboard') },
+          { type: 'separator', label: '' },
+          { label: 'Clear Recently Opened', action: () => console.log('Clear') },
+        ],
+      },
       { type: 'separator', label: '' },
       { label: 'Save', shortcut: 'Ctrl+S', action: () => console.log('Save') },
       { label: 'Save As...', shortcut: 'Ctrl+Shift+S', action: () => console.log('Save As') },
@@ -388,19 +398,15 @@ That's it! The titlebar will automatically:
 
 ### Defining Menus
 
-Menus are defined as an array of `MenuItem` objects passed to the `menuItems` prop. Each menu item can have:
+Menus are defined as an array of `MenuItem` objects passed to the `menuItems` prop. The `MenuItem` type is **recursive** — any item can have a `submenu` containing more `MenuItem` objects, enabling cascading (nested) menus to any depth.
 
-- **`label`** — Display text for the menu button
-- **`submenu`** — Array of `SubMenuItem` objects for the dropdown
-- **`action`** — Direct action for top-level items without a submenu
-- **`disabled`** — Grays out and disables the menu item
-
-Each submenu item supports:
+Each menu item supports:
 
 - **`label`** — Display text
-- **`action`** — Callback fired when the item is clicked
+- **`submenu`** — Array of `MenuItem` objects (nested submenu, shown as a cascading flyout)
+- **`action`** — Callback fired when the item is clicked (ignored if `submenu` is set)
 - **`shortcut`** — Keyboard shortcut string (e.g., `'Ctrl+Shift+N'`)
-- **`disabled`** — Grays out the item
+- **`disabled`** — Grays out and disables the item
 - **`type: 'separator'`** — Renders a horizontal divider line
 
 ```typescript
@@ -409,17 +415,63 @@ const menuItems: MenuItem[] = [
     label: 'File',
     submenu: [
       { label: 'New File', shortcut: 'Ctrl+N', action: () => createFile() },
-      { label: 'Open Recent', disabled: true, action: () => {} },
+      {
+        label: 'Open Recent',
+        submenu: [
+          { label: '~/projects/my-app', action: () => openProject('my-app') },
+          { label: '~/projects/dashboard', action: () => openProject('dashboard') },
+          { type: 'separator', label: '' },
+          { label: 'Clear Recently Opened', action: () => clearRecent() },
+        ],
+      },
       { type: 'separator', label: '' },
       { label: 'Save', shortcut: 'Ctrl+S', action: () => save() },
     ],
   },
   {
     label: 'Disabled Menu',
-    disabled: true, // Entire top-level menu is disabled
+    disabled: true,
   },
 ];
 ```
+
+### Cascading (Nested) Submenus
+
+Any `MenuItem` can contain a `submenu` array, and those children can also have their own `submenu`, enabling multi-level cascading menus just like native desktop applications.
+
+```typescript
+{
+  label: 'View',
+  submenu: [
+    {
+      label: 'Appearance',
+      submenu: [
+        { label: 'Zoom In', shortcut: 'Ctrl+=', action: () => zoomIn() },
+        { label: 'Zoom Out', shortcut: 'Ctrl+-', action: () => zoomOut() },
+        { type: 'separator', label: '' },
+        {
+          label: 'Color Theme',
+          submenu: [
+            { label: 'Dark+ (default)', action: () => setTheme('dark+') },
+            { label: 'Light+', action: () => setTheme('light+') },
+            { label: 'Monokai', action: () => setTheme('monokai') },
+          ],
+        },
+      ],
+    },
+    { label: 'Toggle Full Screen', shortcut: 'F11', action: () => toggleFullScreen() },
+  ],
+}
+```
+
+**Cascading submenu behavior:**
+
+- Items with children display a **chevron indicator** (▸) instead of a keyboard shortcut
+- Child menus open to the **right** by default, flipping to the **left** if there isn't enough viewport space
+- **Hover delay** (200ms) prevents accidental opening/closing when moving the mouse across items
+- Clicking a leaf item **closes all menus** (including all parent levels)
+- Keyboard: **ArrowRight** opens a child submenu, **ArrowLeft** closes it and returns to the parent
+- Works at any nesting depth (2–3 levels recommended for good UX)
 
 ### Keyboard Shortcuts
 
@@ -458,9 +510,9 @@ When a dropdown menu is open, the following keyboard controls are available:
 |-----|--------|
 | `↓` Arrow Down | Focus next actionable item (skips separators and disabled items) |
 | `↑` Arrow Up | Focus previous actionable item |
-| `→` Arrow Right | Open the next menu |
-| `←` Arrow Left | Open the previous menu |
-| `Enter` | Activate the focused item |
+| `→` Arrow Right | Open a child submenu if the focused item has one, otherwise move to the next top-level menu |
+| `←` Arrow Left | Close the current child submenu and return to parent, or move to the previous top-level menu |
+| `Enter` | Activate the focused item, or open its child submenu if it has one |
 | `Escape` | Close the current dropdown |
 
 Hover switching is also supported — hovering over another top-level menu label while one is open will switch to it instantly.
@@ -760,20 +812,17 @@ type Platform = 'windows' | 'macos' | 'linux';
 
 type MenuItemAction = () => void;
 
-type SubMenuItem = {
+type MenuItem = {
   label: string;
   action?: MenuItemAction;
+  submenu?: MenuItem[];   // recursive — enables cascading submenus
   disabled?: boolean;
   type?: 'separator';
   shortcut?: string;
 };
 
-type MenuItem = {
-  label: string;
-  action?: MenuItemAction;
-  submenu?: SubMenuItem[];
-  disabled?: boolean;
-};
+// SubMenuItem is a deprecated alias for MenuItem (kept for backward compatibility)
+type SubMenuItem = MenuItem;
 
 type TitlebarAction = {
   id: string;

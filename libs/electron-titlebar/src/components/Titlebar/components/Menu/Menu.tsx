@@ -12,6 +12,9 @@ import {
   DropdownItem,
   Separator,
   Shortcut,
+  SubMenuWrapper,
+  SubMenuDropdown,
+  ChevronIndicator,
 } from './styles';
 
 export type MenuProps = {
@@ -19,7 +22,7 @@ export type MenuProps = {
   platform?: Platform;
 };
 
-function getActionableIndices(submenu: NonNullable<MenuItem['submenu']>): number[] {
+function getActionableIndices(submenu: MenuItem[]): number[] {
   return submenu.reduce<number[]>((acc, sub, idx) => {
     if (sub.type !== 'separator' && !sub.disabled) acc.push(idx);
     return acc;
@@ -40,8 +43,8 @@ function navigateActionable(
   return actionable[nextPos];
 }
 
-function flattenOverflowItems(overflowItems: MenuItem[]): NonNullable<MenuItem['submenu']>[0][] {
-  const flat: NonNullable<MenuItem['submenu']>[0][] = [];
+function flattenOverflowItems(overflowItems: MenuItem[]): MenuItem[] {
+  const flat: MenuItem[] = [];
   for (const item of overflowItems) {
     if (item.submenu) {
       for (const sub of item.submenu) {
@@ -55,6 +58,229 @@ function flattenOverflowItems(overflowItems: MenuItem[]): NonNullable<MenuItem['
 }
 
 const OVERFLOW_BTN_WIDTH = 40;
+const SUBMENU_HOVER_DELAY = 200;
+
+type ChildPosition = { top: number; left: number };
+
+function computeChildPosition(trigger: HTMLElement): ChildPosition {
+  const rect = trigger.getBoundingClientRect();
+  const submenuWidth = 240;
+  const spaceRight = window.innerWidth - rect.right;
+  const left = spaceRight >= submenuWidth
+    ? rect.right + 2
+    : rect.left - submenuWidth - 2;
+  const top = Math.max(0, Math.min(rect.top - 6, window.innerHeight - 300));
+  return { top, left };
+}
+
+type SubMenuItemsProps = {
+  items: MenuItem[];
+  platform: Platform;
+  focusedIndex: number;
+  onFocusIndex: (idx: number) => void;
+  onItemClick: (item: MenuItem) => void;
+  depth?: number;
+  onCloseToParent?: () => void;
+  onOpenRight?: () => void;
+};
+
+function SubMenuItems({
+  items,
+  platform,
+  focusedIndex,
+  onFocusIndex,
+  onItemClick,
+  depth = 0,
+  onCloseToParent,
+  onOpenRight,
+}: SubMenuItemsProps) {
+  const [openChildIndex, setOpenChildIndex] = React.useState<number | null>(null);
+  const [childFocusedIndex, setChildFocusedIndex] = React.useState(-1);
+  const [childPos, setChildPos] = React.useState<ChildPosition>({ top: 0, left: 0 });
+  const hoverTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const childDropdownRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (focusedIndex === -1) {
+      setOpenChildIndex(null);
+      setChildFocusedIndex(-1);
+    }
+  }, [focusedIndex]);
+
+  function handleMouseEnter(idx: number, item: MenuItem, e: React.MouseEvent) {
+    if (item.disabled || item.type === 'separator') return;
+    onFocusIndex(idx);
+
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+
+    if (item.submenu && item.submenu.length > 0) {
+      const target = e.currentTarget as HTMLElement;
+      hoverTimerRef.current = setTimeout(() => {
+        setChildPos(computeChildPosition(target));
+        setOpenChildIndex(idx);
+        setChildFocusedIndex(-1);
+      }, SUBMENU_HOVER_DELAY);
+    } else {
+      hoverTimerRef.current = setTimeout(() => {
+        setOpenChildIndex(null);
+        setChildFocusedIndex(-1);
+      }, SUBMENU_HOVER_DELAY);
+    }
+  }
+
+  function handleMouseLeave(_idx: number, item: MenuItem) {
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    if (!item.submenu || item.submenu.length === 0) {
+      onFocusIndex(-1);
+    }
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (openChildIndex !== null && items[openChildIndex]?.submenu) {
+      return;
+    }
+
+    const actionable = getActionableIndices(items);
+
+    switch (e.key) {
+      case 'ArrowDown': {
+        if (actionable.length === 0) break;
+        e.preventDefault();
+        e.stopPropagation();
+        onFocusIndex(navigateActionable(actionable, focusedIndex, 1));
+        break;
+      }
+      case 'ArrowUp': {
+        if (actionable.length === 0) break;
+        e.preventDefault();
+        e.stopPropagation();
+        onFocusIndex(navigateActionable(actionable, focusedIndex, -1));
+        break;
+      }
+      case 'ArrowRight': {
+        e.preventDefault();
+        e.stopPropagation();
+        const currentItem = focusedIndex >= 0 ? items[focusedIndex] : null;
+        if (currentItem?.submenu && currentItem.submenu.length > 0) {
+          setOpenChildIndex(focusedIndex);
+          setChildFocusedIndex(-1);
+          setTimeout(() => {
+            childDropdownRef.current?.focus();
+          }, 0);
+        } else {
+          onOpenRight?.();
+        }
+        break;
+      }
+      case 'ArrowLeft': {
+        e.preventDefault();
+        e.stopPropagation();
+        onCloseToParent?.();
+        break;
+      }
+      case 'Enter': {
+        e.preventDefault();
+        e.stopPropagation();
+        if (focusedIndex >= 0 && items[focusedIndex]) {
+          const item = items[focusedIndex];
+          if (item.submenu && item.submenu.length > 0) {
+            setOpenChildIndex(focusedIndex);
+            setChildFocusedIndex(-1);
+            setTimeout(() => {
+              childDropdownRef.current?.focus();
+            }, 0);
+          } else {
+            onItemClick(item);
+          }
+        }
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
+  function handleChildCloseToParent() {
+    setOpenChildIndex(null);
+    setChildFocusedIndex(-1);
+  }
+
+  return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div onKeyDown={handleKeyDown}>
+      {items.map((sub, subIdx) => {
+        if (sub.type === 'separator') {
+          return <Separator key={`sep-${sub.label || subIdx}`} role="separator" />;
+        }
+
+        const hasChildren = sub.submenu && sub.submenu.length > 0;
+
+        return (
+          <SubMenuWrapper key={sub.label}>
+            <DropdownItem
+              role="menuitem"
+              disabled={sub.disabled}
+              focused={focusedIndex === subIdx}
+              aria-disabled={sub.disabled || undefined}
+              aria-haspopup={hasChildren ? 'true' : undefined}
+              aria-expanded={openChildIndex === subIdx ? true : undefined}
+              onClick={(e) => {
+                if (hasChildren) {
+                  if (openChildIndex === subIdx) {
+                    setOpenChildIndex(null);
+                  } else {
+                    setChildPos(computeChildPosition(e.currentTarget as HTMLElement));
+                    setOpenChildIndex(subIdx);
+                  }
+                  setChildFocusedIndex(-1);
+                } else {
+                  onItemClick(sub);
+                }
+              }}
+              onMouseEnter={(e) => handleMouseEnter(subIdx, sub, e)}
+              onMouseLeave={() => handleMouseLeave(subIdx, sub)}
+              data-testid={hasChildren ? `submenu-trigger-${sub.label}` : undefined}
+            >
+              <span>{sub.label}</span>
+              {sub.shortcut && !hasChildren && (
+                <Shortcut>{formatShortcut(sub.shortcut, platform)}</Shortcut>
+              )}
+              {hasChildren && <ChevronIndicator aria-hidden="true">▸</ChevronIndicator>}
+            </DropdownItem>
+
+            {hasChildren && openChildIndex === subIdx && (
+              <SubMenuDropdown
+                ref={childDropdownRef}
+                tabIndex={-1}
+                role="menu"
+                aria-label={`${sub.label} submenu`}
+                style={{ top: childPos.top, left: childPos.left }}
+                data-testid={`submenu-dropdown-${sub.label}`}
+              >
+                <SubMenuItems
+                  items={sub.submenu!}
+                  platform={platform}
+                  focusedIndex={childFocusedIndex}
+                  onFocusIndex={setChildFocusedIndex}
+                  onItemClick={onItemClick}
+                  depth={depth + 1}
+                  onCloseToParent={handleChildCloseToParent}
+                  onOpenRight={onOpenRight}
+                />
+              </SubMenuDropdown>
+            )}
+          </SubMenuWrapper>
+        );
+      })}
+    </div>
+  );
+}
 
 export function Menu({ items, platform = 'windows' }: MenuProps) {
   const [openIndex, setOpenIndex] = React.useState<number | null>(null);
@@ -163,6 +389,11 @@ export function Menu({ items, platform = 'windows' }: MenuProps) {
     }
   }, [overflowOpen]);
 
+  function closeAll() {
+    setOpenIndex(null);
+    setFocusedSubIndex(-1);
+  }
+
   function handleMenuItemClick(index: number, item: MenuItem) {
     if (item.disabled) return;
     if (item.submenu) {
@@ -173,14 +404,13 @@ export function Menu({ items, platform = 'windows' }: MenuProps) {
     }
   }
 
-  function handleSubmenuClick(sub: NonNullable<MenuItem['submenu']>[0]) {
+  function handleSubmenuItemClick(sub: MenuItem) {
     if (sub.disabled || sub.type === 'separator') return;
     sub.action?.();
-    setOpenIndex(null);
-    setFocusedSubIndex(-1);
+    closeAll();
   }
 
-  function handleOverflowItemClick(sub: NonNullable<MenuItem['submenu']>[0]) {
+  function handleOverflowItemClick(sub: MenuItem) {
     if (sub.disabled || sub.type === 'separator') return;
     sub.action?.();
     setOverflowOpen(false);
@@ -285,11 +515,36 @@ export function Menu({ items, platform = 'windows' }: MenuProps) {
       case 'Enter':
         e.preventDefault();
         if (submenu && focusedSubIndex >= 0 && submenu[focusedSubIndex]) {
-          handleSubmenuClick(submenu[focusedSubIndex]);
+          const focusedItem = submenu[focusedSubIndex];
+          if (focusedItem.submenu && focusedItem.submenu.length > 0) {
+            // Do not close, let SubMenuItems handle opening the child
+          } else {
+            handleSubmenuItemClick(submenu[focusedSubIndex]);
+          }
         }
         break;
       default:
         break;
+    }
+  }
+
+  function handleOpenRightFromSubmenu() {
+    if (openIndex !== null && openIndex < visibleCount - 1) {
+      setOpenIndex(openIndex + 1);
+    } else if (hasOverflow) {
+      setOverflowOpen(true);
+    } else if (visibleCount > 0) {
+      setOpenIndex(0);
+    }
+  }
+
+  function handleCloseToParentFromSubmenu() {
+    if (openIndex !== null && openIndex > 0) {
+      setOpenIndex(openIndex - 1);
+    } else if (hasOverflow) {
+      setOverflowOpen(true);
+    } else if (visibleCount > 0) {
+      setOpenIndex(visibleCount - 1);
     }
   }
 
@@ -374,25 +629,16 @@ export function Menu({ items, platform = 'windows' }: MenuProps) {
 
           {openIndex === i && item.submenu && (
             <Dropdown ref={dropdownRef} tabIndex={-1} role="menu" aria-label={`${item.label} submenu`}>
-              {item.submenu.map((sub, subIdx) =>
-                sub.type === 'separator' ? (
-                  <Separator key={`sep-${item.label}-${sub.label || subIdx}`} role="separator" />
-                ) : (
-                  <DropdownItem
-                    key={sub.label}
-                    role="menuitem"
-                    disabled={sub.disabled}
-                    focused={focusedSubIndex === subIdx}
-                    aria-disabled={sub.disabled || undefined}
-                    onClick={() => handleSubmenuClick(sub)}
-                    onMouseEnter={() => setFocusedSubIndex(subIdx)}
-                    onMouseLeave={() => setFocusedSubIndex(-1)}
-                  >
-                    <span>{sub.label}</span>
-                    {sub.shortcut && <Shortcut>{formatShortcut(sub.shortcut, platform)}</Shortcut>}
-                  </DropdownItem>
-                ),
-              )}
+              <SubMenuItems
+                items={item.submenu}
+                platform={platform}
+                focusedIndex={focusedSubIndex}
+                onFocusIndex={setFocusedSubIndex}
+                onItemClick={handleSubmenuItemClick}
+                depth={0}
+                onCloseToParent={handleCloseToParentFromSubmenu}
+                onOpenRight={handleOpenRightFromSubmenu}
+              />
             </Dropdown>
           )}
         </div>

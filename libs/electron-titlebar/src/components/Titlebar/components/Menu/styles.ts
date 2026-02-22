@@ -200,3 +200,43 @@ export const Shortcut = styled('span', {
   fontFamily: 'inherit',
   letterSpacing: '0.02em',
 });
+
+export const SubMenuWrapper = styled('div', {
+  position: 'relative',
+});
+
+export const SubMenuDropdown = styled('div', {
+  position: 'fixed',
+  minWidth: '220px',
+  maxWidth: 'calc(100vw - 16px)',
+  maxHeight: 'calc(100vh - 48px)',
+  overflowY: 'auto',
+  backgroundColor: '#2D2D2D',
+  border: '1px solid rgba(255, 255, 255, 0.08)',
+  borderRadius: '8px',
+  padding: '6px',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3)',
+  zIndex: 1002,
+
+  '&::-webkit-scrollbar': {
+    width: '6px',
+  },
+  '&::-webkit-scrollbar-track': {
+    background: 'transparent',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderRadius: '3px',
+  },
+  '&::-webkit-scrollbar-thumb:hover': {
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+  },
+});
+
+export const ChevronIndicator = styled('span', {
+  marginLeft: 'auto',
+  fontSize: '10px',
+  opacity: 0.5,
+  lineHeight: 1,
+  paddingLeft: '8px',
+});
