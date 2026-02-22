@@ -212,8 +212,7 @@ function SubMenuItems({
   }
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div onKeyDown={handleKeyDown}>
+    <div role="presentation" onKeyDown={handleKeyDown}>
       {items.map((sub, subIdx) => {
         if (sub.type === 'separator') {
           return <Separator key={`sep-${sub.label || subIdx}`} role="separator" />;
@@ -350,8 +349,7 @@ export function Menu({ items, platform = 'windows' }: MenuProps) {
       observer.disconnect();
       container.style.flexBasis = '';
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items.length]);
+  }, [items.length]); // only re-run when item count changes
 
   React.useEffect(() => {
     if (openIndex !== null && openIndex >= visibleCount) {
