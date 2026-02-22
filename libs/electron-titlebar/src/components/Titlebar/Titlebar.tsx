@@ -2,35 +2,76 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-import { globalStyles } from '~/styles/global';
+import { OS } from '~/utils';
+import type { Platform } from '~/utils';
 import titlebarLogo from '~/assets/icon/logo/electron-pretty-titlebar-logo.svg';
 
 import { useTitlebarActions } from './hooks/useTitlebarActions';
 
 import { WindowControls } from './components/WindowControls';
+import type { MenuItem } from './components/Menu';
 
 import { htmlTagStyles, Logo, LogoImage, TitlebarContainer } from './styles';
 
-const ipcHandle = 'electron' in window ? window.electron.ipcRenderer : null;
+const ipcHandle = 'electron' in globalThis ? (globalThis as unknown as Window).electron.ipcRenderer : null;
+
+export type { Platform } from '~/utils';
+export { formatShortcut } from '~/utils';
+
+export type { MenuItem, SubMenuItem, MenuItemAction } from './components/Menu';
+export type { UserProfileProps, UserProfileAction, UserInfo, UserStatus } from './components/UserProfile';
+export type {
+  CommandPaletteConfig,
+  CommandPaletteItem,
+  CommandPaletteSection,
+  FilterChip,
+  CommandPaletteFooterAction,
+  SearchBarProps,
+  SearchResult,
+} from './components/SearchBar';
+export type { TitlebarAction, TitlebarActionDropdownItem, ToolbarActionsProps } from './components/ToolbarActions';
 
 export type TitlebarProps = {
   title?: string | null;
   logo?: string;
   size?: 'default' | 'small';
+  platform?: Platform;
+  menuItems?: MenuItem[];
+  user?: import('./components/UserProfile').UserInfo | null;
+  userActions?: import('./components/UserProfile').UserProfileAction[];
+  onSignIn?: () => void;
+  onSignOut?: () => void;
+  commandPalette?: import('./components/SearchBar').CommandPaletteConfig;
+  actions?: import('./components/ToolbarActions').TitlebarAction[];
+  renderActions?: () => React.ReactNode;
   onMinus?: () => void;
   onMinimizeMaximaze?: () => void;
   onClose?: () => void;
 };
 
+function detectPlatform(): Platform {
+  if (OS.isMacOS()) return 'macos';
+  if (OS.isLinux()) return 'linux';
+  return 'windows';
+}
+
 export default function Titlebar({
   title = 'Pretty Titlebar',
   logo,
   size = 'default',
+  platform: platformOverride,
+  menuItems,
+  user,
+  userActions,
+  onSignIn,
+  onSignOut,
+  commandPalette,
+  actions,
+  renderActions,
   onClose,
   onMinus,
   onMinimizeMaximaze,
 }: TitlebarProps) {
-  globalStyles();
   const [isWindowMaximized, setIsWindowMaximized] = React.useState<boolean>(false);
   const { handleMinimazeMaximaze, handleMinus, handleClose } = useTitlebarActions(ipcHandle, {
     toggleWindowMaximized: setIsWindowMaximized,
@@ -39,6 +80,8 @@ export default function Titlebar({
     onClose,
   });
 
+  const platform = platformOverride ?? detectPlatform();
+  const isMac = platform === 'macos';
   const LOGO = logo || titlebarLogo;
 
   return (
@@ -47,18 +90,45 @@ export default function Titlebar({
         <html data-titlebar='prettier' lang='pt' className={htmlTagStyles({ size })} />
       </Helmet>
       {createPortal(
-        <TitlebarContainer size={size}>
-          <Logo>
-            <LogoImage src={LOGO} alt='Electron Pretty Titlebar Logo' />
-          </Logo>
+        <TitlebarContainer size={size} platform={platform}>
+          {!isMac && (
+            <Logo>
+              <LogoImage src={LOGO} alt='Electron Pretty Titlebar Logo' />
+            </Logo>
+          )}
 
-          <WindowControls
-            title={title}
-            isWindowMaximized={isWindowMaximized}
-            handleMinimazeMaximaze={handleMinimazeMaximaze}
-            handleMinus={handleMinus}
-            handleClose={handleClose}
-          />
+          {isMac ? (
+            <WindowControls
+              title={title}
+              menuItems={menuItems}
+              platform={platform}
+              user={user}
+              userActions={userActions}
+              onSignIn={onSignIn}
+              onSignOut={onSignOut}
+              commandPalette={commandPalette}
+              actions={actions}
+              renderActions={renderActions}
+              macOnly
+            />
+          ) : (
+            <WindowControls
+              title={title}
+              menuItems={menuItems}
+              platform={platform}
+              user={user}
+              userActions={userActions}
+              onSignIn={onSignIn}
+              onSignOut={onSignOut}
+              commandPalette={commandPalette}
+              actions={actions}
+              renderActions={renderActions}
+              isWindowMaximized={isWindowMaximized}
+              handleMinimazeMaximaze={handleMinimazeMaximaze}
+              handleMinus={handleMinus}
+              handleClose={handleClose}
+            />
+          )}
         </TitlebarContainer>,
         document.body
       )}

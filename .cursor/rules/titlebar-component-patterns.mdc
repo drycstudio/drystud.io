@@ -1,0 +1,83 @@
+---
+description: Titlebar component conventions -- platform detection, discriminated unions, conditional rendering, sub-component architecture, testing patterns
+globs: "libs/electron-titlebar/src/components/**/*.tsx,libs/electron-titlebar/src/components/**/*.ts"
+alwaysApply: false
+---
+
+# Titlebar Component Patterns
+
+## Platform-Aware Rendering
+
+Always use `detectPlatform()` or the `platform` prop. Never check `navigator.userAgent` directly:
+
+```typescript
+import { OS } from '~/utils';
+
+function detectPlatform(): Platform {
+  if (OS.isMacOS()) return 'macos';
+  if (OS.isLinux()) return 'linux';
+  return 'windows';
+}
+
+const platform = platformOverride ?? detectPlatform();
+```
+
+## Discriminated Union Props
+
+Use discriminated unions for mutually exclusive modes:
+
+```typescript
+// GOOD
+type WithButtons = { macOnly?: false; handleClose(): void; handleMinus(): void };
+type MacOnly = { macOnly: true; handleClose?: never; handleMinus?: never };
+type Props = WithButtons | MacOnly;
+```
+
+## Sub-Component Layout
+
+WindowControls orchestrates all sub-components in order:
+
+```
+WindowControls
+├── Menu              (dropdown menu bar)
+├── Title             (centered title / drag region)
+├── SearchBar         (command palette trigger + overlay)
+├── ToolbarActions    (action buttons: icon + filled/split)
+├── UserProfile       (avatar + dropdown)
+└── [!macOnly] ButtonContainer (minimize, maximize, close)
+```
+
+Both macOS and non-macOS branches render Menu, SearchBar, ToolbarActions, UserProfile identically. Only window control buttons differ.
+
+## New Props Flow
+
+Props flow from Titlebar -> WindowControls -> sub-components:
+
+```
+Titlebar (actions, renderActions, user, commandPalette, menuItems)
+  └── WindowControls (receives all above via props)
+        ├── Menu (menuItems, platform)
+        ├── SearchBar (commandPalette, platform)
+        ├── ToolbarActions (actions, renderActions)
+        └── UserProfile (user, userActions, onSignIn, onSignOut)
+```
+
+## Type Exports
+
+All public types must be re-exported from `Titlebar.tsx`:
+
+```typescript
+export type { TitlebarAction, TitlebarActionDropdownItem, ToolbarActionsProps } from './components/ToolbarActions';
+export type { MenuItem, SubMenuItem, MenuItemAction } from './components/Menu';
+export type { UserInfo, UserProfileAction, UserStatus } from './components/UserProfile';
+export type { CommandPaletteConfig, CommandPaletteSection, ... } from './components/SearchBar';
+```
+
+## Testing
+
+- Tests use vitest + jsdom. Auto-detection defaults to `'windows'`.
+- Use the `platform` prop to test specific platform layouts.
+- Integration tests (Titlebar.test.tsx) verify components render at the top level.
+- Unit tests (per component) verify detailed behavior: clicks, dropdowns, keyboard, a11y.
+- After changes: `npx vitest run` from `libs/electron-titlebar`.
+- Current count: 284 tests across 12 files.

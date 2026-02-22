@@ -1,0 +1,97 @@
+---
+description: Stitches CSS-in-JS scoped styling patterns -- never use globalCss, scope resets inside containers, variant patterns for split buttons and badges
+globs: "libs/electron-titlebar/src/**/*.ts,libs/electron-titlebar/src/**/*.tsx"
+alwaysApply: false
+---
+
+# Stitches Scoped Styles
+
+## Never Use globalCss
+
+Do NOT use `globalCss` from `@stitches/react`. Global CSS resets conflict with consumer apps.
+
+```typescript
+// BAD -- injects globals
+import { globalCss } from '@stitches/react';
+export const globalStyles = globalCss({ '*': { margin: 0 } });
+
+// GOOD -- scope inside container
+export const Container = styled('div', {
+  '& *': { margin: 0, padding: 0, border: '0 solid', boxSizing: 'border-box' },
+  '& button': { color: 'inherit', fontFamily: 'inherit', backgroundColor: 'transparent', cursor: 'pointer' },
+});
+```
+
+## Variants Over Conditionals
+
+Use Stitches `variants` for visual states instead of runtime CSS conditionals:
+
+```typescript
+export const TitlebarContainer = styled('div', {
+  variants: {
+    platform: { macos: { paddingLeft: '70px' }, windows: {}, linux: {} },
+    size: { default: { height: '38px' }, small: { height: '32px' } },
+  },
+});
+```
+
+## Specificity with `&&`
+
+Use `&&` (double ampersand) to increase specificity when button styles are overridden by consumer resets:
+
+```typescript
+export const ActionButton = styled('button', {
+  '&&': {
+    display: 'flex',
+    // all styles inside && to win specificity battles
+    '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.08)' },
+    '&:disabled': { opacity: 0.4, cursor: 'default' },
+  },
+  variants: {
+    active: { true: { '&&': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } } },
+  },
+});
+```
+
+## Split Button Pattern
+
+Composite styled components for the filled/split button:
+
+```typescript
+SplitButtonContainer  // flex row, overflow hidden, border-radius, variant for color
+  SplitMainButton     // left side: icon + label, transparent bg
+  SplitDivider        // 1px vertical line
+  SplitChevronButton  // right side: chevron icon
+```
+
+The `SplitButtonContainer` uses a `variant` for color (`default`/`attention`/`success`) and a `disabled` boolean variant for opacity.
+
+## Badge Pattern
+
+Use compound variants (`kind` + `variant`) for badge styles:
+
+```typescript
+variants: {
+  variant: {
+    default: { backgroundColor: '#4F46E5' },
+    attention: { backgroundColor: '#EF4444' },
+    success: { backgroundColor: '#22C55E' },
+  },
+  kind: {
+    dot: { width: '8px', height: '8px', borderRadius: '50%' },
+    count: { minWidth: '16px', padding: '0 4px', fontSize: '9px' },
+  },
+},
+```
+
+## Keyboard Focus via Data Attributes
+
+Use `data-focused` attribute (not `:focus`) for keyboard navigation styling in dropdowns:
+
+```typescript
+'&:hover, &[data-focused]': {
+  backgroundColor: 'rgba(79, 70, 229, 0.3)',
+},
+```
+
+This allows keyboard-driven focus to match hover styling without requiring actual DOM focus on each item.

@@ -1,0 +1,68 @@
+---
+description: ToolbarActions component patterns -- action types, split button, badges, dropdowns, keyboard navigation, accessibility
+globs: "libs/electron-titlebar/src/components/Titlebar/components/ToolbarActions/**"
+alwaysApply: false
+---
+
+# ToolbarActions Patterns
+
+## Action Types
+
+Every action needs a unique `id`. Two variants:
+
+- **`'icon'`** (default) -- Compact icon button with optional badge, tooltip, dropdown, highlight.
+- **`'filled'`** -- Medium colored split button with text label. Main area fires `onClick`, chevron opens dropdown.
+
+## Split Button (Filled Variant)
+
+Must include `role="group"` and `aria-label` on `SplitButtonContainer`:
+
+```tsx
+<SplitButtonContainer
+  role="group"
+  aria-label={action.tooltip || action.label}
+  variant={action.badgeVariant || 'default'}
+>
+  <SplitMainButton onClick={...}>{action.icon}{action.label}</SplitMainButton>
+  {hasDropdown && <>
+    <SplitDivider />
+    <SplitChevronButton onClick={toggleDropdown}><FiChevronDown /></SplitChevronButton>
+  </>}
+</SplitButtonContainer>
+```
+
+## Dropdown Keys
+
+Separator keys use array index (`key={`sep-${index}`}`), never `item.label` (separators have empty labels, causing duplicates).
+
+```tsx
+// GOOD
+<DropdownSeparator key={`sep-${index}`} />
+
+// BAD -- duplicate keys when multiple separators have empty labels
+<DropdownSeparator key={`sep-${item.label}`} />
+```
+
+## Keyboard Navigation
+
+Dropdowns support ArrowDown, ArrowUp, Enter, Escape. Track `focusedIndex` state and `actionableIndices` (memoized array of non-separator, non-disabled indices). Use `data-focused` attribute for visual state.
+
+## Badge Variants
+
+`badgeVariant` controls color for both badge dots/counts AND filled button backgrounds:
+
+| Variant | Color | Hex |
+|---------|-------|-----|
+| `'default'` | Blue | `#4F46E5` |
+| `'attention'` | Red | `#EF4444` |
+| `'success'` | Green | `#22C55E` |
+
+## Accessibility Checklist
+
+- `role="toolbar"` on `ActionsContainer`
+- `aria-label` on each action button (from `tooltip`)
+- `role="menu"` on `ActionDropdown`
+- `role="menuitem"` on `DropdownItem`
+- `role="separator"` on `DropdownSeparator`
+- `role="group"` + `aria-label` on `SplitButtonContainer`
+- `data-focused` attribute for keyboard focus styling
