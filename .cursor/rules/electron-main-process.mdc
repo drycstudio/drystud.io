@@ -1,0 +1,54 @@
+---
+description: Electron main process conventions -- BrowserWindow config, IPC patterns, platform-aware setup
+globs: "**/main/index.ts,libs/electron-titlebar/src/config/**"
+alwaysApply: false
+---
+
+# Electron Main Process Patterns
+
+## BrowserWindow Configuration
+
+Always use `getTitlebarOptions()` from the titlebar library instead of hardcoding frame/titlebar settings:
+
+```typescript
+// BAD -- hardcoded, not cross-platform
+const mainWindow = new BrowserWindow({
+  frame: false,
+});
+
+// GOOD -- platform-aware
+import { getTitlebarOptions } from '@drycstud.io/electron-titlebar/config';
+const mainWindow = new BrowserWindow({
+  ...getTitlebarOptions(),
+});
+```
+
+## IPC Handler Registration
+
+Call `attachToWindow(ipcMain, mainWindow)` after the window is ready, not at creation time:
+
+```typescript
+// GOOD
+mainWindow.on('ready-to-show', () => {
+  attachToWindow(ipcMain, mainWindow);
+  mainWindow.show();
+});
+```
+
+## Platform Detection in Main Process
+
+Use `process.platform` directly (not navigator/userAgent):
+
+```typescript
+const isMac = process.platform === 'darwin';    // macOS
+const isWin = process.platform === 'win32';     // Windows
+const isLinux = process.platform === 'linux';   // Linux
+```
+
+## Config Functions Must Run in Main Process
+
+`setup()`, `getTitlebarOptions()`, and `attachToWindow()` use Node.js APIs (`process.platform`, Electron IPC). They are exported from the `config` entry point which runs in the main process. Never import them in renderer code.
+
+## Preload Config
+
+`preloadConfig()` runs in the preload script context. It uses `contextBridge.exposeInMainWorld` and must be called before the renderer loads.

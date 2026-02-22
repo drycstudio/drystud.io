@@ -1,0 +1,70 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Getting Started/Introduction" />
+
+# Electron Pretty Titlebar
+
+A cross-platform, customizable titlebar component for Electron apps built with React.
+
+## Features
+
+- **Multi-platform support** — Native macOS appearance (traffic lights), Windows/Linux window controls
+- **Menu bar** — Full dropdown menus with keyboard navigation, shortcuts, separators, and disabled items
+- **Platform-aware shortcuts** — Automatically converts `Ctrl+N` → `⌘N` on macOS
+- **Two sizes** — Default (38px) and compact (32px)
+- **CSS isolation** — Scoped styles that don't conflict with Tailwind CSS or other frameworks
+- **Custom handlers** — Override minimize, maximize, and close behaviors
+- **Keyboard navigation** — Arrow keys, Enter, Escape for full menu accessibility
+- **TypeScript** — Full type definitions for all props and menu item structures
+
+## Quick Start
+
+### 1. Install
+
+```bash
+yarn add @drycstud.io/electron-titlebar
+```
+
+### 2. Main Process Setup
+
+```ts
+import { getTitlebarOptions, attachToWindow } from '@drycstud.io/electron-titlebar/config';
+
+const mainWindow = new BrowserWindow({
+  ...getTitlebarOptions(),
+  webPreferences: { preload: join(__dirname, '../preload/index.js') },
+});
+
+attachToWindow(ipcMain, mainWindow);
+```
+
+### 3. Renderer
+
+```tsx
+import Titlebar from '@drycstud.io/electron-titlebar';
+import type { MenuItem } from '@drycstud.io/electron-titlebar';
+
+const menus: MenuItem[] = [
+  {
+    label: 'File',
+    submenu: [
+      { label: 'New', shortcut: 'Ctrl+N', action: () => console.log('New') },
+      { label: 'Save', shortcut: 'Ctrl+S', action: () => console.log('Save') },
+    ],
+  },
+];
+
+function App() {
+  return <Titlebar title="My App" menuItems={menus} />;
+}
+```
+
+## Platform Behavior
+
+| Feature | macOS | Windows | Linux |
+|---------|-------|---------|-------|
+| Window controls | Native traffic lights | Custom buttons | Custom buttons |
+| App logo | Hidden | Shown | Shown |
+| Menu position | After traffic lights | After logo | After logo |
+| Shortcuts | `⌘⇧N` symbols | `Ctrl+Shift+N` text | `Ctrl+Shift+N` text |
+| Title position | Centered | Centered | Centered |

@@ -461,6 +461,17 @@ When a dropdown menu is open, the following keyboard controls are available:
 
 Hover switching is also supported — hovering over another top-level menu label while one is open will switch to it instantly.
 
+### Responsive Overflow
+
+When the window is too narrow to display all menu items, the menu automatically collapses items one by one into an overflow button (`⋯`). Items restore individually as the window grows back.
+
+- Items collapse **right-to-left** (rightmost items overflow first)
+- The overflow dropdown groups hidden items under their original menu labels
+- Keyboard navigation seamlessly transitions between visible menus and the overflow dropdown
+- Dropdown menus scroll with a styled scrollbar when they exceed the viewport height
+
+This behavior is fully automatic — no configuration needed.
+
 ## Toolbar Actions
 
 The titlebar supports a customizable **toolbar actions** area positioned between the search bar and the user profile. Use it for notifications, settings, upgrade indicators, or any custom action buttons.
@@ -566,6 +577,74 @@ const updateAction: TitlebarAction = {
 
 Without a `dropdown`, the filled variant renders as a single solid button (no chevron).
 
+### Custom Dropdown Content
+
+For advanced dropdowns (e.g., a rich notification panel), use `renderDropdown` instead of the `dropdown` array. This gives you full control over the dropdown content:
+
+```tsx
+const notificationsAction: TitlebarAction = {
+  id: 'notifications',
+  icon: <FiBell />,
+  tooltip: 'Notifications',
+  badge: 3,
+  badgeVariant: 'attention',
+  dropdownWidth: 360,
+  renderDropdown: (close) => (
+    <NotificationPanelRoot>
+      <NotificationHeader>
+        <NotificationTitle>Notifications</NotificationTitle>
+        <NotificationHeaderActions>
+          <NotificationHeaderButton onClick={() => markAllRead()}>
+            Mark all read
+          </NotificationHeaderButton>
+        </NotificationHeaderActions>
+      </NotificationHeader>
+      <NotificationList>
+        <NotificationItem>
+          <NotificationIcon style={{ color: '#22C55E' }}>
+            <FiCheck />
+          </NotificationIcon>
+          <NotificationContent>
+            <NotificationItemTitle>Deploy succeeded</NotificationItemTitle>
+            <NotificationDescription>Production v2.1.0 is live</NotificationDescription>
+            <NotificationMeta>2 minutes ago</NotificationMeta>
+          </NotificationContent>
+        </NotificationItem>
+      </NotificationList>
+      <NotificationFooter>
+        <NotificationFooterButton onClick={close}>Dismiss all</NotificationFooterButton>
+      </NotificationFooter>
+    </NotificationPanelRoot>
+  ),
+};
+```
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `renderDropdown` | `(close: () => void) => ReactNode` | Custom dropdown content. Receives a `close` callback to dismiss the dropdown. |
+| `dropdownWidth` | `number \| string` | Width of the dropdown container (e.g., `360` or `'360px'`). |
+
+When both `renderDropdown` and `dropdown` are provided, `renderDropdown` takes precedence.
+
+### Notification Panel Components
+
+The library exports a set of pre-styled building blocks for notification panels. Import them from the main entry point:
+
+```tsx
+import {
+  NotificationPanelRoot,
+  NotificationHeader, NotificationTitle, NotificationHeaderActions, NotificationHeaderButton,
+  NotificationList, NotificationItem, NotificationDot, NotificationIcon,
+  NotificationContent, NotificationItemTitle, NotificationDescription, NotificationMeta,
+  NotificationBadge, NotificationSeparator,
+  NotificationFooter, NotificationFooterButton,
+  NotificationEmpty, NotificationEmptyText,
+  NotificationGroup, NotificationGroupLabel,
+} from '@drycstud.io/electron-titlebar';
+```
+
+These are headless-ish styled components — compose them freely to build any notification UI.
+
 ### Custom Render Actions
 
 For fully custom content in the actions area, use the `renderActions` escape hatch:
@@ -660,12 +739,15 @@ import type {
   MenuItemAction,
   TitlebarAction,
   TitlebarActionDropdownItem,
+  ToolbarActionsProps,
   UserInfo,
   UserStatus,
   UserProfileAction,
   CommandPaletteConfig,
   CommandPaletteSection,
   CommandPaletteItem,
+  FilterChip,
+  CommandPaletteFooterAction,
 } from '@drycstud.io/electron-titlebar';
 ```
 
@@ -700,6 +782,8 @@ type TitlebarAction = {
   highlight?: boolean;            // pulsing glow effect (icon variant only)
   onClick?: () => void;
   dropdown?: TitlebarActionDropdownItem[];
+  renderDropdown?: (close: () => void) => ReactNode; // custom dropdown content
+  dropdownWidth?: number | string;                    // custom dropdown width
   disabled?: boolean;
 };
 
@@ -970,12 +1054,12 @@ yarn dev            # Start the Electron app
 
 Make sure these are installed in your project:
 
-| Package       | Version   |
-|---------------|-----------|
-| `electron`    | `^31.2.1` |
-| `react`       | `^18.3.1` |
-| `react-dom`   | `^18.3.1` |
-| `react-icons` | `^5.2.1`  |
+| Package       | Version              |
+|---------------|----------------------|
+| `electron`    | `>=31.0.0`           |
+| `react`       | `^18.3.1 \|\| ^19.0.0` |
+| `react-dom`   | `^18.3.1 \|\| ^19.0.0` |
+| `react-icons` | `^5.2.1`            |
 
 ## License
 

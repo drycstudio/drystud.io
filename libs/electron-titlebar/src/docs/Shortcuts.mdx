@@ -1,0 +1,55 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Guides/Keyboard Shortcuts" />
+
+# Keyboard Shortcuts
+
+## How Shortcuts Work
+
+Shortcuts are defined as strings on `SubMenuItem.shortcut` using Windows-style notation:
+
+```ts
+{ label: 'Save', shortcut: 'Ctrl+S', action: () => save() }
+```
+
+The titlebar **automatically converts** them to the correct platform format at render time. No need to provide separate strings per OS.
+
+## Conversion Examples
+
+| Input | Windows/Linux | macOS |
+|-------|---------------|-------|
+| `Ctrl+N` | Ctrl+N | ⌘N |
+| `Ctrl+Shift+N` | Ctrl+Shift+N | ⇧⌘N |
+| `Ctrl+Alt+S` | Ctrl+Alt+S | ⌥⌘S |
+| `Alt+F4` | Alt+F4 | ⌥F4 |
+| `Ctrl+Shift+Alt+N` | Ctrl+Shift+Alt+N | ⌥⇧⌘N |
+| `F11` | F11 | F11 |
+| `` Ctrl+` `` | `` Ctrl+` `` | `` ⌘` `` |
+| `Ctrl+,` | Ctrl+, | ⌘, |
+
+## Using `formatShortcut` Directly
+
+You can use the utility function outside the titlebar:
+
+```tsx
+import { formatShortcut } from '@drycstud.io/electron-titlebar';
+
+function MyComponent({ platform }) {
+  return <kbd>{formatShortcut('Ctrl+S', platform)}</kbd>;
+}
+```
+
+## Keyboard Navigation
+
+When a menu is open, the following keys are supported:
+
+| Key | Action |
+|-----|--------|
+| `↓` Arrow Down | Focus next item (skips separators and disabled items) |
+| `↑` Arrow Up | Focus previous item |
+| `→` Arrow Right | Open next menu |
+| `←` Arrow Left | Open previous menu |
+| `Enter` | Activate focused item |
+| `Escape` | Close current dropdown |
+
+Hover switching is also supported — hovering over another top-level menu label while one is open will switch to it.

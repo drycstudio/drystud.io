@@ -1,0 +1,102 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Getting Started/API Reference" />
+
+# API Reference
+
+## Titlebar Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string \| null` | `'Pretty Titlebar'` | Window title text displayed centered in the titlebar. Pass `null` to hide. |
+| `logo` | `string` | Built-in logo | URL of a custom logo image. Only shown on Windows/Linux. |
+| `size` | `'default' \| 'small'` | `'default'` | Height variant. `default` = 38px, `small` = 32px. |
+| `platform` | `'windows' \| 'macos' \| 'linux'` | Auto-detected | Overrides platform detection. Controls layout and shortcut formatting. |
+| `menuItems` | `MenuItem[]` | `undefined` | Array of menu definitions for the menu bar. |
+| `onMinus` | `() => void` | IPC fallback | Custom minimize handler. |
+| `onMinimizeMaximaze` | `() => void` | IPC fallback | Custom maximize/restore handler. |
+| `onClose` | `() => void` | IPC fallback | Custom close handler. |
+
+## MenuItem Type
+
+```ts
+type MenuItem = {
+  label: string;
+  action?: () => void;
+  submenu?: SubMenuItem[];
+  disabled?: boolean;
+};
+```
+
+## SubMenuItem Type
+
+```ts
+type SubMenuItem = {
+  label: string;
+  action?: () => void;
+  disabled?: boolean;
+  type?: 'separator';
+  shortcut?: string;
+};
+```
+
+## Config Exports
+
+Imported from `@drycstud.io/electron-titlebar/config`:
+
+### `getTitlebarOptions()`
+
+Returns `BrowserWindow` constructor options for a frameless titlebar:
+
+```ts
+// On macOS:
+{ frame: false, titleBarStyle: 'hiddenInset', trafficLightPosition: { x: 10, y: 10 } }
+
+// On Windows/Linux:
+{ frame: false, titleBarStyle: 'hidden' }
+```
+
+### `attachToWindow(ipcMain, mainWindow)`
+
+Registers IPC handlers for window control:
+
+| Channel | Action |
+|---------|--------|
+| `minimizeWindow` | Minimizes the window |
+| `maximizeRestoreWindow` | Toggles maximize/restore |
+| `closeWindow` | Closes the window |
+| `windowsIsMaximized` | Returns maximized state |
+
+### `setup()`
+
+Validates the Electron process type and logs a warning if called from the wrong context.
+
+### `preloadConfig()`
+
+Sets up the Electron context bridge for IPC communication. Call this in your preload script.
+
+## Utility Exports
+
+### `formatShortcut(shortcut, platform)`
+
+Converts keyboard shortcuts to platform-specific format:
+
+```ts
+import { formatShortcut } from '@drycstud.io/electron-titlebar';
+
+formatShortcut('Ctrl+Shift+N', 'macos');   // '⇧⌘N'
+formatShortcut('Ctrl+Shift+N', 'windows'); // 'Ctrl+Shift+N'
+formatShortcut('Alt+F4', 'macos');         // '⌥F4'
+```
+
+### Modifier Mapping (macOS)
+
+| Input | Symbol | Name |
+|-------|--------|------|
+| `Ctrl` | `⌘` | Command |
+| `Alt` | `⌥` | Option |
+| `Shift` | `⇧` | Shift |
+| `Control` | `⌃` | Control |
+| `Meta` / `Cmd` | `⌘` | Command |
+
+Modifiers are sorted in standard macOS order: `⌃ ⌥ ⇧ ⌘`
