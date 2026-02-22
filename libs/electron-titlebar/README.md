@@ -9,6 +9,10 @@
 
 A pretty, cross-platform titlebar for Electron apps built with React. Automatically adapts to **macOS** (native traffic lights), **Windows**, and **Linux** — similar to VS Code, Figma, and Postman.
 
+<p align="center">
+  <img src="assets/demo.gif" alt="Pretty Electron Titlebar Demo" width="720" />
+</p>
+
 ## Features
 
 - **Cross-platform** — Native look on macOS (traffic lights), custom window controls on Windows/Linux
