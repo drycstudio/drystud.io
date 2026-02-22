@@ -3,9 +3,31 @@ import { useState, useCallback } from 'react'
 import Versions from './components/Versions'
 import electronLogo from './assets/electron.svg'
 
-import { FiBell, FiSettings, FiZap, FiCheckCircle, FiUserPlus, FiPackage, FiDownload, FiRefreshCw } from 'react-icons/fi'
+import {
+  FiBell, FiSettings, FiZap, FiUserPlus, FiPackage,
+  FiDownload, FiRefreshCw, FiAlertTriangle, FiGitPullRequest,
+  FiCheck, FiTrash2, FiExternalLink,
+} from 'react-icons/fi'
 
-import Titlebar from '@drycstud.io/electron-titlebar'
+import Titlebar, {
+  NotificationPanelRoot,
+  NotificationHeader,
+  NotificationTitle,
+  NotificationHeaderActions,
+  NotificationHeaderButton,
+  NotificationList,
+  NotificationItem,
+  NotificationIcon,
+  NotificationContent,
+  NotificationItemTitle,
+  NotificationDescription,
+  NotificationMeta,
+  NotificationBadge,
+  NotificationFooter,
+  NotificationFooterButton,
+  NotificationEmpty,
+  NotificationEmptyText,
+} from '@drycstud.io/electron-titlebar'
 import type {
   MenuItem,
   UserInfo,
@@ -33,7 +55,7 @@ const menuItems: MenuItem[] = [
       { type: 'separator', label: '' },
       { label: 'Preferences', shortcut: 'Ctrl+,', action: () => console.log('Preferences') },
       { type: 'separator', label: '' },
-      { label: 'Exit', shortcut: 'Alt+F4', action: () => globalThis.close() },
+      { label: 'Exit', shortcut: 'Alt+F4', action: () => globalThis.electron.ipcRenderer.send('closeWindow') },
     ],
   },
   {
@@ -219,41 +241,66 @@ const recentSections: CommandPaletteSection[] = [
   },
 ]
 
-const toolbarActions: TitlebarAction[] = [
+type Notification = {
+  id: string
+  title: string
+  description?: string
+  variant: 'info' | 'success' | 'warning' | 'error' | 'default'
+  icon: React.ReactNode
+  badge?: string
+  time: string
+  read: boolean
+  action?: () => void
+}
+
+const initialNotifications: Notification[] = [
   {
-    id: 'notifications',
-    icon: <FiBell />,
-    tooltip: 'Notifications',
-    badge: 3,
-    badgeVariant: 'attention',
-    dropdown: [
-      { label: 'Mark all as read', icon: <FiCheckCircle />, action: () => console.log('Mark all read') },
-      { label: '', type: 'separator' },
-      { label: 'New deployment completed', icon: <FiPackage />, action: () => console.log('Deployment') },
-      { label: 'Team invite from John', icon: <FiUserPlus />, action: () => console.log('Team invite') },
-      { label: 'Build succeeded: v2.1.0', icon: <FiCheckCircle />, action: () => console.log('Build') },
-    ],
+    id: 'n1',
+    title: 'Deployment completed',
+    description: 'Production deploy for api-service succeeded in 2m 14s.',
+    variant: 'success',
+    icon: <FiPackage />,
+    badge: 'Deploy',
+    time: '2 min ago',
+    read: false,
   },
   {
-    id: 'settings',
-    icon: <FiSettings />,
-    tooltip: 'Settings',
-    onClick: () => console.log('Open settings'),
+    id: 'n2',
+    title: 'Team invite from John',
+    description: 'John Doe invited you to join the "Backend" workspace.',
+    variant: 'info',
+    icon: <FiUserPlus />,
+    time: '15 min ago',
+    read: false,
   },
   {
-    id: 'upgrade',
-    icon: <FiZap />,
-    label: 'Update v2.1.0',
-    variant: 'filled',
-    tooltip: 'Update Available — v2.1.0',
-    badgeVariant: 'success',
-    onClick: () => console.log('Download & Update Now'),
-    dropdown: [
-      { label: 'Download & Update Now', icon: <FiRefreshCw />, action: () => console.log('Download & Update') },
-      { label: 'Download Only', icon: <FiDownload />, action: () => console.log('Download Only') },
-      { label: '', type: 'separator' },
-      { label: 'Release Notes', icon: <FiPackage />, action: () => console.log('Release Notes') },
-    ],
+    id: 'n3',
+    title: 'Build failed: staging',
+    description: 'Pipeline #4821 failed at step "lint". 3 errors found.',
+    variant: 'error',
+    icon: <FiAlertTriangle />,
+    badge: 'CI/CD',
+    time: '1 hour ago',
+    read: false,
+  },
+  {
+    id: 'n4',
+    title: 'PR #142 merged',
+    description: 'feat: add notification panel components',
+    variant: 'success',
+    icon: <FiGitPullRequest />,
+    badge: 'PR',
+    time: '3 hours ago',
+    read: true,
+  },
+  {
+    id: 'n5',
+    title: 'API rate limit warning',
+    description: 'Workspace usage at 85% of monthly quota.',
+    variant: 'warning',
+    icon: <FiAlertTriangle />,
+    time: 'Yesterday',
+    read: true,
   },
 ]
 
@@ -274,6 +321,123 @@ function buildSearchSections(query: string): CommandPaletteSection[] {
 function App(): JSX.Element {
   const ipcHandle = (): void => globalThis.electron.ipcRenderer.send('ping')
 
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [notifications, setNotifications] = useState<Notification[]>(initialNotifications)
+
+  const unreadCount = notifications.filter((n) => !n.read).length
+
+  const markAllRead = useCallback(() => {
+    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })))
+  }, [])
+
+  const markRead = useCallback((id: string) => {
+    setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)))
+  }, [])
+
+  const clearAll = useCallback(() => {
+    setNotifications([])
+  }, [])
+
+  const toolbarActions: TitlebarAction[] = [
+    {
+      id: 'notifications',
+      icon: <FiBell />,
+      tooltip: 'Notifications',
+      badge: unreadCount || false,
+      badgeVariant: 'attention',
+      dropdownWidth: 360,
+      renderDropdown: (close) => (
+        <NotificationPanelRoot>
+          <NotificationHeader>
+            <NotificationTitle>Notifications{unreadCount > 0 ? ` (${unreadCount})` : ''}</NotificationTitle>
+            <NotificationHeaderActions>
+              {unreadCount > 0 && (
+                <NotificationHeaderButton onClick={markAllRead}>
+                  <FiCheck /> Mark all read
+                </NotificationHeaderButton>
+              )}
+              {notifications.length > 0 && (
+                <NotificationHeaderButton onClick={() => { clearAll(); close(); }}>
+                  <FiTrash2 /> Clear
+                </NotificationHeaderButton>
+              )}
+            </NotificationHeaderActions>
+          </NotificationHeader>
+
+          {notifications.length === 0 ? (
+            <NotificationEmpty>
+              <FiBell />
+              <NotificationEmptyText>No notifications</NotificationEmptyText>
+            </NotificationEmpty>
+          ) : (
+            <NotificationList>
+              {notifications.map((n) => (
+                <NotificationItem
+                  key={n.id}
+                  unread={!n.read}
+                  onClick={() => {
+                    markRead(n.id)
+                    n.action?.()
+                  }}
+                >
+                  <NotificationIcon variant={n.variant}>{n.icon}</NotificationIcon>
+                  <NotificationContent>
+                    <NotificationItemTitle>{n.title}</NotificationItemTitle>
+                    {n.description && <NotificationDescription>{n.description}</NotificationDescription>}
+                    <NotificationMeta>
+                      {n.time}
+                      {n.badge && (
+                        <>
+                          {' · '}
+                          <NotificationBadge variant={n.variant}>{n.badge}</NotificationBadge>
+                        </>
+                      )}
+                    </NotificationMeta>
+                  </NotificationContent>
+                  {!n.read && (
+                    <span style={{
+                      width: 6, height: 6, borderRadius: '50%',
+                      backgroundColor: '#4F46E5', flexShrink: 0, marginTop: 6,
+                    }} />
+                  )}
+                </NotificationItem>
+              ))}
+            </NotificationList>
+          )}
+
+          {notifications.length > 0 && (
+            <NotificationFooter>
+              <NotificationFooterButton onClick={close}>
+                <FiExternalLink /> View all notifications
+              </NotificationFooterButton>
+            </NotificationFooter>
+          )}
+        </NotificationPanelRoot>
+      ),
+    },
+    {
+      id: 'settings',
+      icon: <FiSettings />,
+      tooltip: 'Settings',
+      onClick: () => console.log('Open settings'),
+    },
+    {
+      id: 'upgrade',
+      icon: <FiZap />,
+      label: 'Update v2.1.0',
+      variant: 'filled',
+      tooltip: 'Update Available — v2.1.0',
+      badgeVariant: 'success',
+      onClick: () => console.log('Download & Update Now'),
+      dropdown: [
+        { label: 'Download & Update Now', icon: <FiRefreshCw />, action: () => console.log('Download & Update') },
+        { label: 'Download Only', icon: <FiDownload />, action: () => console.log('Download Only') },
+        { label: '', type: 'separator' },
+        { label: 'Release Notes', icon: <FiPackage />, action: () => console.log('Release Notes') },
+      ],
+    },
+  ]
+
   const [sections, setSections] = useState<CommandPaletteSection[]>(recentSections)
   const [activeFilters, setActiveFilters] = useState<Record<string, boolean>>({
     requests: false,
@@ -282,10 +446,10 @@ function App(): JSX.Element {
   })
 
   const handleQueryChange = useCallback((query: string) => {
-    if (!query.trim()) {
-      setSections(recentSections)
-    } else {
+    if (query.trim()) {
       setSections(buildSearchSections(query))
+    } else {
+      setSections(recentSections)
     }
   }, [])
 
@@ -320,9 +484,10 @@ function App(): JSX.Element {
         title="Electron Pretty Titlebar"
         logo={electronLogo}
         menuItems={menuItems}
-        user={currentUser}
+        user={isLoggedIn ? currentUser : null}
         userActions={userActions}
-        onSignOut={() => console.log('Sign out clicked')}
+        onSignIn={() => { console.log('Sign in clicked'); setIsLoggedIn(true) }}
+        onSignOut={() => { console.log('Sign out clicked'); setIsLoggedIn(false) }}
         commandPalette={commandPalette}
         actions={toolbarActions}
         onMinus={() => console.log('Custom minimize handler')}
